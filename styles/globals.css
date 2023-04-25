@@ -1,8 +1,16 @@
+@import url('https://fonts.cdnfonts.com/css/roobert');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@layer base {
+  html {
+    @apply text-white;
+  } 
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -14,14 +22,26 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+} */
+
+/* html {
+  height: 100%;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+#__next {
+  height: 100%;
+} */
+
+/* body {
+  min-height: 100vh;
+  @apply bg-background; 
+  background-image: url("/images/elipse.svg"),
+    url("/images/horizontalelipse.svg"),
+    url("/images/ellipse1.svg"),
+    url("/images/rectangle1.svg"),
+    url("https://uploads-ssl.webflow.com/641382783fd2a817d52bef95/641382783fd2a80bfa2befb2_STREAD%201-1%203.png");
+    background-position: 0px 0px, 30% 40%, 65% 70%, 85% 70%, 100% 0%;
+    background-size: 450.69px 500px, 500px, auto 300px, 250px, auto 500px;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+    backdrop-filter: blur(150px);
+} */
