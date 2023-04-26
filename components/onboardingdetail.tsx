@@ -47,7 +47,7 @@ export default function OnboardingDetail(props: DetailProps) {
             <div className="w-full">
               <div className="w-full mt-6">
                 <Link href={props.btnHref}>
-                  <Button className="w-full">{props.btnText}</Button>
+                  <Button className="w-full shadow-btn">{props.btnText}</Button>
                 </Link>
               </div>
 

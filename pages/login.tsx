@@ -25,7 +25,7 @@ export default function Login() {
             {/* <Input name="Nom" placeholder="Prénom, Nom" /> */}
           </div>
 
-          <Button className="mt-6 w-full">👉 S’inscrire</Button>
+          <Button className="mt-6 w-full shadow-btn">👉 S’inscrire</Button>
         </OnboardingGlass>
       </div>
     </Onboarding>

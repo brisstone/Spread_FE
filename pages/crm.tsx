@@ -217,7 +217,7 @@ export default function Home() {
                   src="/images/squareplus.svg"
                   height={14}
                   width={14}
-                  alt="wallet icon"
+                  alt="add icon"
                 />
                 <p className="text-base">Ajouter une question</p>
               </div>

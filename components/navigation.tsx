@@ -12,7 +12,7 @@ interface NavItemProps {
 
 export function NavItem(props: NavItemProps) {
   return (
-    <li>
+    <li className="truncate">
       <Link href={props.href} className="flex gap-4 px-4 py-3 items-center">
         <IconCover
           className={`w-7 h-7 ${props.active ? "bg-btn" : "bg-icon-back"}`}

@@ -1,0 +1,18 @@
+.container {
+  @apply w-[18px] h-[18px] rounded-full;
+  @apply border border-solid border-greyborder;
+  @apply cursor-pointer;
+}
+
+.input {
+  @apply hidden;
+}
+
+.checkboxBg {
+  @apply w-full h-full;
+  @apply rounded-full
+}
+
+.input:checked ~ .checkboxBg {
+  @apply bg-btn;
+}

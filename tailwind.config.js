@@ -18,6 +18,7 @@ module.exports = {
         'gradient-kpi': 'linear-gradient(126.97deg, rgba(41, 26, 55, 0.74) 28.26%, rgba(23, 6, 38, 0.5) 91.2%)',
         'gradient-card': 'linear-gradient(126.97deg, rgba(41, 26, 55, 0.74) 28.26%, rgba(23, 6, 38, 0.71) 91.2%)',
         'gradient-divider': 'linear-gradient(180deg, rgba(224, 225, 226, 0) 0%, #E0E1E2 49.52%, rgba(224, 225, 226, 0.15625) 99.04%)',
+        'gradient-horizdivider': 'linear-gradient(90deg, rgba(224, 225, 226, 0) 0%, #E0E1E2 49.52%, rgba(224, 225, 226, 0.15625) 99.04%)',
       },
       colors: {
         background: '#100D12',
@@ -30,6 +31,10 @@ module.exports = {
         'misc': '#4E466D',
         'active-icon': 'rgba(255, 255, 255, 0.1)',
         'purpleblack': '#13111B',
+        'dim-white': 'rgba(255, 255, 255, 0.12)',
+        'tag': '#00A642',
+        'greyish': '#EEEEEE',
+        'greyborder': '#808080',
       },
       fontSize: {
         base: ['0.875rem', '1.5rem'],

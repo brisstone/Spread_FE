@@ -21,7 +21,10 @@ export default function Layout(props: LayoutProps) {
                 <NavItem svg="/images/chat.svg" name="Login" href="/login" />
                 <NavItem svg="/images/chat.svg" name="Forgot Password" href="/forgot-password" />
                 <NavItem svg="/images/chat.svg" name="CRM" href="/crm" />
+                <NavItem svg="/images/chat.svg" name="Onboarding" href="/onboarding" />
                 <NavItem svg="/images/chat.svg" name="Clients" href="/clients" />
+                <NavItem svg="/images/chat.svg" name="To Do List" href="/todo" />
+                <NavItem svg="/images/chat.svg" name="Kanban" href="/kanban" />
               </ul>
             </div>
           </div>

@@ -1,16 +1,28 @@
 import { Props } from "@/types/props";
+import { omit } from "lodash";
 import Image from "next/image";
+import { ButtonHTMLAttributes, DetailedHTMLProps, HTMLProps } from "react";
 
-interface IconButtonProps extends Props {
+interface IconButtonProps
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   iconUrl: string;
   width: number;
   height: number;
-  edge?: 'left' | 'right';
+  edge?: "left" | "right";
 }
 
 export default function IconButton(props: IconButtonProps) {
   return (
-    <button className={`flex justify-center items-center bg-transparent active:bg-active-icon p-2 rounded-full ${(props.edge === 'left' && '-ml-[50%]') || (props.edge === 'right' && '-mr-[50%]')} ${props.className}`}>
+    <button
+      {...omit(props, ["iconUrl", "width", "height", "edge"])}
+      className={`flex justify-center items-center bg-transparent active:bg-active-icon p-2 rounded-full ${
+        (props.edge === "left" && "-ml-[50%]") ||
+        (props.edge === "right" && "-mr-[50%]")
+      } ${props.className}`}
+    >
       <Image
         src={props.iconUrl}
         height={props.height}
