@@ -3,11 +3,13 @@ import Glass from "./glass";
 import Image from "next/image";
 import Background from "./background";
 
-export default function Onboarding({ children }: Props) {
+export default function Onboarding({ children, className }: Props) {
   return (
     <Background>
-      <div className="min-h-screen w-full min-w-full box-border flex justify-center items-center p-4 flex-col">
-        <div>{children}</div>
+      <div
+        className={`min-h-screen w-full min-w-full box-border flex justify-center items-center p-4 flex-col ${className}`}
+      >
+        {children}
       </div>
     </Background>
   );

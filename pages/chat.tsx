@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Card from "@/components/card";
-import Layout from "@/components/layout";
+import Layout, { LayoutHeader } from "@/components/layout";
 import { ListItem } from "@/components/list";
 import Tab, { TabItem } from "@/components/tab";
 import utilStyles from "../styles/utils.module.css";
@@ -17,7 +17,9 @@ export default function Chat() {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <Layout header="Conversations Récentes 💬">
+    // <Layout header="Conversations Récentes 💬">
+    <>
+      <LayoutHeader>Conversations Récentes 💬</LayoutHeader>
       <div className="flex flex-col w-full grow sticky">
         <Card className="flex w-full h-full grow p-5">
           <div className="h-full w-1/3">
@@ -138,6 +140,9 @@ export default function Chat() {
           </div>
         </Card>
       </div>
-    </Layout>
+    </>
+    // </Layout>
   );
 }
+
+Chat.Layout = Layout;

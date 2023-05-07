@@ -4,7 +4,7 @@ import CRMCard from "@/components/crm-card";
 import IconButton from "@/components/iconbutton";
 import Input from "@/components/input";
 import KPI from "@/components/kpi";
-import Layout from "@/components/layout";
+import Layout, { LayoutHeader } from "@/components/layout";
 import Tab, { TabItem, TabPanel } from "@/components/tab";
 import CustomTable from "@/components/table";
 import { Props } from "@/types/props";
@@ -135,11 +135,13 @@ function QuestionSection(props: Props) {
   );
 }
 
-export default function Home() {
+export default function CRM() {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <Layout header="CRM - Leads 💸">
+    // <Layout header="CRM - Leads 💸">
+    <>
+      <LayoutHeader>CRM - Leads 💸</LayoutHeader>
       <div className="flex flex-col w-full grow sticky">
         <Tab
           value={tabIndex}
@@ -225,6 +227,9 @@ export default function Home() {
           </TabPanel>
         </div>
       </div>
-    </Layout>
+    </>
+    // </Layout>
   );
 }
+
+CRM.Layout = Layout;

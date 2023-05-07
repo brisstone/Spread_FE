@@ -1,7 +1,7 @@
 import Button from "@/components/button";
 import Card from "@/components/card";
 import { BaseHDivider } from "@/components/divider";
-import Layout from "@/components/layout";
+import Layout, { LayoutHeader } from "@/components/layout";
 import { ScrollableList } from "@/components/list";
 import { TodoItem } from "@/components/todo";
 
@@ -10,9 +10,11 @@ Fusce interdum scelerisque augue maximus euismod. Quisque nulla dui, molestie cu
 Sed faucibus urna ut lectus placerat, et vulputate nibh convallis. Suspendisse enim est, fermentum cursus laoreet sit amet, bibendum convallis nulla. Vestibulum lectus libero, pharetra nec quam et, auctor tempor odio. Donec malesuada velit sed risus convallis molestie. Phasellus semper leo ornare aliquam feugiat. Etiam vitae magna dapibus, efficitur leo eu, tincidunt eros. Nullam odio elit, aliquam vitae est vel, tempus ullamcorper enim.
 `;
 
-export default function Chat() {
+export default function Todo() {
   return (
-    <Layout header="To Do List  ✅">
+    // <Layout header="To Do List  ✅">
+    <>
+      <LayoutHeader>To Do List ✅</LayoutHeader>
       <Card className="flex flex-col grow sticky p-10">
         <p className="text-[30px] leading-[35px]">Tâches 🎯</p>
         <BaseHDivider className="mt-5" />
@@ -42,6 +44,10 @@ export default function Chat() {
           </div>
         </div>
       </Card>
-    </Layout>
+    </>
+
+    // </Layout>
   );
 }
+
+Todo.Layout = Layout;
