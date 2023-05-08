@@ -12,9 +12,10 @@ import { v4 } from "uuid";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { authenticate } from "@/redux/slices/auth";
 import Cookies from "js-cookie";
-import useUser from "@/data/useUser";
+import useUser from "@/data/use-user";
 
 export interface LayoutProps extends Props {
+  header?: string;
 }
 
 const Layout: FC<LayoutProps> = (props: LayoutProps) => {
@@ -46,38 +47,40 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                   svg="/images/stat.svg"
                   active
                   name="Dashboard"
-                  href="/"
+                  href="/dashboard"
                 />
-                <NavItem svg="/images/chat.svg" name="Chat" href="/chat" />
+                <NavItem svg="/images/chat.svg" name="Chat" href="/dashboard/chat" />
                 <NavItem svg="/images/chat.svg" name="Login" href="/login" />
                 <NavItem
                   svg="/images/chat.svg"
                   name="Forgot Password"
                   href="/forgot-password"
                 />
-                <NavItem svg="/images/chat.svg" name="CRM" href="/crm" />
+                <NavItem svg="/images/chat.svg" name="CRM" href="/dashboard/crm" />
                 <NavItem
                   svg="/images/chat.svg"
                   name="Onboarding"
-                  href="/onboarding"
+                  href="/dashboard/onboarding"
                 />
                 <NavItem
                   svg="/images/chat.svg"
                   name="Clients"
-                  href="/clients"
+                  href="/dashboard/clients"
                 />
                 <NavItem
                   svg="/images/chat.svg"
                   name="To Do List"
-                  href="/todo"
+                  href="/dashboard/todo"
                 />
-                <NavItem svg="/images/chat.svg" name="Kanban" href="/kanban" />
+                <NavItem svg="/images/chat.svg" name="Kanban" href="/dashboard/kanban" />
+                <NavItem svg="/images/chat.svg" name="Parameters" href="/dashboard/settings" />
               </ul>
             </div>
           </div>
         </nav>
 
         <main className="relative w-4/5 ml-[20%] flex flex-col main grow pl-4 py-10 pr-5">
+          {props.header && <LayoutHeader>{props.header}</LayoutHeader>}
           {isLoading ? <p className="absolute text-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading...</p> : props.children}
         </main>
       </div>

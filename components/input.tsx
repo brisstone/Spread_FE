@@ -7,6 +7,7 @@ import Glass from "./glass";
 export interface TextFieldBaseProps {
   header?: string;
   containerClassName?: string;
+  smallerYPadding?: boolean;
   inputClassName?: string;
   errorText?: string | false;
 }
@@ -22,11 +23,15 @@ const Input: FC<TextFieldProps> = (props) => {
       <Glass className={props.containerClassName}>
         <input
           {...omit(props, ["inputClassName", "errorText"])}
-          className={`w-full bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base outline-none ${props.inputClassName}`}
+          className={`w-full bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base outline-none ${
+            props.smallerYPadding ? "py-[10px]" : ""
+          } ${props.inputClassName}`}
         />
       </Glass>
       {props.errorText && (
-        <span className="text-xs text-red-400 break-words max-w-full">{props.errorText}</span>
+        <span className="text-xs text-red-400 break-words max-w-full">
+          {props.errorText}
+        </span>
       )}
     </div>
   );

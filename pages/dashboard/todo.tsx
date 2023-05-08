@@ -12,9 +12,7 @@ Sed faucibus urna ut lectus placerat, et vulputate nibh convallis. Suspendisse e
 
 export default function Todo() {
   return (
-    // <Layout header="To Do List  ✅">
-    <>
-      <LayoutHeader>To Do List ✅</LayoutHeader>
+    <Layout header="To Do List  ✅">
       <Card className="flex flex-col grow sticky p-10">
         <p className="text-[30px] leading-[35px]">Tâches 🎯</p>
         <BaseHDivider className="mt-5" />
@@ -44,9 +42,7 @@ export default function Todo() {
           </div>
         </div>
       </Card>
-    </>
-
-    // </Layout>
+    </Layout>
   );
 }
 

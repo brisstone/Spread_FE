@@ -9,9 +9,7 @@ import Image from "next/image";
 
 export default function Kanban() {
   return (
-    // <Layout header="Kanban 📄">
-    <>
-      <LayoutHeader>Kanban 📄</LayoutHeader>
+    <Layout header="Kanban 📄">
       <div className="flex flex-col grow">
         <div className="flex grow items-stretch gap-5">
           <KanbanCard />
@@ -20,8 +18,7 @@ export default function Kanban() {
           <KanbanCard />
         </div>
       </div>
-    </>
-    // </Layout>
+    </Layout>
   );
 }
 

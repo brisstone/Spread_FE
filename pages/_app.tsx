@@ -35,7 +35,6 @@ export default function App({
     header?: string;
   };
 }) {
-
   const Layout = Component.Layout || React.Fragment;
 
   return (
@@ -45,9 +44,7 @@ export default function App({
           fetcher,
         }}
       >
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Component {...pageProps} />
       </SWRConfig>
     </Provider>
   );

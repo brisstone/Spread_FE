@@ -34,6 +34,8 @@ module.exports = {
         'active-icon': 'rgba(255, 255, 255, 0.1)',
         'purpleblack': '#13111B',
         'dim-white': 'rgba(255, 255, 255, 0.12)',
+        'dim-white2': '#DFE3EA',
+        'dim-white3': '#B7B7B7',
         'tag': '#00A642',
         'greyish': '#EEEEEE',
         'greyborder': '#808080',

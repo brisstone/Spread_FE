@@ -1,8 +1,9 @@
 import { ApiError } from "@/lib/ApiError";
+import { User } from "@/types/general";
 import useSWR from "swr";
 
 export default function useUser() {
-  const { data: user, error, isLoading, mutate } = useSWR("/auth/user");
+  const { data: user, error, isLoading, mutate } = useSWR<User>("/auth/user");
 
   const loggedOut =
     error &&

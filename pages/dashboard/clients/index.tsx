@@ -4,6 +4,7 @@ import ClientCard from "@/components/client-card";
 import Glass from "@/components/glass";
 import Layout from "@/components/layout";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Clients() {
   return (
@@ -18,9 +19,14 @@ export default function Clients() {
           <ClientCard />
 
           <div className="w-full mt-12 flex justify-center">
-            <Button iconUrl="/images/plus.svg" className="shadow-none !text-base">
-              Nouveau Client
-            </Button>
+            <Link href="/dashboard/clients/new">
+              <Button
+                iconUrl="/images/plus.svg"
+                className="shadow-none !text-base"
+              >
+                Nouveau Client
+              </Button>
+            </Link>
           </div>
         </div>
       </Card>

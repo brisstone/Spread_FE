@@ -8,7 +8,7 @@ export default function Checkbox(props: HTMLProps<HTMLInputElement>) {
       className={`${styles.container} ${props.className}`}
       htmlFor={props.id}
     >
-      <input className={styles.input} {...omit(props, ["className"])} />
+      <input type="checkbox" className={styles.input} {...omit(props, ["className"])} />
       <div className={styles.checkboxBg}></div>
     </label>
   );

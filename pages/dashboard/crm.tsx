@@ -139,9 +139,7 @@ export default function CRM() {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    // <Layout header="CRM - Leads 💸">
-    <>
-      <LayoutHeader>CRM - Leads 💸</LayoutHeader>
+    <Layout header="CRM - Leads 💸">
       <div className="flex flex-col w-full grow sticky">
         <Tab
           value={tabIndex}
@@ -227,8 +225,7 @@ export default function CRM() {
           </TabPanel>
         </div>
       </div>
-    </>
-    // </Layout>
+    </Layout>
   );
 }
 

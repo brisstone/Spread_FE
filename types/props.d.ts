@@ -8,3 +8,8 @@ type Props = {
 interface PropWithActive extends Props {
   active?: boolean;
 }
+
+interface HeaderSubtitle {
+  header: string;
+  subtitle: string;
+}

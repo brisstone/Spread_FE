@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function ClientCard() {
   return (
     <Glass className="py-10 px-14">
-      <Link href="/clients/hdhd" className="block w-full">
+      <Link href="/dashboard/clients/hdhd" className="block w-full">
         <div className="w-full flex gap-4 items-center">
           <Image
             src="/images/genericavatar.png"

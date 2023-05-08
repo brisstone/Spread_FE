@@ -12,8 +12,9 @@ import {
   Badge,
 } from "@tremor/react";
 import KPI from "@/components/kpi";
-import Layout from "@/components/layout";
+import Layout, { LayoutHeader } from "@/components/layout";
 import CustomTable from "@/components/table";
+import useUser from "@/data/use-user";
 
 const data = [
   {
@@ -100,8 +101,11 @@ const valueFormatter = (number: number) =>
   `$ ${Intl.NumberFormat("us").format(number).toString()}`;
 
 export default function Home() {
+  const { user } = useUser();
+
   return (
-    <Layout header="Bienvenue, Alvyn ! 👋">
+    <Layout>
+      <LayoutHeader>{ user && `Bienvenue, ${user.firstName || 'Alvyn'} ! 👋` }</LayoutHeader>
       <div className="w-full">
         <div className="flex w-full gap-6">
           <KPI className="grow" />

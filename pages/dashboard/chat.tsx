@@ -12,14 +12,13 @@ import {
   OutgoingMessage,
 } from "@/components/message-list";
 import { useState } from "react";
+import ConversationsList from "@/components/conversation-list";
 
 export default function Chat() {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    // <Layout header="Conversations Récentes 💬">
-    <>
-      <LayoutHeader>Conversations Récentes 💬</LayoutHeader>
+    <Layout header="Conversations Récentes 💬">
       <div className="flex flex-col w-full grow sticky">
         <Card className="flex w-full h-full grow p-5">
           <div className="h-full w-1/3">
@@ -36,21 +35,7 @@ export default function Chat() {
             </div>
 
             <div className="w-full mt-8">
-              <ul>
-                <ListItem
-                  primaryText="📩 Demi Wikinson"
-                  secondaryText="1 Nouveau Message | En Ligne"
-                />
-                <ListItem
-                  active
-                  primaryText="📩 Demi Wikinson"
-                  secondaryText="1 Nouveau Message | En Ligne"
-                />
-                <ListItem
-                  primaryText="📩 Demi Wikinson"
-                  secondaryText="1 Nouveau Message | En Ligne"
-                />
-              </ul>
+              <ConversationsList />
             </div>
           </div>
           <div className={`w-0.5 h-full bg-gradient-divider mx-12`}></div>
@@ -140,8 +125,7 @@ export default function Chat() {
           </div>
         </Card>
       </div>
-    </>
-    // </Layout>
+    </Layout>
   );
 }
 
