@@ -1,5 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
-import Cookies from "js-cookie";
+import { getCookieContext } from ".";
+import { StorageEnum } from "@/types/enum";
 
 const axiosHttp = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -13,7 +14,7 @@ axiosHttp.interceptors.request.use(function (config) {
     ...config,
     headers: {
       ...config.headers,
-      Authorization: `Bearer ${Cookies.get('accessToken')}`,
+      Authorization: `Bearer ${getCookieContext()}`,
     },
   } as InternalAxiosRequestConfig<any>;
 });

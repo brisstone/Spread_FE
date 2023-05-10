@@ -1,4 +1,4 @@
-import { HeaderSubtitle } from "@/types/props";
+import { HeaderSubtitle, Props } from "@/types/props";
 import Button from "../button";
 
 export function SettingsHeader(props: HeaderSubtitle) {
@@ -19,6 +19,20 @@ export function SettingsTop(props: HeaderSubtitle) {
 
         <Button className="!text-base bg-white text-black">Annuler</Button>
       </div>
+    </div>
+  );
+}
+
+export function Section(props: Props & { header: string; subtitle: string }) {
+  return (
+    <div className={`flex ${props.className}`}>
+      <div className="w-1/5">
+        <p className="text-base leading-5">{props.header}</p>
+        <p className="text-base leading-5 text-obsec break-words">
+          {props.subtitle}
+        </p>
+      </div>
+      <div className="ml-10 grow lg:max-w-[50%]">{props.children}</div>
     </div>
   );
 }

@@ -13,27 +13,29 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { authenticate } from "@/redux/slices/auth";
 import Cookies from "js-cookie";
 import useUser from "@/data/use-user";
+import useUserAndEnterprise from "@/data/user-user-enterprise";
 
 export interface LayoutProps extends Props {
   header?: string;
 }
 
 const Layout: FC<LayoutProps> = (props: LayoutProps) => {
-
   const [id, setId] = useState(v4());
 
   const router = useRouter();
 
-  const { user, isLoading, error, loggedOut } = useUser();
+  const { user, enterprise, isLoading, error, loggedOut } =
+    useUserAndEnterprise();
 
-  console.log('user:', user);
-  console.log('isLoading:', isLoading);
-  console.log('error:', error);
-  console.log('loggedOut:', loggedOut);
+  console.log("user:", user);
+  console.log("isLoading:", isLoading);
+  console.log("error:", error);
+  console.log("loggedOut:", loggedOut);
+  console.log("enterprise", enterprise);
 
   useEffect(() => {
-    if (loggedOut) router.replace('/login');
-  }, [loggedOut, router])
+    if (loggedOut) router.replace(`/${router.query.id}/login`);
+  }, [loggedOut, router]);
 
   return (
     <Background>
@@ -47,33 +49,49 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                   svg="/images/stat.svg"
                   active
                   name="Dashboard"
-                  href="/dashboard"
+                  href={`/${enterprise?.id}/dashboard`}
                 />
-                <NavItem svg="/images/chat.svg" name="Chat" href="/dashboard/chat" />
+                <NavItem
+                  svg="/images/chat.svg"
+                  name="Chat"
+                  href={`/${enterprise?.id}/dashboard/chat`}
+                />
                 <NavItem svg="/images/chat.svg" name="Login" href="/login" />
                 <NavItem
                   svg="/images/chat.svg"
                   name="Forgot Password"
                   href="/forgot-password"
                 />
-                <NavItem svg="/images/chat.svg" name="CRM" href="/dashboard/crm" />
+                <NavItem
+                  svg="/images/chat.svg"
+                  name="CRM"
+                  href={`/${enterprise?.id}/dashboard/crm`}
+                />
                 <NavItem
                   svg="/images/chat.svg"
                   name="Onboarding"
-                  href="/dashboard/onboarding"
+                  href={`/${enterprise?.id}/dashboard/onboarding`}
                 />
                 <NavItem
                   svg="/images/chat.svg"
                   name="Clients"
-                  href="/dashboard/clients"
+                  href={`/${enterprise?.id}/dashboard/clients`}
                 />
                 <NavItem
                   svg="/images/chat.svg"
                   name="To Do List"
-                  href="/dashboard/todo"
+                  href={`/${enterprise?.id}/dashboard/todo`}
                 />
-                <NavItem svg="/images/chat.svg" name="Kanban" href="/dashboard/kanban" />
-                <NavItem svg="/images/chat.svg" name="Parameters" href="/dashboard/settings" />
+                <NavItem
+                  svg="/images/chat.svg"
+                  name="Kanban"
+                  href={`/${enterprise?.id}/dashboard/kanban`}
+                />
+                <NavItem
+                  svg="/images/chat.svg"
+                  name="Parameters"
+                  href={`/${enterprise?.id}/dashboard/settings`}
+                />
               </ul>
             </div>
           </div>
@@ -81,7 +99,17 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
 
         <main className="relative w-4/5 ml-[20%] flex flex-col main grow pl-4 py-10 pr-5">
           {props.header && <LayoutHeader>{props.header}</LayoutHeader>}
-          {isLoading ? <p className="absolute text-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading...</p> : props.children}
+          {isLoading && (
+            <p className="absolute text-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              Loading...
+            </p>
+          )}
+          {error && (
+            <p className="absolute text-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              Erreur lors du chargement des données de l&apos;organisation
+            </p>
+          )}
+          {!isLoading && !error && user && enterprise && props.children}
         </main>
       </div>
     </Background>

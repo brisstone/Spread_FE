@@ -11,6 +11,7 @@ export default function Button(props: ButtonProps) {
   return (
     <button
       {...omit(props, ['iconUrl', 'loading'])}
+      disabled={props.loading}
       className={`bg-btn rounded-lg outline-none py-4 px-5 ${props.className} h-fit flex justify-center items-center`}
     >
       <span className="inline-flex gap-2 items-center">

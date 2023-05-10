@@ -1,4 +1,6 @@
+import Alert from "@/components/alert";
 import { LayoutProps } from "@/components/layout";
+import { AlertContextProvider } from "@/contexts/alert-context";
 import fetcher from "@/lib/fetcher";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { authenticate } from "@/redux/slices/auth";
@@ -44,7 +46,10 @@ export default function App({
           fetcher,
         }}
       >
-        <Component {...pageProps} />
+        <AlertContextProvider>
+          <Alert />
+          <Component {...pageProps} />
+        </AlertContextProvider>
       </SWRConfig>
     </Provider>
   );

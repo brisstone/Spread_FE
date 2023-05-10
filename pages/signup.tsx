@@ -8,27 +8,25 @@ import { object, string } from "yup";
 import { User } from "@/types/general";
 import { Form, FormikProvider } from "formik";
 import { omit } from "lodash";
+import { EmailSchema, PasswordSchema } from "@/util/schema";
+import { setCookie, setCookieContext } from "@/lib";
 
 const Schema = object({
   name: string()
     .required("Votre nom est requis")
     .matches(/\w+\s+\w+/, "Veuillez inclure votre nom et prénom"),
-  email: string()
-    .required("Votre email est requis")
-    .email("L'e-mail doit être dans un format valide"),
-  password: string()
-    .required("Mot de passe requis")
-    .min(6, "Votre mot de passe doit contenir au moins 6 caractères"),
+  email: EmailSchema,
+  password: PasswordSchema,
 });
+
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+};
 
 export default function Signup() {
   const router = useRouter();
-
-  const initialValues = {
-    name: "",
-    email: "",
-    password: "",
-  };
 
   const { data, error, formik } = usePost<
     {
@@ -49,11 +47,8 @@ export default function Signup() {
     },
     schema: Schema,
     onComplete: (data) => {
-      Cookies.set("accessToken", data.token, {
-        secure: true,
-        sameSite: "strict",
-      });
-      router.push("/login");
+      setCookieContext('noent', data.token);
+      router.replace("/verify-email");
     },
   });
 
@@ -87,6 +82,7 @@ export default function Signup() {
                 />
                 <Input
                   header="Email"
+                  type="email"
                   className="w-full"
                   placeholder="Votre email"
                   {...getFieldProps("email")}

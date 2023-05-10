@@ -2,7 +2,7 @@ import Image from "next/image";
 import Card from "@/components/card";
 import Layout, { LayoutHeader } from "@/components/layout";
 import { ListItem } from "@/components/list";
-import Tab, { TabItem } from "@/components/tab";
+import Tab, { TabItem, TabPanel } from "@/components/tab";
 import utilStyles from "../styles/utils.module.css";
 import ThreeDots from "@/public/images/threedots.svg";
 import IconButton from "@/components/iconbutton";
@@ -35,7 +35,9 @@ export default function Chat() {
             </div>
 
             <div className="w-full mt-8">
-              <ConversationsList />
+              <TabPanel index={0} value={tabIndex}>
+                <ConversationsList />
+              </TabPanel>
             </div>
           </div>
           <div className={`w-0.5 h-full bg-gradient-divider mx-12`}></div>

@@ -2,13 +2,14 @@ import Button from "@/components/button";
 import Card from "@/components/card";
 import Input, { TextArea } from "@/components/input";
 import Layout from "@/components/layout";
-import ProfileSettings from "@/components/settings/Profile";
+import ProfileSettings from "@/components/settings/profile";
 import EnterpriseSettings from "@/components/settings/enterprise";
 import Tab, { TabItem, TabPanel } from "@/components/tab";
 import { HeaderSubtitle, Props } from "@/types/props";
 import Image from "next/image";
 import { useState } from "react";
-
+import ChangePassword from "@/components/settings/change-password";
+import Team from "@/components/settings/team";
 
 export default function Settings() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -38,6 +39,12 @@ export default function Settings() {
             </TabPanel>
             <TabPanel index={1} value={tabIndex}>
               <ProfileSettings />
+            </TabPanel>
+            <TabPanel index={2} value={tabIndex}>
+              <ChangePassword />
+            </TabPanel>
+            <TabPanel index={3} value={tabIndex}>
+              <Team />
             </TabPanel>
           </Card>
         </div>

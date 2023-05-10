@@ -1,9 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useMemo, useState } from "react";
 import { FormikValues, useFormik } from "formik";
-import {
-  SuccessDataResponse,
-} from "@/types/responses";
+import { SuccessDataResponse } from "@/types/responses";
 import { Maybe, ObjectSchema, ObjectShape, AnySchema, AnyObject } from "yup";
 // import { getAccessToken } from "helpers/authHelpers";
 import { apiErrorParser, commonSuccessRespFilter } from "@/lib/responseHelpers";
@@ -41,7 +39,7 @@ import axiosHttp from "@/lib/axiosHttp";
 interface UsePostProps<
   TReturnType,
   TData extends FormikValues,
-  T extends ObjectSchema<AnyObject> = any
+  T extends AnySchema
 > {
   url: string;
   initialValues: TData;
@@ -49,13 +47,15 @@ interface UsePostProps<
   schema?: T;
   type?: "post" | "patch";
   notify?: boolean;
+  enableReinitialize?: boolean;
   onComplete?: (data: TReturnType) => any;
+  onError?: (e: Error) => void;
 }
 
 export function usePost<
   TReturnType,
   TData extends FormikValues = FormikValues,
-  TShape extends ObjectSchema<AnyObject> = ObjectSchema<AnyObject>,
+  TShape extends AnySchema = AnySchema
 >(options: UsePostProps<TReturnType, TData, TShape>) {
   const [error, setError] = useState<string>();
   const [data, setData] = useState<TReturnType>();
@@ -65,6 +65,7 @@ export function usePost<
 
   const formik = useFormik<TData>({
     initialValues: options.initialValues,
+    enableReinitialize: options.enableReinitialize,
     validationSchema: options.schema,
     onSubmit: (values, { setSubmitting, resetForm }) => {
       const body = options.modifyBefore ? options.modifyBefore(values) : values;
@@ -87,6 +88,7 @@ export function usePost<
           setError(e.message);
           // notify(e);
           setSubmitting(false);
+          options.onError(e);
         });
     },
   });

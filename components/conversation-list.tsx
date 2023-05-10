@@ -1,9 +1,8 @@
-import Cookies from "js-cookie";
+import useSWR from 'swr';
 import { ListItem } from "./list";
 
-console.log(Cookies.get('accessToken')  )
-
 export default function ConversationsList() {
+  const { data, error, isLoading } = useSWR('/messaging/conversations');
   return (
     <ul>
       <ListItem

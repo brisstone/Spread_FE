@@ -15,14 +15,14 @@ export default function CRMCard(props: Props) {
 
         <div className="mt-8 w-full">
           <ul className="w-full">
-            <li className="flex justify-between py-3">
+          <li className="flex justify-between py-3">
               <p className="text-[16px] leading-[20px]">Lorenzo</p>
-              <Button className="shadow-none py-[10px] px-6">👉 Onboard</Button>
+              <Button className="shadow-none text-xs leading-[14px] py-[10px] px-6">👉 Onboard</Button>
             </li>
 
             <li className="flex justify-between py-3">
               <p className="text-[16px] leading-[20px]">Lorenzo</p>
-              <Button className="shadow-none py-[10px] px-6">👉 Onboard</Button>
+              <Button className="shadow-none text-xs leading-[14px] py-[10px] px-6">👉 Onboard</Button>
             </li>
           </ul>
         </div>
