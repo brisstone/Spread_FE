@@ -8,3 +8,11 @@ export function authenticateUser() {
     .then((response) => response.data.data)
     .catch(apiErrorParser);
 }
+
+export function createConversation(id: string) {
+  return axiosHttp
+    .post("/messaging/conversations", { others: [id] })
+    .then(commonSuccessRespFilter)
+    .then((response) => response.data.data)
+    .catch(apiErrorParser);
+}

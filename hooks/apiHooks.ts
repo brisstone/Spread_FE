@@ -88,7 +88,7 @@ export function usePost<
           setError(e.message);
           // notify(e);
           setSubmitting(false);
-          options.onError(e);
+          if (options.onError) options.onError(e);
         });
     },
   });

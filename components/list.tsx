@@ -7,12 +7,13 @@ interface ListItemProps extends PropWithActive {
   secondaryText: string;
 }
 
-export function ListItem(props: ListItemProps) {
+export function ListItem(props: ListItemProps & { onClick?: () => any }) {
   return (
     <div
-      className={`flex gap-3 items-center px-5 py-4 ${
+      className={`flex gap-3 items-center px-5 py-4 cursor-pointer ${
         props.active ? utilStyles.glass : ""
       }`}
+      onClick={props.onClick}
     >
       <div className="flex relative after:content-normal after:z-10 after:bottom-0 after:absolute after:w-3 after:h-3 after:rounded-full after:bg-icon after:right-0 after:border-[1.5px] after:border-white after:border-solid">
         <Image

@@ -23,6 +23,7 @@ module.exports = {
       },
       colors: {
         background: '#100D12',
+        backdrop: 'rgba(0,0,0,0.5)',
         'subtitle': '#A0AEC0',
         'subtitle2': '#8C8C8C',
         'subtitle3': '#C1C1C1',
