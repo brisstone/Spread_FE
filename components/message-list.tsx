@@ -1,5 +1,6 @@
 import { Props } from "@/types/props";
 import Image from "next/image";
+import { ForwardedRef, forwardRef } from "react";
 
 interface MessageProps extends Props {
   message: string;
@@ -19,9 +20,9 @@ export function MessageList(props: Props) {
   );
 }
 
-export function IncomingMessage(props: IncomingMessageProps) {
+export const IncomingMessage = forwardRef((props: IncomingMessageProps, ref: ForwardedRef<HTMLLIElement>) => {
   return (
-    <li className="flex justify-start mt-8">
+    <li className="flex justify-start mt-8" ref={ref}>
       <div className="flex gap-3 max-w-[60%] items-start">
         {/* <div className=""> */}
         <Image
@@ -57,11 +58,13 @@ export function IncomingMessage(props: IncomingMessageProps) {
       </div>
     </li>
   );
-}
+});
 
-export function OutgoingMessage(props: MessageProps) {
+IncomingMessage.displayName = 'IncomingMessage';
+
+export const OutgoingMessage = forwardRef((props: MessageProps, ref: ForwardedRef<HTMLLIElement>) => {
   return (
-    <li className="flex justify-end mt-8">
+    <li className="flex justify-end mt-8" ref={ref}>
       <div className="max-w-[60%] items-start">
         <div className="flex gap-2 grow bg-white text-purpleblack p-2 rounded-l-[6px] rounded-b-[6px]">
           <div className="grow mb-4">
@@ -88,4 +91,6 @@ export function OutgoingMessage(props: MessageProps) {
       </div>
     </li>
   );
-}
+});
+
+OutgoingMessage.displayName = 'OutgoingMessage';

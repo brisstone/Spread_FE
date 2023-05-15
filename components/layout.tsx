@@ -20,18 +20,18 @@ export interface LayoutProps extends Props {
 }
 
 const Layout: FC<LayoutProps> = (props: LayoutProps) => {
-  const [id, setId] = useState(v4());
+  // const [id, setId] = useState(v4());
 
   const router = useRouter();
 
   const { user, enterprise, isLoading, error, loggedOut } =
     useUserAndEnterprise();
 
-  console.log("user:", user);
-  console.log("isLoading:", isLoading);
-  console.log("error:", error);
-  console.log("loggedOut:", loggedOut);
-  console.log("enterprise", enterprise);
+  // console.log("user:", user);
+  // console.log("isLoading:", isLoading);
+  // console.log("error:", error);
+  // console.log("loggedOut:", loggedOut);
+  // console.log("enterprise", enterprise);
 
   useEffect(() => {
     if (loggedOut) router.replace(`/${router.query.id}/login`);

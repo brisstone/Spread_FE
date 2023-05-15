@@ -1,13 +1,15 @@
 import useSWR from "swr";
 import { ListItem } from "./list";
 import { Conversation } from "@/types/general";
+import { getUserName } from "@/lib/util";
+import useConversations from "@/data/use-conversations";
 
-export default function ConversationsList() {
+export default function ConversationsList(props: { onActive?: (id: string) => any, selectedConvId: string }) {
   const {
-    data: conversations,
+    conversations,
     error,
     isLoading,
-  } = useSWR<Conversation[]>("/messaging/conversations");
+  } = useConversations();
 
   return error ? (
     <p className="text-base text-subtitle text-center">
@@ -25,9 +27,11 @@ export default function ConversationsList() {
           {conversations && conversations.length ? (
             conversations.map((c) => (
               <ListItem
-                primaryText="📩 Demi Wikinson"
+                onClick={() => props.onActive ? props.onActive(c.id) : null}
+                primaryText={c.users.map((u) => getUserName(u)).join(', ')}
                 key={c.id}
                 secondaryText="1 Nouveau Message | En Ligne"
+                active={c.id === props.selectedConvId}
               />
             ))
           ) : (

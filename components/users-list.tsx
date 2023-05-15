@@ -3,6 +3,7 @@ import useSWR, { useSWRConfig } from "swr";
 import { ListItem, ScrollableList } from "./list";
 import { createConversation } from "@/services";
 import { useAlert } from "@/contexts/alert-context";
+import { getUserName } from "@/lib/util";
 
 export default function UsersList() {
   const {
@@ -37,7 +38,7 @@ export default function UsersList() {
                     .catch((e) => pushAlert(e.message))
                 }}
                 key={user.id}
-                primaryText={`${user.firstName || ''}${user.lastName ? ` ${user.lastName}` : ''}` || user.email}
+                primaryText={getUserName(user)}
                 secondaryText="Démarrer la conversation"
               />
             ))

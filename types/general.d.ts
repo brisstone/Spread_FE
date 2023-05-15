@@ -1,12 +1,17 @@
-export interface User {
+
+export interface BaseModel {
   id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface User extends BaseModel {
   email: string;
   firstName: string;
   lastName: string;
   enterpriseId: string;
 }
 
-export interface Enterprise {
+export interface Enterprise extends BaseModel {
   id: string;
   name: string;
   description: string | null;
@@ -14,14 +19,18 @@ export interface Enterprise {
   socials: string[];
   includeLogoInInvoice: boolean;
   includeLogoInEmail: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
-export interface Conversation {
-  users: Pick<User, "id" | "email" | "firstName" | "lastName">[];
+export type MinimalUser = Pick<User, "id" | "email" | "firstName" | "lastName">;
+
+export interface Conversation extends BaseModel {
+  users: MinimalUser[];
   enterpriseId: string;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
+}
+
+export interface Message extends BaseModel {
+  text: string;
+  conversationId: string;
+  fromId: string;
+  from: MinimalUser;
 }

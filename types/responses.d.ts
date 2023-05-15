@@ -3,15 +3,14 @@ export interface Response {
   message: string;
 }
 
-export interface PaginatedResponse<Data> extends SuccessDataResponse<Data> {
-  count?: number;
-  next?: {
-    page: number;
-    limit: number;
-  }
-  prev?: {
-    page: number;
-    limit: number;
+export interface PaginationResponse<T> {
+  data: T[];
+  pageData: {
+    total: number;
+    currentPage: number;
+    nextPage: number;
+    prevPage: number;
+    lastPage: number;
   }
 }
 
