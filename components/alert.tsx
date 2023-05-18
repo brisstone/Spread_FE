@@ -11,7 +11,7 @@ export default function Alert() {
   }, [alerts]);
 
   return (
-    <div className={`fixed top-4 right-4 p-3 ${show ? 'opacity-100' : 'opacity-0'} transition-opacity bg-red-400 rounded-lg`}>
+    <div className={`fixed top-4 right-4 p-3 ${show ? 'opacity-100' : 'opacity-0 z-[999]'} transition-opacity bg-red-400 rounded-lg`}>
       <p className="text-base text-white">{alerts[alerts.length - 1]}</p>
     </div>
   )

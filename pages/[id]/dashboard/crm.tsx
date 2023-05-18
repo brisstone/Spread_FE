@@ -1,6 +1,7 @@
 import Button from "@/components/button";
 import Card, { CardContent, CardHeader } from "@/components/card";
 import CRMCard from "@/components/crm-card";
+import CardPanel from "@/components/crm/card-panel";
 import IconButton from "@/components/iconbutton";
 import Input from "@/components/input";
 import KPI from "@/components/kpi";
@@ -156,17 +157,7 @@ export default function CRM() {
 
         <div className="mt-7">
           <TabPanel index={0} value={tabIndex}>
-            <div className="flex w-full gap-6 ">
-              <KPI className="grow" />
-              <KPI className="grow" />
-              <KPI className="grow" />
-              <KPI className="grow" />
-            </div>
-            <div className="flex w-full grow mt-7 gap-6 justify-evenly items-stretch">
-              <CRMCard />
-              <CRMCard />
-              <CRMCard />
-            </div>
+            <CardPanel />
           </TabPanel>
 
           <TabPanel index={1} value={tabIndex}>

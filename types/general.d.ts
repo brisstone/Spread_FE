@@ -34,3 +34,18 @@ export interface Message extends BaseModel {
   fromId: string;
   from: MinimalUser;
 }
+
+export interface CRMCategory extends BaseModel {
+  name: string;
+  enterpriseId: string;
+  rank: number;
+}
+
+export interface CRMLead extends BaseModel {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  amount: number;
+  categoryId: string;
+  category: CRMCategory;
+}

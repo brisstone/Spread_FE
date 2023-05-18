@@ -9,3 +9,11 @@ export const EmailSchema = string()
   .email("L'e-mail doit être dans un format valide");
 
 export const UuidSchema = string().required().uuid();
+
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+export const PhoneSchema = string().matches(
+  phoneRegExp,
+  "Le numéro de téléphone n'est pas valide"
+);

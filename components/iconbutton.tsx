@@ -18,7 +18,7 @@ export default function IconButton(props: IconButtonProps) {
   return (
     <button
       {...omit(props, ["iconUrl", "width", "height", "edge"])}
-      className={`flex justify-center items-center bg-transparent active:bg-active-icon p-2 rounded-full ${
+      className={`flex justify-center items-center bg-transparent active:bg-active-icon p-2 rounded-full cursor-pointer ${
         (props.edge === "left" && "-ml-[50%]") ||
         (props.edge === "right" && "-mr-[50%]")
       } ${props.className}`}

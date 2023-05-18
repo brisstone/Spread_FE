@@ -1,10 +1,10 @@
 export enum EnterpriseRole {
-  OWNER = "Owner",
-  ADMIN = "Admin",
-  LEAD = "Lead",
-  OPERATOR = "Operator",
-  READER = "Reader",
-  CLIENT = "Client",
+  OWNER = "OwnerRole",
+  ADMIN = "AdminRole",
+  LEAD = "LeadRole",
+  OPERATOR = "OperatorRole",
+  READER = "ReaderRole",
+  CLIENT = "ClientRole",
 }
 
 export enum StorageEnum {
