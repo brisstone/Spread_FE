@@ -10,3 +10,7 @@ export enum EnterpriseRole {
 export enum StorageEnum {
   ENT_CONTEXT = 'enterprise_context',
 }
+
+export enum DragTypes {
+  CRMLEAD = 'crmLead',
+}

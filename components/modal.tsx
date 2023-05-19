@@ -1,7 +1,9 @@
 import { Props } from "@/types/props";
 import Card from "./card";
 
-export default function Modal(props: Props & { open: boolean, handleClose: () => any }) {
+export type ModalProps = Props & { open: boolean, handleClose: () => any };
+
+export default function Modal(props: ModalProps) {
   return (
     <div
       className={`${

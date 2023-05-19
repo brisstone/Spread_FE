@@ -1,6 +1,5 @@
 import Button from "@/components/button";
 import Card, { CardContent, CardHeader } from "@/components/card";
-import CRMCard from "@/components/crm-card";
 import CardPanel from "@/components/crm/card-panel";
 import IconButton from "@/components/iconbutton";
 import Input from "@/components/input";

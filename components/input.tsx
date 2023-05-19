@@ -22,7 +22,7 @@ const Input: FC<TextFieldProps> = (props) => {
       )}
       <Glass className={props.containerClassName}>
         <input
-          {...omit(props, ["inputClassName", "errorText"])}
+          {...omit(props, ["inputClassName", "errorText", "smallerYPadding"])}
           className={`w-full bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base outline-none ${
             props.smallerYPadding ? "py-[10px]" : ""
           } ${props.inputClassName}`}
