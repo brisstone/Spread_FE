@@ -1,6 +1,7 @@
 import Button from "@/components/button";
 import Card, { CardContent, CardHeader } from "@/components/card";
 import CardPanel from "@/components/crm/card-panel";
+import OnboardingQuestions from "@/components/crm/onboarding";
 import IconButton from "@/components/iconbutton";
 import Input from "@/components/input";
 import KPI from "@/components/kpi";
@@ -96,45 +97,6 @@ const data = [
 const valueFormatter = (number: number) =>
   `$ ${Intl.NumberFormat("us").format(number).toString()}`;
 
-function QuestionSection(props: Props) {
-  return (
-    <div className="w-full mt-6">
-      <p className="mb-3 text-base">Questions Simples</p>
-      <div
-        className={`w-full grid grid-cols-2 gap-x-10 gap-y-4 ${props.className}`}
-      >
-        {props.children}
-
-        {/** Note to me: The children were put here just to shorten the static code */}
-        <Input
-          name=""
-          placeholder="Prénom"
-          className="grow"
-          inputClassName="!py-2 placeholder:text-white"
-        />
-        <Input
-          name=""
-          placeholder="Nom"
-          className="grow"
-          inputClassName="!py-2 placeholder:text-white"
-        />
-        <Input
-          name=""
-          placeholder="Numéro de Télephone"
-          className="grow"
-          inputClassName="!py-2 placeholder:text-white"
-        />
-        <Input
-          name=""
-          placeholder="Email"
-          className="grow"
-          inputClassName="!py-2 placeholder:text-white"
-        />
-      </div>
-    </div>
-  );
-}
-
 export default function CRM() {
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -197,21 +159,7 @@ export default function CRM() {
           </TabPanel>
 
           <TabPanel index={2} value={tabIndex}>
-            <Card className="w-full py-12 px-16">
-              <QuestionSection />
-              <QuestionSection />
-              <QuestionSection className="!flex flex-col" />
-
-              <div className="flex gap-2 mt-4">
-                <Image
-                  src="/images/squareplus.svg"
-                  height={14}
-                  width={14}
-                  alt="add icon"
-                />
-                <p className="text-base">Ajouter une question</p>
-              </div>
-            </Card>
+            <OnboardingQuestions />
           </TabPanel>
         </div>
       </div>

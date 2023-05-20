@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, FC, HTMLProps } from "react";
 import { omit } from "lodash";
 import Image from "next/image";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconUrl?: string;
   loading?: boolean;
 }
