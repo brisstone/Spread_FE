@@ -1,3 +1,4 @@
+import { QuestionType } from "./enum";
 
 export interface BaseModel {
   id: string;
@@ -48,4 +49,16 @@ export interface CRMLead extends BaseModel {
   amount: number;
   categoryId: string;
   category: CRMCategory;
+}
+
+export interface QuestionCategory extends BaseModel {
+  name: string;
+  enterpriseId: string;
+}
+export interface Question extends BaseModel {
+  name: string;
+  type: QuestionType;
+  category: QuestionCategory;
+  categoryId: string;
+  enterpriseId: string;
 }

@@ -5,6 +5,9 @@ import { Props } from "@/types/props";
 import Button, { ButtonProps } from "../button";
 import { omit } from "lodash";
 import { useAlert } from "@/contexts/alert-context";
+import { usePost } from "@/hooks/apiHooks";
+import QuestionModal from "./question-modal";
+import { useState } from "react";
 
 function QuestionSection(props: Props) {
   return (
@@ -59,44 +62,11 @@ function AddButton(props: ButtonProps & { text: string }) {
 
 export default function OnboardingQuestions() {
   const { pushAlert } = useAlert();
-
-  // const {
-  //   data: newClient,
-  //   error: formError,
-  //   formik,
-  // } = usePost<
-  //   CRMLead,
-  //   {
-  //     email: string;
-  //     phoneNumber: string;
-  //     name: string;
-  //     amount: string;
-  //     categoryId: string;
-  //   }
-  // >({
-  //   url: "/crm/leads",
-  //   enableReinitialize: true,
-  //   initialValues: {
-  //     email: "",
-  //     phoneNumber: "",
-  //     name: "",
-  //     amount: "",
-  //     categoryId: props.categoryId,
-  //   },
-  //   schema: LeadSchema,
-  //   onComplete: (data) => {
-  //     mutate(`/crm/categories/${props.categoryId}/leads`, (existing: CRMLead[] | undefined): CRMLead[] => {
-  //       if (!existing) return [data];
-  //       return [...existing, data];
-  //     });
-  //     props.handleClose();
-  //   },
-  //   onError: (e) => {
-  //     pushAlert(e.message);
-  //   },
-  // });
+  const [qOpen, setQOpen] = useState(false);
 
   return (
+    <>
+    <QuestionModal open={qOpen} handleClose={() => setQOpen(false)} />
     <Card className="w-full py-12 px-16">
       <QuestionSection />
       <QuestionSection />
@@ -107,5 +77,6 @@ export default function OnboardingQuestions() {
         <AddButton text="Ajouter une catégorie" />
       </div>
     </Card>
+    </>
   );
 }

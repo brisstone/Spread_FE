@@ -14,3 +14,10 @@ export enum StorageEnum {
 export enum DragTypes {
   CRMLEAD = 'crmLead',
 }
+
+export enum QuestionType {
+  TEXT = 'text',
+  DATE = 'date',
+  SELECT = 'select',
+}
+
