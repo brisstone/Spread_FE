@@ -42,7 +42,7 @@ type TextAreaProps = TextFieldBaseProps & HTMLProps<HTMLTextAreaElement>;
 export function TextArea(props: TextAreaProps) {
   return (
     <div className={`flex flex-col ${props.className}`}>
-      {props.name && <span className="text-base mb-[10px]">{props.name}</span>}
+      {props.header && <span className="text-base mb-[10px]">{props.header}</span>}
       <Glass className={props.containerClassName}>
         <textarea
           {...omit(props, ["inputClassName"])}

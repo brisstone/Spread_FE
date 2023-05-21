@@ -1,48 +1,50 @@
-import Image from "next/image";
+import useSWR from "swr";
+import { Props } from "@/types/props";
+import { useAlert } from "@/contexts/alert-context";
+import { QuestionCategoryWithQuestions } from "@/types/general";
 import Card from "../card";
 import Input from "../input";
-import { Props } from "@/types/props";
 import Button, { ButtonProps } from "../button";
 import { omit } from "lodash";
-import { useAlert } from "@/contexts/alert-context";
 import { usePost } from "@/hooks/apiHooks";
 import QuestionModal from "./question-modal";
 import { useState } from "react";
+import QuestionCategoryModal from "./questioncategory-modal";
+import Fetched from "../fetched";
 
-function QuestionSection(props: Props) {
+import utilStyles from "@/styles/utils.module.css";
+
+/**
+ *
+ * @param props Props & { data: QuestionCategoryWithQuestions }
+ * @returns Group of questions under a question category
+ */
+function QuestionSection({
+  data,
+  className,
+}: Props & { data: QuestionCategoryWithQuestions }) {
   return (
     <div className="w-full mt-6">
-      <p className="mb-3 text-base">Questions Simples</p>
-      <div
-        className={`w-full grid grid-cols-2 gap-x-10 gap-y-4 ${props.className}`}
-      >
-        {props.children}
-
+      <p className="mb-3 text-base">{data.name}</p>
+      <div className={`w-full grid grid-cols-2 gap-x-10 gap-y-4 ${className}`}>
         {/** Note to me: The children were put here just to shorten the static code */}
-        <Input
-          name=""
-          placeholder="Prénom"
-          className="grow"
-          inputClassName="!py-2 placeholder:text-white"
-        />
-        <Input
-          name=""
-          placeholder="Nom"
-          className="grow"
-          inputClassName="!py-2 placeholder:text-white"
-        />
-        <Input
-          name=""
-          placeholder="Numéro de Télephone"
-          className="grow"
-          inputClassName="!py-2 placeholder:text-white"
-        />
-        <Input
-          name=""
-          placeholder="Email"
-          className="grow"
-          inputClassName="!py-2 placeholder:text-white"
-        />
+        {data.questions.length > 0 ? (
+          data.questions.map((q) => (
+            <Input
+              key={q.id}
+              name=""
+              placeholder={q.name}
+              disabled
+              className="grow"
+              inputClassName="!py-2 placeholder:text-white"
+            />
+          ))
+        ) : (
+          <p className="text-xs text-subtitle">
+            Vous n&apos;avez créé aucune question d&apos;intégration dans cette
+            catégorie
+          </p>
+        )}
       </div>
     </div>
   );
@@ -63,20 +65,63 @@ function AddButton(props: ButtonProps & { text: string }) {
 export default function OnboardingQuestions() {
   const { pushAlert } = useAlert();
   const [qOpen, setQOpen] = useState(false);
+  const [qCOpen, setQCOpen] = useState(false);
+
+  const { data, error, isLoading } = useSWR<QuestionCategoryWithQuestions[]>(
+    "/crm/onboarding/questions"
+  );
 
   return (
     <>
-    <QuestionModal open={qOpen} handleClose={() => setQOpen(false)} />
-    <Card className="w-full py-12 px-16">
-      <QuestionSection />
-      <QuestionSection />
-      <QuestionSection className="!flex flex-col" />
+      <QuestionModal open={qOpen} handleClose={() => setQOpen(false)} />
+      <QuestionCategoryModal
+        open={qCOpen}
+        handleClose={() => setQCOpen(false)}
+      />
+      <Card className="w-full py-12 px-16">
+        <Fetched
+          error={error}
+          errorComp={
+            <p
+              className={`text-base text-subtitle text-center ${utilStyles.absoluteCentered}`}
+            >
+              Échec de la récupération des données
+            </p>
+          }
+          isLoading={isLoading}
+          isLoadingComp={
+            <p
+              className={`text-base text-subtitle text-center ${utilStyles.absoluteCentered}`}
+            >
+              Chargement...
+            </p>
+          }
+          data={data}
+          dataComp={(qcs) =>
+            qcs.length > 0 ? (
+              qcs.map((q) => <QuestionSection data={q} key={q.id} />)
+            ) : (
+              <p
+                className={`text-base text-subtitle text-center ${utilStyles.absoluteCentered}`}
+              >
+                Vous n&apos;avez pas encore créé de questions d&apos;intégration
+              </p>
+            )
+          }
+        />
+        {/* <QuestionSection className="!flex flex-col" /> */}
 
-      <div className="flex mt-4 gap-4">
-        <AddButton text="Ajouter une question" />
-        <AddButton text="Ajouter une catégorie" />
-      </div>
-    </Card>
+        <div className="flex mt-8 gap-4">
+          <AddButton
+            onClick={() => setQOpen(true)}
+            text="Ajouter une question"
+          />
+          <AddButton
+            onClick={() => setQCOpen(true)}
+            text="Ajouter une catégorie"
+          />
+        </div>
+      </Card>
     </>
   );
 }

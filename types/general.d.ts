@@ -55,10 +55,28 @@ export interface QuestionCategory extends BaseModel {
   name: string;
   enterpriseId: string;
 }
+
 export interface Question extends BaseModel {
   name: string;
   type: QuestionType;
-  category: QuestionCategory;
   categoryId: string;
+  enterpriseId: string;
+}
+
+export interface QuestionWithCategory extends Question {
+  category: QuestionCategory;
+}
+
+export interface QuestionCategoryWithQuestions extends QuestionCategory {
+  questions: Question[]
+}
+
+export interface Client extends BaseModel {
+  name: string;
+  email: string;
+  brief: string;
+  invitationMessage: string;
+  leadId?: string;
+  userId?: string;
   enterpriseId: string;
 }

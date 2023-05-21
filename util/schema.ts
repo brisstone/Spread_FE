@@ -10,6 +10,8 @@ export const EmailSchema = string()
 
 export const UuidSchema = string().required().uuid();
 
+export const UuidSchemaFunc = (msg: string) => string().required(msg).uuid();
+
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
