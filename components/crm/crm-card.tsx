@@ -12,6 +12,8 @@ import { useAlert } from "@/contexts/alert-context";
 import { DragTypes } from "@/types/enum";
 import CRMLeadModal from "./lead-modal";
 import { moveLead } from "@/services";
+import useUserAndEnterprise from "@/data/user-user-enterprise";
+import Link from "next/link";
 
 interface CRMCardProps extends Props {
   data: CRMCategory;
@@ -26,6 +28,8 @@ function CRMLeadItem({ lead }: { lead: CRMLead }) {
     }),
   }));
 
+  const { enterprise } = useUserAndEnterprise();
+
   return (
     <li
       ref={drag}
@@ -34,9 +38,11 @@ function CRMLeadItem({ lead }: { lead: CRMLead }) {
       } cursor-move items-center`}
     >
       <p className="text-[16px] leading-[20px]">{lead.name}</p>
-      <Button className="shadow-none text-xs leading-[14px] py-[10px] px-6">
-        👉 Onboard
-      </Button>
+      <Link href={`/${enterprise?.id}/dashboard/clients/new?leadId=${lead.id}`}>
+        <Button className="shadow-none text-xs leading-[14px] py-[10px] px-6">
+          👉 Onboard
+        </Button>
+      </Link>
     </li>
   );
 }
@@ -125,7 +131,7 @@ export default function CRMCard(props: CRMCardProps) {
                     leads.map((l) => <CRMLeadItem lead={l} key={l.id} />)
                   ) : (
                     <p className="text-base text-subtitle text-center">
-                      Aucun prospect dans cette catégorie{" "}
+                      Aucun prospect dans cette catégorie
                     </p>
                   )}
                 </ul>

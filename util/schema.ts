@@ -5,8 +5,11 @@ export const PasswordSchema = string()
   .min(6, "Votre mot de passe doit contenir au moins 6 caractères");
 
 export const EmailSchema = string()
-  .required("Votre email est requis")
+  .required("Email est requis")
   .email("L'e-mail doit être dans un format valide");
+
+export const RequiredSchema = (msg?: string) =>
+  string().required(msg || "Ceci est nécessaire");
 
 export const UuidSchema = string().required().uuid();
 

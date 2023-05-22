@@ -80,3 +80,7 @@ export interface Client extends BaseModel {
   userId?: string;
   enterpriseId: string;
 }
+
+export interface ClientWithTeam extends Client {
+  team: MinimalUser[];
+}

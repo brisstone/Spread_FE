@@ -3,6 +3,9 @@ import { BaseHDivider } from "./divider";
 import Glass from "./glass";
 import Image from "next/image";
 import Tag from "./tag";
+import { MinimalUser } from "@/types/general";
+import { getUserName } from "@/lib/util";
+import utilStyles from "@/styles/utils.module.css";
 
 interface ClientDetailGlassProps extends Props {
   title: string;
@@ -30,46 +33,41 @@ export function NoteGlass(props: NoteGlassProps) {
   );
 }
 
-export function Team(props: Props) {
+export function Team(props: { data: MinimalUser[], name: string }) {
   return (
-    <ClientDetailGlass title="Equipe - Client X">
-      <div className="w-fit flex flex-col items-stretch">
-        <div className="flex justify-between gap-[200px] mt-5">
-          <p className="text-base">Profile</p>
-          <p className="text-base">Statut</p>
-        </div>
-
-        {/* Team list */}
-        <div className="flex items-center mt-5">
-          <Image
-            src="/images/profilecompany2.png"
-            height={50}
-            width={50}
-            alt="avatar"
-            className="rounded-full"
-          />
-          <div className="grow ml-5">
-            <p className="text-base">Dylan Williams</p>
-            <p className="text-[13px] leading-[19px]">@Mazal</p>
+    <ClientDetailGlass title={`Equipe - ${props.name}`}>
+      {props.data.length > 0 ? (
+        <div className="w-fit flex flex-col items-stretch">
+          <div className="flex justify-between gap-[200px] mt-5">
+            <p className="text-base">Profile</p>
+            <p className="text-base">Statut</p>
           </div>
-          <Tag>Actif</Tag>
-        </div>
 
-        <div className="flex items-center py-5">
-          <Image
-            src="/images/profilecompany2.png"
-            height={50}
-            width={50}
-            alt="avatar"
-            className="rounded-full"
-          />
-          <div className="grow ml-5">
-            <p className="text-base">Dylan Williams</p>
-            <p className="text-[13px] leading-[19px]">@Mazal</p>
-          </div>
-          <Tag>Actif</Tag>
+          {/* Team list */}
+          {props.data.map((u) => (
+            <div className="flex items-center mt-5" key={u.id}>
+              <Image
+                src="/images/profilecompany2.png"
+                height={50}
+                width={50}
+                alt="avatar"
+                className="rounded-full"
+              />
+              <div className="grow ml-5">
+                <p className="text-base">{getUserName(u)}</p>
+                {/* <p className="text-[13px] leading-[19px]">{u.email}</p> */}
+              </div>
+              <Tag>Actif</Tag>
+            </div>
+          ))}
         </div>
-      </div>
+      ) : (
+        <p
+          className={`text-base text-subtitle text-center ${utilStyles.absoluteCentered}`}
+        >
+          Aucun membre de l&apos;équipe n&apos;a été attaché à ce client
+        </p>
+      )}
     </ClientDetailGlass>
   );
 }

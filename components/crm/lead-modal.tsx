@@ -50,10 +50,13 @@ export default function CRMLeadModal(
     },
     schema: LeadSchema,
     onComplete: (data) => {
-      mutate(`/crm/categories/${props.categoryId}/leads`, (existing: CRMLead[] | undefined): CRMLead[] => {
-        if (!existing) return [data];
-        return [...existing, data];
-      });
+      mutate(
+        `/crm/categories/${props.categoryId}/leads`,
+        (existing: CRMLead[] | undefined): CRMLead[] => {
+          if (!existing) return [data];
+          return [...existing, data];
+        }
+      );
       props.handleClose();
     },
     onError: (e) => {
