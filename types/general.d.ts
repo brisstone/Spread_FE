@@ -84,3 +84,12 @@ export interface Client extends BaseModel {
 export interface ClientWithTeam extends Client {
   team: MinimalUser[];
 }
+
+export interface Task extends BaseModel {
+  title: string;
+  description: string;
+  done: boolean;
+  assignee: User;
+  assigneeId: string;
+  enterpriseId: string;
+}

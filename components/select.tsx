@@ -3,12 +3,12 @@ import utilStyles from "@/styles/utils.module.css";
 import Glass from "./glass";
 import { omit } from "lodash";
 
-export default function Select(
-  props: HTMLProps<HTMLSelectElement> & {
-    header?: string;
-    errorText?: string | false;
-  }
-) {
+export type SelectProps = HTMLProps<HTMLSelectElement> & {
+  header?: string;
+  errorText?: string | false;
+};
+
+export default function Select(props: SelectProps) {
   return (
     <div className={`relative ${props.className}`}>
       {props.header && (

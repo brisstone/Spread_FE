@@ -16,6 +16,7 @@ import Fetched from "@/components/fetched";
 import { getUserName } from "@/lib/util";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
 import utilStyles from "@/styles/utils.module.css";
+import UsersDropdown from "@/components/users-dropdown";
 
 const Schema = object({
   name: RequiredSchema(),
@@ -23,6 +24,7 @@ const Schema = object({
   brief: RequiredSchema(),
   invitationMessage: RequiredSchema(),
   team: array().of(UuidSchema),
+  leadId: UuidSchema.optional(),
 });
 
 export default function NewClient() {
@@ -59,16 +61,18 @@ export default function NewClient() {
     Client,
     Pick<Client, "name" | "brief" | "email" | "invitationMessage"> & {
       team: [];
+      leadId: string | undefined;
     }
   >({
     url: "/crm/clients",
     enableReinitialize: true,
     initialValues: {
-      name: "",
-      email: "",
+      name: lead ? lead.name : "",
+      email: lead ? lead.email : "",
       brief: "",
       invitationMessage: "",
       team: [],
+      leadId: lead ? lead.id : undefined,
     },
     schema: Schema,
     onComplete: (data) => {
@@ -106,114 +110,91 @@ export default function NewClient() {
             Chargement...
           </p>
         )}
-        <Card className="px-11 py-8">
-          <p className="text-[30px] leading-[35px]">Informations 👋</p>
-          <p className="text-base mt-1">À propos de votre client</p>
+        {!error && !isLoading && (
+          <Card className="px-11 py-8">
+            <p className="text-[30px] leading-[35px]">Informations 👋</p>
+            <p className="text-base mt-1">À propos de votre client</p>
 
-          <Form className="w-full" onSubmit={handleSubmit}>
-            <div className="flex flex-nowrap gap-7 mt-7">
-              <Input
-                header="Nom"
-                placeholder="Entrez le nom de votre client..."
-                className="grow"
-                inputClassName="placeholder:text-white"
-                {...getFieldProps("name")}
-                errorText={touched.name && errors.name}
-              />
+            <Form className="w-full" onSubmit={handleSubmit}>
+              <div className="flex flex-nowrap gap-7 mt-7">
+                <Input
+                  header="Nom"
+                  placeholder="Entrez le nom de votre client..."
+                  className="grow"
+                  inputClassName="placeholder:text-white"
+                  {...getFieldProps("name")}
+                  errorText={touched.name && errors.name}
+                />
 
-              {/* <Input
+                {/* <Input
                 header="Nom"
                 placeholder="Entrez le nom de votre client..."
                 className="grow"
                 inputClassName="placeholder:text-white"
               /> */}
-            </div>
+              </div>
 
-            <div className="flex flex-nowrap gap-7 mt-12">
-              <Input
-                header="Brief"
-                placeholder="Votre brief..."
-                className="grow"
-                inputClassName="placeholder:text-white"
-                {...getFieldProps("brief")}
-                errorText={touched.brief && errors.brief}
-              />
-            </div>
+              <div className="flex flex-nowrap gap-7 mt-12">
+                <Input
+                  header="Brief"
+                  placeholder="Votre brief..."
+                  className="grow"
+                  inputClassName="placeholder:text-white"
+                  {...getFieldProps("brief")}
+                  errorText={touched.brief && errors.brief}
+                />
+              </div>
 
-            <div className="flex flex-nowrap gap-7 mt-12">
-              <Select
-                header="AJOUTER DES MEMBRES D’ÉQUIPE"
-                {...getFieldProps("categoryId")}
-                onChange={(e) => {
-                  setFieldValue("team", [(e.target as any).value]);
-                }}
-                className="mt-2"
-                // errorText={touched.team && errors.team}
-              >
-                <SelectOption value="">Séléctionner un membre</SelectOption>
-                <Fetched
-                  error={usersError}
-                  errorComp={
-                    <SelectOption value="">
-                      Échec de la récupération des données
-                    </SelectOption>
-                  }
-                  isLoading={usersLoading}
-                  isLoadingComp={
-                    <SelectOption value="">Chargement...</SelectOption>
-                  }
-                  data={users}
-                  dataComp={(usrs) =>
-                    usrs.length > 0 ? (
-                      usrs.map((u) => (
-                        <SelectOption key={u.id} value={u.id}>
-                          {`${getUserName(u)}`}
-                        </SelectOption>
-                      ))
-                    ) : (
-                      <SelectOption value="">
-                        Aucun utilisateur n&apos;a le rôle d&apos;opérateur
-                      </SelectOption>
-                    )
+              <div className="flex flex-nowrap gap-7 mt-12">
+                <UsersDropdown
+                  header="AJOUTER DES MEMBRES D’ÉQUIPE"
+                  roles={[EnterpriseRole.OPERATOR]}
+                  {...getFieldProps("team")}
+                  onChange={(e) => {
+                    setFieldValue("team", [(e.target as any).value]);
+                  }}
+                  // className="mt-2"
+                  // errorText={touched.team && errors.team}
+                />
+
+                <Input
+                  header="INVITEZ VOTRE CLIENT"
+                  placeholder="Adresse email du client"
+                  className="grow"
+                  inputClassName="placeholder:text-white"
+                  {...getFieldProps("email")}
+                  disabled={!!leadId}
+                  value={leadId ? lead?.email || "" : formik.values.email}
+                  errorText={touched.email && errors.email}
+                />
+              </div>
+
+              <div className="flex flex-nowrap gap-7 mt-12">
+                <TextArea
+                  header="MESSAGE D’INVITATION"
+                  placeholder="Votre message d’invitation..."
+                  className="grow"
+                  inputClassName="placeholder:text-white"
+                  {...getFieldProps("invitationMessage")}
+                  errorText={
+                    touched.invitationMessage && errors.invitationMessage
                   }
                 />
-              </Select>
+              </div>
 
-              <Input
-                header="INVITEZ VOTRE CLIENT"
-                placeholder="Adresse email du client"
-                className="grow"
-                inputClassName="placeholder:text-white"
-                {...getFieldProps("email")}
-                errorText={touched.email && errors.email}
-              />
-            </div>
-
-            <div className="flex flex-nowrap gap-7 mt-12">
-              <TextArea
-                header="MESSAGE D’INVITATION"
-                placeholder="Votre message d’invitation..."
-                className="grow"
-                inputClassName="placeholder:text-white"
-                {...getFieldProps("invitationMessage")}
-                errorText={
-                  touched.invitationMessage && errors.invitationMessage
-                }
-              />
-            </div>
-
-            <div className="mt-12 flex gap-6">
-              <Button
-                loading={isSubmitting}
-                type="submit"
-                iconUrl="/images/plus.svg"
-                className="shadow-none !text-base"
-              >
-                Créer
-              </Button>
-            </div>
-          </Form>
-        </Card>
+              <div className="mt-12 flex gap-6">
+                <Button
+                  loading={isSubmitting}
+                  type="submit"
+                  iconUrl="/images/plus.svg"
+                  className="shadow-none !text-base"
+                >
+                  Créer
+                </Button>
+              </div>
+            </Form>
+          </Card>
+        )}
       </FormikProvider>
     </Layout>
   );
