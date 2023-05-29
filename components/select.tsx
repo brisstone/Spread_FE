@@ -12,11 +12,11 @@ export default function Select(props: SelectProps) {
   return (
     <div className={`relative ${props.className}`}>
       {props.header && (
-        <span className="text-base mb-[10px]">{props.header}</span>
+        <span className="text-base">{props.header}</span>
       )}
-      <Glass className="relative">
+      <Glass className={`relative ${props.header ? 'mt-[10px]' : ''}`}>
         <select
-          {...omit(props, ["className"])}
+          {...omit(props, ["className", "errorText"])}
           className={`bg-transparent w-full h-full rounded-2xl p-[10px] appearance-none outline-none`}
         >
           {props.children}

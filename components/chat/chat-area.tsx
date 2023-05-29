@@ -179,7 +179,6 @@ export default function ChatArea({
                   iconUrl="/images/clip.svg"
                   height={20}
                   width={20}
-                  onClick={() => setSize(size + 1)}
                   // TODO edge not working, fix
                   // edge="left"
                 />

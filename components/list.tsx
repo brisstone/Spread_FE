@@ -1,6 +1,7 @@
 import Image from "next/image";
 import utilStyles from "../styles/utils.module.css";
 import { PropWithActive, Props } from "@/types/props";
+import { ForwardedRef, forwardRef } from "react";
 
 interface ListItemProps extends PropWithActive {
   primaryText: string;
@@ -32,10 +33,17 @@ export function ListItem(props: ListItemProps & { onClick?: () => any }) {
   );
 }
 
-export function ScrollableList(props: Props) {
-  return <div className={`relative ${props.className}`}>
-    <ul className="absolute scrollbar-thin scrollbar-track-transparent scrollbar-thumb-icon-back top-0 left-0 overflow-y-auto w-full h-full">
-      {props.children}
-    </ul>
-  </div>;
-}
+export const ScrollableList = forwardRef(
+  (props: Props, ref: ForwardedRef<HTMLUListElement>) => {
+    return (
+      <div className={`relative ${props.className}`}>
+        <ul
+          ref={ref}
+          className="absolute scrollbar-thin scrollbar-track-transparent scrollbar-thumb-icon-back top-0 left-0 overflow-y-auto w-full h-full"
+        >
+          {props.children}
+        </ul>
+      </div>
+    );
+  }
+);

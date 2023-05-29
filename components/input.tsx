@@ -5,7 +5,7 @@ import { Props } from "@/types/props";
 import Glass from "./glass";
 
 export interface TextFieldBaseProps {
-  header?: string;
+  header?: string | JSX.Element;
   containerClassName?: string;
   smallerYPadding?: boolean;
   inputClassName?: string;

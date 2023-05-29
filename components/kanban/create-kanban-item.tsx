@@ -1,50 +1,55 @@
-import { object, string } from "yup";
-import { KeyedMutator } from "swr";
+import { number, object, string } from "yup";
+import { KeyedMutator, useSWRConfig } from "swr";
 import { Form, FormikProvider } from "formik";
 import Modal, { ModalProps } from "../modal";
-import Input from "../input";
+import Input, { TextArea } from "../input";
 import { usePost } from "@/hooks/apiHooks";
-import { RequiredSchema, UuidSchema } from "@/util/schema";
-import { CRMLead, Task } from "@/types/general";
+import { EmailSchema, UuidSchema } from "@/util/schema";
+import { CRMLead, KanbanCategory, KanbanItem } from "@/types/general";
 import { useAlert } from "@/contexts/alert-context";
 import Button from "../button";
 import UsersDropdown from "../users-dropdown";
 import { EnterpriseRole } from "@/types/enum";
 
 const Schema = object({
-  title: RequiredSchema(),
-  description: RequiredSchema(),
-  assigneeId: RequiredSchema(),
-  dueDate: string().optional(),
+  title: string().required("Titre est requis"),
+  description: string().optional(),
+  assigneeId: UuidSchema,
+  categoryId: UuidSchema,
 });
 
-export default function CreateTodoModal(
+export default function CreateKanbanItemModal(
   props: ModalProps & {
-    mutate: KeyedMutator<Task[][]>;
+    categoryId: string;
+    mutate: KeyedMutator<KanbanItem[][]>;
   }
 ) {
   const { pushAlert } = useAlert();
 
-  const { formik } = usePost<
-    Task,
+  const {
+    data: newClient,
+    error: formError,
+    formik,
+  } = usePost<
+    KanbanItem,
     {
       title: string;
       description: string;
       assigneeId: string;
-      dueDate: string | undefined;
+      categoryId: string;
     }
   >({
-    url: "/tasks",
+    url: "/kanban/items",
     enableReinitialize: true,
     initialValues: {
       title: "",
       description: "",
       assigneeId: "",
-      dueDate: undefined,
+      categoryId: props.categoryId,
     },
     schema: Schema,
     onComplete: (data) => {
-      if (props.mutate)
+      if (props.mutate) {
         props.mutate((m) => {
           if (!m) return m;
           const newData = [...m];
@@ -52,6 +57,8 @@ export default function CreateTodoModal(
           newData[0] = [data, ...newData[0]];
           return newData;
         });
+      }
+      props.handleClose();
     },
     onError: (e) => {
       pushAlert(e.message);
@@ -70,51 +77,34 @@ export default function CreateTodoModal(
   return (
     <Modal open={props.open} handleClose={props.handleClose}>
       <FormikProvider value={formik}>
-        <Form className="w-full" onSubmit={handleSubmit}>
+        <Form className="w- full" onSubmit={handleSubmit}>
           <Input
-            header="Title"
-            placeholder="Title"
+            header="Nom"
+            placeholder="Nom"
+            className="mt-2"
             smallerYPadding
             {...getFieldProps("title")}
             errorText={touched.title && errors.title}
           />
-          <Input
+
+          <TextArea
             header="Description"
-            placeholder="Description"
-            className="mt-2"
-            smallerYPadding
+            placeholder="Entrez la description"
+            className="grow mt-2"
+            inputClassName="placeholder:text-white"
             {...getFieldProps("description")}
             errorText={touched.description && errors.description}
-          />
-
-          <Input
-            header="Date limite"
-            placeholder="Date limite"
-            className="mt-2"
-            smallerYPadding
-            type="datetime-local"
-            // {...getFieldProps("dueDate")}
-            onChange={(e) => {
-              setFieldValue(
-                "dueDate",
-                new Date((e.target as any).value).toISOString()
-              );
-            }}
           />
 
           <UsersDropdown
             header="Cessionnaire"
             className="mt-2"
-            roles={[
-              EnterpriseRole.OPERATOR,
-              EnterpriseRole.LEAD,
-              EnterpriseRole.ADMIN,
-              EnterpriseRole.READER,
-            ]}
+            roles={Object.values(EnterpriseRole)}
             {...getFieldProps("assigneeId")}
             // className="mt-2"
             errorText={touched.assigneeId && errors.assigneeId}
           />
+
           <Button className="mt-4 w-full" type="submit" loading={isSubmitting}>
             Ajouter
           </Button>

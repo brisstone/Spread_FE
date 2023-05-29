@@ -11,7 +11,7 @@ export const EmailSchema = string()
 export const RequiredSchema = (msg?: string) =>
   string().required(msg || "Ceci est nécessaire");
 
-export const UuidSchema = string().required().uuid();
+export const UuidSchema = string().required("Ceci est nécessaire").uuid();
 
 export const UuidSchemaFunc = (msg: string) => string().required(msg).uuid();
 

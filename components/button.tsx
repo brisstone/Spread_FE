@@ -10,7 +10,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export default function Button(props: ButtonProps) {
   return (
     <button
-      {...omit(props, ['iconUrl', 'loading'])}
+      {...omit(props, ["iconUrl", "loading"])}
       disabled={props.loading}
       className={`bg-btn rounded-lg outline-none py-4 px-5 ${props.className} h-fit flex justify-center items-center`}
     >
@@ -20,8 +20,23 @@ export default function Button(props: ButtonProps) {
             <Image src={props.iconUrl} height={15} width={15} alt="plus" />
           </span>
         )}
-        <span className="leading-[18px]">{props.loading ? 'Loading' : props.children}</span>
+        <span className="leading-[18px]">
+          {props.loading ? "Chargement..." : props.children}
+        </span>
       </span>
     </button>
+  );
+}
+
+export function AddButton(props: ButtonProps & { text: string }) {
+  console.log("props", props);
+  return (
+    <Button
+      {...omit(props, ["text"])}
+      className={`flex !p-0 flex-nowrap gap-2 !bg-transparent ${props.className}`}
+      iconUrl="/images/squareplus.svg"
+    >
+      <span className="text-base">{props.text}</span>
+    </Button>
   );
 }

@@ -17,3 +17,9 @@ export function BaseHDivider(props: Props) {
     <div className={`h-px w-full bg-dim-white ${props.className}`}></div>
   );
 }
+
+export function VerticalDivider(props:Props) {
+  return (
+    <div className={`w-px bg-divider ${props.className}`}></div>
+  )
+}

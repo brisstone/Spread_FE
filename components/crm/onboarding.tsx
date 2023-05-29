@@ -4,7 +4,7 @@ import { useAlert } from "@/contexts/alert-context";
 import { QuestionCategoryWithQuestions } from "@/types/general";
 import Card from "../card";
 import Input from "../input";
-import Button, { ButtonProps } from "../button";
+import Button, { AddButton, ButtonProps } from "../button";
 import { omit } from "lodash";
 import { usePost } from "@/hooks/apiHooks";
 import QuestionModal from "./question-modal";
@@ -47,18 +47,6 @@ function QuestionSection({
         )}
       </div>
     </div>
-  );
-}
-
-function AddButton(props: ButtonProps & { text: string }) {
-  return (
-    <Button
-      {...omit(props, ["text", "className"])}
-      className="!flex !p-0 flex-nowrap gap-2 !bg-transparent"
-      iconUrl="/images/squareplus.svg"
-    >
-      <span className="text-base">{props.text}</span>
-    </Button>
   );
 }
 

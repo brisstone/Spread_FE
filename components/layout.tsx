@@ -46,12 +46,6 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                   name="Chat"
                   href={`/${enterprise?.id}/dashboard/chat`}
                 />
-                <NavItem svg="/images/chat.svg" name="Login" href="/login" />
-                <NavItem
-                  svg="/images/chat.svg"
-                  name="Forgot Password"
-                  href="/forgot-password"
-                />
                 <NavItem
                   svg="/images/chat.svg"
                   name="CRM"
@@ -76,6 +70,11 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                   svg="/images/chat.svg"
                   name="Kanban"
                   href={`/${enterprise?.id}/dashboard/kanban`}
+                />
+                <NavItem
+                  svg="/images/chat.svg"
+                  name="Facturation"
+                  href={`/${enterprise?.id}/dashboard/invoicing`}
                 />
                 <NavItem
                   svg="/images/chat.svg"

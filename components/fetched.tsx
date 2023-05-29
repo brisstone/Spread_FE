@@ -1,8 +1,10 @@
+import { ErrorFeedback, Feedback, LoadingFeedback } from "./feedback";
+
 export default function Fetched<T>(props: {
   error: any;
-  errorComp: JSX.Element;
+  errorComp?: JSX.Element;
   isLoading: boolean;
-  isLoadingComp: JSX.Element;
+  isLoadingComp?: JSX.Element;
   data: T;
   dataComp: (data: NonNullable<T>) => JSX.Element | JSX.Element[];
 }) {
@@ -12,8 +14,11 @@ export default function Fetched<T>(props: {
         props.dataComp(props.data)
       ) : (
         <>
-          {props.isLoading && props.isLoadingComp}
-          {props.error && props.errorComp}
+          {props.isLoading && (props.isLoadingComp || <LoadingFeedback />)}
+          {props.error && (props.errorComp || <ErrorFeedback />)}
+          {!props.error && !props.isLoading && (
+            <Feedback msg="Quelque chose s'est mal passé" />
+          )}
         </>
       )}
     </>

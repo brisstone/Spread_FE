@@ -1,4 +1,4 @@
-import { QuestionType } from "./enum";
+import { EnterpriseRole, QuestionType } from "./enum";
 
 export interface BaseModel {
   id: string;
@@ -68,7 +68,7 @@ export interface QuestionWithCategory extends Question {
 }
 
 export interface QuestionCategoryWithQuestions extends QuestionCategory {
-  questions: Question[]
+  questions: Question[];
 }
 
 export interface Client extends BaseModel {
@@ -92,4 +92,61 @@ export interface Task extends BaseModel {
   assignee: User;
   assigneeId: string;
   enterpriseId: string;
+}
+
+export interface KanbanCategory extends BaseModel {
+  name: string;
+  enterpriseId: string;
+}
+
+export interface KanbanItem extends BaseModel {
+  title: string;
+  description: string;
+  assignee: User;
+  assigneeId: string;
+  closed: boolean;
+  categoryId: string;
+  enterpriseId: string;
+}
+
+export interface InvoiceCurrency extends BaseModel {
+  name: string;
+}
+
+export interface InvoiceItem extends BaseModel {
+  description: string;
+  quantity: number;
+  price: number;
+  total: number;
+  invoiceId: string;
+}
+
+export interface Invoice extends BaseModel {
+  name: string;
+  description: string | null;
+  type: InvoiceType;
+  currency: InvoiceCurrency;
+  dueDate: Date;
+  client: Client;
+  clientId: string;
+  notes: string |null;
+  discount: number | null;
+  tax: number | null;
+  paidAt: Date | null;
+  items: InvoiceItem[];
+  enterpriseId: string;
+}
+
+export interface Role extends BaseModel {
+  name: EnterpriseRole;
+}
+
+export interface EnterpriseInvitation extends BaseModel {
+  email: string;
+  token: string;
+  expiresAt: Date;
+  acceptedAt: Date | null;
+  enterprise: Enterprise;
+  enterpriseId: string;
+  enterpriseRole: Role;
 }

@@ -13,6 +13,7 @@ import Fetched from "@/components/fetched";
 
 import utilStyles from "@/styles/utils.module.css";
 import CreateTodoModal from "@/components/todo/create-modal";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 export function TaskHeader() {
   return <p className="text-[30px] leading-[35px]">Tâches 🎯</p>;
@@ -30,35 +31,7 @@ export default function Todo() {
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  const observerTarget = useRef(null);
-  const target = observerTarget.current;
-
-  useEffect(() => {
-    console.log("effecting");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          console.log("intersecting...", entries);
-          setSize((s) => s + 1);
-        }
-      },
-      { threshold: 1 }
-    );
-
-    if (target) {
-      observer.observe(target);
-    }
-
-    return () => {
-      console.log("unmounting");
-      if (target) {
-        observer.unobserve(target);
-      }
-    };
-  }, [target, setSize]);
-
-  console.log("data", tasks);
-  console.log("size", size);
+  const { observerTarget } = useInfiniteScroll(setSize);
 
   return (
     <Layout header="To Do List  ✅">

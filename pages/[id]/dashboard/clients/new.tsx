@@ -42,20 +42,9 @@ export default function NewClient() {
     isLoading,
   } = useSWR<CRMLead>(() => (leadId ? `/crm/leads/${leadId}` : null));
 
-  console.log("leadId", leadId);
-  console.log("---------\nDATA\n----------\n", lead, error, isLoading);
-
-  const {
-    data: users,
-    isLoading: usersLoading,
-    error: usersError,
-  } = useSWR<Pick<User, "id" | "email" | "firstName" | "lastName">[]>(
-    `/enterprise/users?role=${EnterpriseRole.OPERATOR}`
-  );
-
   const {
     // data: newClient,
-    // error: formError,
+    // error: formError,  
     formik,
   } = usePost<
     Client,
