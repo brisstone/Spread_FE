@@ -39,7 +39,7 @@ export default function CurrenciesDropdown(
             ))
           ) : (
             <SelectOption value="">
-              Il n'y a pas de devises disponibles
+              Il n&apos;y a pas de devises disponibles
             </SelectOption>
           )
         }

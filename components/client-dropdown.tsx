@@ -37,7 +37,7 @@ export default function ClientsDropdown(props: SelectProps) {
             ))
           ) : (
             <SelectOption value="">
-              Aucune donnée client n'est disponible
+              Aucune donnée client n&apos;est disponible
             </SelectOption>
           )
         }
