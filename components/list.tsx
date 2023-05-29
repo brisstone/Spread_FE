@@ -47,3 +47,5 @@ export const ScrollableList = forwardRef(
     );
   }
 );
+
+ScrollableList.displayName = "ScrollableList"
