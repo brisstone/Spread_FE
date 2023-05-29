@@ -1,18 +1,8 @@
 import { FC, useEffect, useState } from "react";
-import useSWR from "swr";
 import { Props } from "@/types/props";
-import Link from "next/link";
 import { NavItem } from "./navigation";
 import Background from "./background";
-import axiosHttp from "@/lib/axiosHttp";
-import { apiErrorParser, commonSuccessRespFilter } from "@/lib/responseHelpers";
-import { User } from "@/types/general";
 import { useRouter } from "next/router";
-import { v4 } from "uuid";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { authenticate } from "@/redux/slices/auth";
-import Cookies from "js-cookie";
-import useUser from "@/data/use-user";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
 
 export interface LayoutProps extends Props {
@@ -56,12 +46,6 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                   name="Chat"
                   href={`/${enterprise?.id}/dashboard/chat`}
                 />
-                <NavItem svg="/images/chat.svg" name="Login" href="/login" />
-                <NavItem
-                  svg="/images/chat.svg"
-                  name="Forgot Password"
-                  href="/forgot-password"
-                />
                 <NavItem
                   svg="/images/chat.svg"
                   name="CRM"
@@ -89,6 +73,11 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                 />
                 <NavItem
                   svg="/images/chat.svg"
+                  name="Facturation"
+                  href={`/${enterprise?.id}/dashboard/invoicing`}
+                />
+                <NavItem
+                  svg="/images/chat.svg"
                   name="Parameters"
                   href={`/${enterprise?.id}/dashboard/settings`}
                 />
@@ -100,12 +89,12 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
         <main className="relative w-4/5 ml-[20%] flex flex-col main grow pl-4 py-10 pr-5">
           {props.header && <LayoutHeader>{props.header}</LayoutHeader>}
           {isLoading && (
-            <p className="absolute text-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              Loading...
+            <p className="absolute text-base text-subtitle top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              Chargement...
             </p>
           )}
           {error && (
-            <p className="absolute text-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <p className="absolute text-base text-subtitle top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               Erreur lors du chargement des données de l&apos;organisation
             </p>
           )}

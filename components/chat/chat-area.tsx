@@ -8,21 +8,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useConversations from "@/data/use-conversations";
 import ThreeDots from "@/public/images/threedots.svg";
 import { IncomingMessage, MessageList, OutgoingMessage } from "../message-list";
-import { getUserName } from "@/lib/util";
+import { getPgKey, getUserName } from "@/lib/util";
 import utilStyles from "@/styles/utils.module.css";
-
-const getKey =
-  (selectedConvId: string) =>
-  (pageIndex: number, previousPageData: Message[]) => {
-    if (previousPageData && !previousPageData.length) return null; // reached the end
-
-    return () =>
-      selectedConvId
-        ? `/messaging/conversations/${selectedConvId}/messages?page=${
-            pageIndex + 1
-          }&limit=10`
-        : null;
-  };
 
 export default function ChatArea({
   selectedConvId,
@@ -38,7 +25,13 @@ export default function ChatArea({
     size,
     mutate,
     setSize,
-  } = useSWRInfinite<Message[]>(getKey(selectedConvId));
+  } = useSWRInfinite<Message[]>(
+    getPgKey<Message>(() =>
+      selectedConvId
+        ? `/messaging/conversations/${selectedConvId}/messages`
+        : null
+    )
+  );
 
   const { user } = useUser();
 
@@ -81,24 +74,24 @@ export default function ChatArea({
     conversations && conversations.find((c) => c.id === selectedConvId);
 
   useEffect(() => {
-    console.log('effecting')
-    socket.on('privateMessage', (msg: Message) => {
-      console.log('new private message', msg)
+    console.log("effecting");
+    socket.on("privateMessage", (msg: Message) => {
+      console.log("new private message", msg);
       mutate((m) => {
-        console.log('about to mutate', m)
+        console.log("about to mutate", m);
         if (!m) return m;
-        const msgs = [...m]
-        
-        msgs[msgs.length - 1] = [...msgs[msgs.length - 1], msg]
-        console.log(msgs)
-        console.log(m)
-        return msgs
+        const msgs = [...m];
+
+        msgs[msgs.length - 1] = [...msgs[msgs.length - 1], msg];
+        console.log(msgs);
+        console.log(m);
+        return msgs;
       });
     });
 
     return () => {
-      socket.off('privateMessage')
-    }
+      socket.off("privateMessage");
+    };
   }, [socket, mutate]);
 
   return (
@@ -160,21 +153,25 @@ export default function ChatArea({
               onSubmit={(e) => {
                 e.preventDefault();
 
-                socket.emit("privateMessage", {
-                  conversationId: selectedConv.id,
-                  text: inputValue,
-                }, (msg: Message) => {
-                  console.log('about to mutate sending', messages)
-                  mutate((m) => {
-                    if (!m) return m;
-                    const msgs = [...m]
-                    
-                    msgs[msgs.length - 1] = [...msgs[msgs.length - 1], msg]
-                    return msgs
-                  });
-                });
+                socket.emit(
+                  "privateMessage",
+                  {
+                    conversationId: selectedConv.id,
+                    text: inputValue,
+                  },
+                  (msg: Message) => {
+                    console.log("about to mutate sending", messages);
+                    mutate((m) => {
+                      if (!m) return m;
+                      const msgs = [...m];
 
-                setInputValue('');
+                      msgs[msgs.length - 1] = [...msgs[msgs.length - 1], msg];
+                      return msgs;
+                    });
+                  }
+                );
+
+                setInputValue("");
               }}
             >
               <div className="relative w-full flex bg-icon-back py-4 px-6 rounded-lg">
@@ -182,7 +179,6 @@ export default function ChatArea({
                   iconUrl="/images/clip.svg"
                   height={20}
                   width={20}
-                  onClick={() => setSize(size + 1)}
                   // TODO edge not working, fix
                   // edge="left"
                 />

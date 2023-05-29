@@ -1,4 +1,4 @@
-import { EnterpriseRole } from "@/types/enum";
+import { AlertType, EnterpriseRole } from "@/types/enum";
 import Input from "../input";
 import Select, { SelectOption } from "../select";
 import { Section, SettingsTop } from "./util";
@@ -36,7 +36,9 @@ export default function Team() {
       invites: [initialValues],
     },
     schema: Schema,
-    onComplete: (data) => {},
+    onComplete: (data) => {
+      pushAlert('Votre invitation a été envoyée', AlertType.SUCCESS);
+    },
     onError: (e) => {
       pushAlert(e.message);
     },
@@ -120,7 +122,7 @@ export default function Team() {
                           </div>
                         </div>
                       ))}
-                    <Button disabled={isSubmitting} type="submit" className="!text-base mt-4">
+                    <Button loading={isSubmitting} type="submit" className="!text-base mt-4">
                       + Inviter
                     </Button>
                   </>

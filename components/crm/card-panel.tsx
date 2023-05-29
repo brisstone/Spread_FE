@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { DndProvider } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
+// import { TouchBackend } from "react-dnd-touch-backend";
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { CRMCategory } from "@/types/general";
 import CRMCard from "./crm-card";

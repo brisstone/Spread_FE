@@ -49,7 +49,7 @@ export default function Login() {
     schema: Schema,
     onComplete: (data) => {
       setCookieContext(data.user.enterpriseId, data.token);
-      router.replace(`/${router.query.id}/dashboard`);
+      router.replace(`/${data.user.enterpriseId}/dashboard`);
     },
     onError: (e) => {
       pushAlert(e.message);

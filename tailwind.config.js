@@ -43,9 +43,12 @@ module.exports = {
         'greycard': 'rgba(84, 84, 84, 0.2)',
         'blurryblue': 'rgba(109, 61, 237, 0.2)',
         'blueborder': '#9B71E9',
+        'grey2': '#D7DBEC',
+        'divider': '#545454',
       },
       fontSize: {
         base: ['0.875rem', '1.5rem'],
+        md: ['1rem', '1.5rem'],
         lg: ['1.125rem', '140%'],
         xl: ['1.75rem', '100%'],
       },

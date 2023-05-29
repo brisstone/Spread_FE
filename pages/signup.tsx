@@ -10,6 +10,7 @@ import { Form, FormikProvider } from "formik";
 import { omit } from "lodash";
 import { EmailSchema, PasswordSchema } from "@/util/schema";
 import { setCookie, setCookieContext } from "@/lib";
+import { useAlert } from "@/contexts/alert-context";
 
 const Schema = object({
   name: string()
@@ -27,6 +28,7 @@ const initialValues = {
 
 export default function Signup() {
   const router = useRouter();
+  const { pushAlert } = useAlert();
 
   const { data, error, formik } = usePost<
     {
@@ -50,6 +52,9 @@ export default function Signup() {
       setCookieContext('noent', data.token);
       router.replace("/verify-email");
     },
+    onError: (e) => {
+      pushAlert(e.message)
+    }
   });
 
   const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;

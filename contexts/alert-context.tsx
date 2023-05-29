@@ -1,9 +1,15 @@
+import { AlertType } from "@/types/enum";
 import { Props } from "@/types/props";
 import { FC, createContext, useContext, useMemo, useState } from "react";
 
+interface Alert {
+  message: string;
+  type: AlertType;
+}
+
 interface AlertContextState {
-  alerts: string[];
-  pushAlert: (value: string) => void;
+  alerts: Alert[];
+  pushAlert: (value: string, type?: AlertType) => void;
 }
 
 export const AlertContext = createContext<AlertContextState>({
@@ -12,10 +18,10 @@ export const AlertContext = createContext<AlertContextState>({
 });
 
 export function AlertContextProvider(props: Props) {
-  const [alerts, setAlerts] = useState<string[]>([]);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
 
-  const pushAlert = (alert: string) => {
-    setAlerts((prev) => [...prev, alert]);
+  const pushAlert = (alert: string, type: AlertType = AlertType.ERROR) => {
+    setAlerts((prev) => [...prev, { message: alert, type }]);
   };
 
   const value = useMemo(() => ({ alerts, pushAlert }), [alerts]);

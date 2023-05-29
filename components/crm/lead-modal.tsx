@@ -50,10 +50,13 @@ export default function CRMLeadModal(
     },
     schema: LeadSchema,
     onComplete: (data) => {
-      mutate(`/crm/categories/${props.categoryId}/leads`, (existing: CRMLead[] | undefined): CRMLead[] => {
-        if (!existing) return [data];
-        return [...existing, data];
-      });
+      mutate(
+        `/crm/categories/${props.categoryId}/leads`,
+        (existing: CRMLead[] | undefined): CRMLead[] => {
+          if (!existing) return [data];
+          return [...existing, data];
+        }
+      );
       props.handleClose();
     },
     onError: (e) => {
@@ -96,7 +99,7 @@ export default function CRMLeadModal(
             {...getFieldProps(`amount`)}
             errorText={touched.amount && errors.amount}
           />
-          <Button className="mt-4 w-full" type="submit">
+          <Button className="mt-4 w-full" type="submit" loading={isSubmitting}>
             Ajouter
           </Button>
         </Form>
