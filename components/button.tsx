@@ -5,22 +5,29 @@ import Image from "next/image";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconUrl?: string;
   loading?: boolean;
+  iconHeight?: number;
+  iconWidth?: number;
 }
 
 export default function Button(props: ButtonProps) {
   return (
     <button
-      {...omit(props, ["iconUrl", "loading"])}
-      disabled={props.loading}
-      className={`bg-btn rounded-lg outline-none py-4 px-5 ${props.className} h-fit flex justify-center items-center`}
+      {...omit(props, ["iconUrl", "loading", "iconHeight", "iconWidth"])}
+      disabled={props.loading || props.disabled}
+      className={`bg-btn rounded-lg outline-none py-4 px-5 ${props.className} h-fit flex justify-center items-center text-white`}
     >
-      <span className="inline-flex gap-2 items-center">
+      <span className="inline-flex gap-2 text-inherit items-center">
         {props.iconUrl && (
           <span>
-            <Image src={props.iconUrl} height={15} width={15} alt="plus" />
+            <Image
+              src={props.iconUrl}
+              height={props.iconHeight || 15}
+              width={props.iconWidth || 15}
+              alt="plus"
+            />
           </span>
         )}
-        <span className="leading-[18px]">
+        <span className="leading-[18px] text-inherit">
           {props.loading ? "Chargement..." : props.children}
         </span>
       </span>

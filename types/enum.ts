@@ -7,6 +7,15 @@ export enum EnterpriseRole {
   CLIENT = "ClientRole",
 }
 
+export const roleMap = {
+  [EnterpriseRole.OWNER]: 'Propriétaire',
+  [EnterpriseRole.ADMIN]: 'Admin',
+  [EnterpriseRole.LEAD]: 'Chef de file',
+  [EnterpriseRole.OPERATOR]: 'Opérateur',
+  [EnterpriseRole.READER]: 'Accès en lecture',
+  [EnterpriseRole.CLIENT]: 'Client'
+}
+
 export enum StorageEnum {
   ENT_CONTEXT = "enterprise_context",
 }

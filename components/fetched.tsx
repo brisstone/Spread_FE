@@ -17,7 +17,7 @@ export default function Fetched<T>(props: {
           {props.isLoading && (props.isLoadingComp || <LoadingFeedback />)}
           {props.error && (props.errorComp || <ErrorFeedback />)}
           {!props.error && !props.isLoading && (
-            <Feedback msg="Quelque chose s'est mal passé" />
+            <Feedback msg="Pas de données disponibles" />
           )}
         </>
       )}

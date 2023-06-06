@@ -72,9 +72,17 @@
   left: 0;
   right: 0;
   bottom: 0;
-  backdrop-filter: blur(150px);
+  backdrop-filter: blur(100px);
 }
 
 .absoluteCentered {
   @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+}
+
+.documentItemUtils > .bin {
+  @apply opacity-0 transition-opacity
+}
+
+.documentItemUtils:hover > .bin {
+  @apply opacity-100
 }

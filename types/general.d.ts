@@ -9,8 +9,28 @@ export interface User extends BaseModel {
   email: string;
   firstName: string;
   lastName: string;
+  dob: string | null;
+  country: string | null;
+  profileImageKey: string | null;
+  profileImageUrl: string | null;
+  phoneNumber: string | null;
+  address: string | null;
+  city: string | null;
+  postalCode: string | null;
   enterpriseId: string;
+  enterpriseRole: Role;
 }
+
+type UserDetail = Pick<
+  User,
+  | "id"
+  | "email"
+  | "firstName"
+  | "lastName"
+  | "enterpriseRole"
+  | "profileImageKey"
+  | "profileImageUrl"
+>;
 
 export interface Enterprise extends BaseModel {
   id: string;
@@ -129,7 +149,7 @@ export interface Invoice extends BaseModel {
   dueDate: Date;
   client: Client;
   clientId: string;
-  notes: string |null;
+  notes: string | null;
   discount: number | null;
   tax: number | null;
   paidAt: Date | null;
@@ -149,4 +169,18 @@ export interface EnterpriseInvitation extends BaseModel {
   enterprise: Enterprise;
   enterpriseId: string;
   enterpriseRole: Role;
+}
+
+export interface DocumentFolder extends BaseModel {
+  name: string;
+  enterpriseId: string;
+}
+
+export interface DocumentFile extends BaseModel {
+  name: string;
+  key: string;
+  url: string;
+  fileType: string;
+  folder: DocumentFolder;
+  folderId: string;
 }

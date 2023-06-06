@@ -2,7 +2,7 @@ import Onboarding, { OnboardingGlass, Social } from "@/components/onboarding";
 import Image from "next/image";
 import Button from "@/components/button";
 import Glass from "@/components/glass";
-import OutlinedInput from "@/components/outlinedinput";
+import { OutlinedInput } from "@/components/input";
 import Link from "next/link";
 import OnboardingDetail from "@/components/onboardingdetail";
 

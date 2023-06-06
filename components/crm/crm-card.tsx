@@ -141,7 +141,7 @@ export default function CRMCard(props: CRMCardProps) {
 
           <Button
             onClick={() => setModalOpen(true)}
-            className="w-full bg-white text-black shadow-none mt-[18px]"
+            className="w-full bg-white !text-black shadow-none mt-[18px]"
           >
             ✔️ Ajouter
           </Button>

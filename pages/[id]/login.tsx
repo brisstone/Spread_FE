@@ -12,6 +12,8 @@ import { Form, FormikProvider } from "formik";
 import { useEffect } from "react";
 import { useAlert } from "@/contexts/alert-context";
 import { setCookie, setCookieContext } from "@/lib";
+import Link from "next/link";
+import Fetched from "@/components/fetched";
 
 const Schema = object({
   email: EmailSchema,
@@ -22,17 +24,13 @@ const Schema = object({
 export default function Login() {
   const router = useRouter();
 
-  const { isLoading, error } = useSWR(() =>
+  const { data, isLoading, error } = useSWR<{ id: string; name: string }>(() =>
     router.query.id ? `/enterprise/check/${router.query.id}` : null
   );
 
   const { pushAlert } = useAlert();
 
-  const {
-    data,
-    error: formError,
-    formik,
-  } = usePost<
+  const { formik } = usePost<
     {
       user: User;
       token: string;
@@ -53,7 +51,7 @@ export default function Login() {
     },
     onError: (e) => {
       pushAlert(e.message);
-    }
+    },
   });
 
   const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
@@ -62,7 +60,7 @@ export default function Login() {
     // <div className="min-h-screen w-screen">
     <FormikProvider value={formik}>
       <Onboarding>
-        {!error && !isLoading ? (
+        {!error && !isLoading && data ? (
           <>
             <div className="flex flex-col items-center">
               <h1 className="text-3xl">Bienvenue 👋</h1>
@@ -100,6 +98,12 @@ export default function Login() {
                     {/* <Input name="Nom" placeholder="Prénom, Nom" /> */}
                   </div>
 
+                  <p className="text-icon text-base mt-4">
+                    <Link href={`/${data.id}/forgot-password`}>
+                      Mot de passe oublié?
+                    </Link>
+                  </p>
+
                   <Button
                     type="submit"
                     loading={isSubmitting}
@@ -108,6 +112,12 @@ export default function Login() {
                     👉 S’inscrire
                   </Button>
                 </Form>
+                <p className="mt-7 text-base">
+                  <span>Vous n’avez pas de compte?</span>
+                  <span className="text-icon ml-0.5">
+                    <Link href="/signup">Inscrivez-vous</Link>
+                  </span>
+                </p>
               </OnboardingGlass>
             </div>
           </>

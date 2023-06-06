@@ -5,11 +5,14 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
-      use: ['@svgr/webpack'],
-    })
+      use: ["@svgr/webpack"],
+    });
 
-    return config
+    return config;
+  }, 
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "s3.eu-west-3.amazonaws.com" }],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
