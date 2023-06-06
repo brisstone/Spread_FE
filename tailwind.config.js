@@ -16,7 +16,7 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'gradient-nav': 'linear-gradient(111.84deg, rgba(10, 3, 19, 0.94) 59.3%, rgba(42, 26, 55, 0) 100%)',
         'gradient-kpi': 'linear-gradient(126.97deg, rgba(41, 26, 55, 0.74) 28.26%, rgba(23, 6, 38, 0.5) 91.2%)',
-        'gradient-card': 'linear-gradient(126.97deg, rgba(41, 26, 55, 0.74) 28.26%, rgba(23, 6, 38, 0.71) 91.2%)',
+        'gradient-card': 'linear-gradient(127.68deg, rgba(41, 26, 55, 0.34) 20.53%, rgba(23, 6, 38, 0.31) 102.53%)',
         'gradient-divider': 'linear-gradient(180deg, rgba(224, 225, 226, 0) 0%, #E0E1E2 49.52%, rgba(224, 225, 226, 0.15625) 99.04%)',
         'gradient-horizdivider': 'linear-gradient(90deg, rgba(224, 225, 226, 0) 0%, #E0E1E2 49.52%, rgba(224, 225, 226, 0.15625) 99.04%)',
         'gradient-blurrygrey': 'linear-gradient(135deg, rgba(172, 172, 172, 0.2) 0%, rgba(255, 255, 255, 0.53) 100%)'
@@ -45,6 +45,7 @@ module.exports = {
         'blueborder': '#9B71E9',
         'grey2': '#D7DBEC',
         'divider': '#545454',
+        'white2': '#F2F6FA',
       },
       fontSize: {
         base: ['0.875rem', '1.5rem'],

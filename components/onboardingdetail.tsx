@@ -4,7 +4,8 @@ import Image from "next/image";
 import Onboarding, { OnboardingGlass, Social } from "@/components/onboarding";
 import Button from "@/components/button";
 import Glass from "@/components/glass";
-import OutlinedInput from "@/components/outlinedinput";
+import { OutlinedInput } from "@/components/input";
+import { useRouter } from "next/router";
 
 interface DetailProps {
   imgSrc: string;
@@ -13,11 +14,13 @@ interface DetailProps {
   text2: string;
   input?: ReactNode;
   btnText: string;
-  btnHref: string;
+  btnHref?: string;
   bottomItem?: ReactNode;
+  isSubmitting?: boolean;
 }
 
 export default function OnboardingDetail(props: DetailProps) {
+  const router = useRouter();
   return (
     <Onboarding>
       <Glass>
@@ -46,9 +49,13 @@ export default function OnboardingDetail(props: DetailProps) {
 
             <div className="w-full">
               <div className="w-full mt-6">
-                <Link href={props.btnHref}>
-                  <Button className="w-full shadow-btn2">{props.btnText}</Button>
-                </Link>
+                <Button
+                  className="w-full shadow-btn2"
+                  type="submit"
+                  loading={props.isSubmitting}
+                >
+                  {props.btnText}
+                </Button>
               </div>
 
               {props.bottomItem && (
@@ -56,7 +63,7 @@ export default function OnboardingDetail(props: DetailProps) {
               )}
 
               <Link
-                href="/login"
+                href={`/${router.query.id}/login`}
                 className="flex mt-6 justify-center items-center gap-3"
               >
                 <Image

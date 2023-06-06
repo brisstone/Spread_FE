@@ -22,7 +22,7 @@ export function ListItem(props: ListItemProps & { onClick?: () => any }) {
           height={48}
           width={48}
           alt="avatar"
-          className="rounded-full"
+          className="rounded-full object-cover w-12 h-12"
         />
       </div>
       <div className="grow">

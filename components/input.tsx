@@ -60,4 +60,20 @@ export function TextArea(props: TextAreaProps) {
   );
 }
 
+export const OutlinedInput: FC<TextFieldProps> = (props) => {
+  return (
+    <div className="flex flex-col">
+      <input
+        {...omit(props, ["inputClassName", "errorText"])}
+        className={`border-b-[0.5px] border-solid border-b-obsec filter bg-transparent outline-none px-2 py-4 placeholder:text-white ${props.className}`}
+      />
+      {props.errorText && (
+        <span className="text-xs text-red-400 break-words max-w-full mt-2">
+          {props.errorText}
+        </span>
+      )}
+    </div>
+  );
+};
+
 export default Input;

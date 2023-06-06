@@ -1,4 +1,4 @@
-import { AlertType, EnterpriseRole } from "@/types/enum";
+import { AlertType, EnterpriseRole, roleMap } from "@/types/enum";
 import Input from "../input";
 import Select, { SelectOption } from "../select";
 import { Section, SettingsTop } from "./util";
@@ -8,6 +8,8 @@ import { FieldArray, Form, FormikProvider } from "formik";
 import IconButton from "../iconbutton";
 import Button from "../button";
 import { useAlert } from "@/contexts/alert-context";
+import Image from "next/image";
+import TeamList from "./team-list";
 
 const Schema = object({
   invites: array().of(
@@ -37,7 +39,7 @@ export default function Team() {
     },
     schema: Schema,
     onComplete: (data) => {
-      pushAlert('Votre invitation a été envoyée', AlertType.SUCCESS);
+      pushAlert("Votre invitation a été envoyée", AlertType.SUCCESS);
     },
     onError: (e) => {
       pushAlert(e.message);
@@ -88,29 +90,29 @@ export default function Team() {
                             >
                               <SelectOption value="">Select</SelectOption>
                               <SelectOption value={EnterpriseRole.READER}>
-                                Reader
+                                {roleMap[EnterpriseRole.READER]}
                               </SelectOption>
                               <SelectOption value={EnterpriseRole.OPERATOR}>
-                                Operator
+                                {roleMap[EnterpriseRole.OPERATOR]}
                               </SelectOption>
                               <SelectOption value={EnterpriseRole.LEAD}>
-                                Lead
+                                {roleMap[EnterpriseRole.LEAD]}
                               </SelectOption>
                               <SelectOption value={EnterpriseRole.ADMIN}>
-                                Admin
+                                {roleMap[EnterpriseRole.ADMIN]}
                               </SelectOption>
                             </Select>
                           </div>
 
-                          <div className="flex gap-1">
-                            <div
-                              className="p-3 cursor-pointer"
+                          <div className="flex gap-1 ml-1">
+                            <IconButton
+                              width={11}
+                              height={11}
+                              iconUrl="/images/cancel.svg"
                               onClick={() => {
                                 if (index !== 0) arrayHelpers.remove(index);
                               }}
-                            >
-                              <span>x</span>
-                            </div>
+                            />
                             <IconButton
                               width={11}
                               height={11}
@@ -122,7 +124,11 @@ export default function Team() {
                           </div>
                         </div>
                       ))}
-                    <Button loading={isSubmitting} type="submit" className="!text-base mt-4">
+                    <Button
+                      loading={isSubmitting}
+                      type="submit"
+                      className="!text-base mt-4"
+                    >
                       + Inviter
                     </Button>
                   </>
@@ -130,6 +136,15 @@ export default function Team() {
               />
             </Form>
           </Section>
+
+          <div className="mt-11">
+            <Section
+              header="Gestion d’équipe"
+              subtitle="Paramètrez les accès de vos membres."
+            >
+              <TeamList />
+            </Section>
+          </div>
         </div>
       </FormikProvider>
     </>

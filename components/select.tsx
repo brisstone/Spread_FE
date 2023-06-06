@@ -17,7 +17,7 @@ export default function Select(props: SelectProps) {
       <Glass className={`relative ${props.header ? 'mt-[10px]' : ''}`}>
         <select
           {...omit(props, ["className", "errorText"])}
-          className={`bg-transparent w-full h-full rounded-2xl p-[10px] appearance-none outline-none`}
+          className={`bg-transparent w-full h-full rounded-2xl p-[10px] appearance-none outline-none text-white`}
         >
           {props.children}
         </select>

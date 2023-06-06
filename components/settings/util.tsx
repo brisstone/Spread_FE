@@ -10,16 +10,24 @@ export function SettingsHeader(props: HeaderSubtitle) {
   );
 }
 
-export function SettingsTop(props: HeaderSubtitle) {
+export function SettingsTop(props: Props & HeaderSubtitle) {
   return (
     <div className="w-full flex justify-between">
       <SettingsHeader header={props.header} subtitle={props.subtitle} />
       <div className="flex gap-4">
-        <Button className="!text-base">Enregistrer</Button>
-
-        <Button className="!text-base bg-white text-black">Annuler</Button>
+        {props.children}
       </div>
     </div>
+  );
+}
+
+export function GenericButtonGroup() {
+  return (
+    <>
+      <Button className="!text-base">Enregistrer</Button>
+
+      <Button className="!text-base bg-white text-black">Annuler</Button>
+    </>
   );
 }
 
