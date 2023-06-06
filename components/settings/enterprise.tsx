@@ -210,11 +210,10 @@ export default function EnterpriseSettings() {
                         {values.socials && values.socials.length > 0 ? (
                           <div className="relative grid grid-cols-2 gap-x-7 gap-y-7">
                             {values.socials.map((s, index) => (
-                              <div key={s} className="flex items-center gap-2">
+                              <div key={index} className="flex items-center gap-2">
                                 <Input
                                   className="grow"
                                   disabled={disabled}
-                                  key={index}
                                   placeholder="URL"
                                   {...getFieldProps(`socials[${index}]`)}
                                   errorText={
