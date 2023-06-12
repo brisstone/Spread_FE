@@ -7,7 +7,7 @@ export default function Onboarding({ children, className }: Props) {
   return (
     <Background>
       <div
-        className={`min-h-screen w-full min-w-full box-border flex justify-center items-center p-4 flex-col ${className}`}
+        className={`min-h-screen w-full min-w-full box-border flex justify-center items-center flex-col ${className}`}
       >
         {children}
       </div>

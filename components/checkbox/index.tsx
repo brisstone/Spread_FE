@@ -21,7 +21,7 @@ export default function Checkbox(props: HTMLProps<HTMLInputElement>) {
 export function Radio(props: HTMLProps<HTMLInputElement>) {
   return (
     <label
-      className={`${styles.container} ${props.className}`}
+      className={`${styles.container} !border-2 !border-white ${props.className}`}
       htmlFor={props.id}
     >
       <input

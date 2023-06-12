@@ -1,6 +1,6 @@
 import axiosHttp from "@/lib/axiosHttp";
 import { apiErrorParser, commonSuccessRespFilter } from "@/lib/responseHelpers";
-import { CRMLead, DocumentFile, KanbanItem, Task, User } from "@/types/general";
+import { CRMLead, DocumentFile, KanbanItem, LeadOnboarding, Task, User } from "@/types/general";
 import { SuccessDataResponse } from "@/types/responses";
 import axios from "axios";
 
@@ -132,6 +132,14 @@ export function deleteUsers(ids: string[]) {
         users: ids,
       },
     })
+    .then(commonSuccessRespFilter)
+    .then((response) => response.data.data)
+    .catch(apiErrorParser);
+}
+
+export function onboardLead(id: string) {
+  return axiosHttp
+    .post<SuccessDataResponse<LeadOnboarding>>(`/crm/leads/${id}/onboard`)
     .then(commonSuccessRespFilter)
     .then((response) => response.data.data)
     .catch(apiErrorParser);

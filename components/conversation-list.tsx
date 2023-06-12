@@ -3,13 +3,17 @@ import { ListItem } from "./list";
 import { Conversation } from "@/types/general";
 import { getUserName } from "@/lib/util";
 import useConversations from "@/data/use-conversations";
+import useUser from "@/data/use-user";
+import { ConversationListType } from "@/types/enum";
 
-export default function ConversationsList(props: { onActive?: (id: string) => any, selectedConvId: string }) {
-  const {
-    conversations,
-    error,
-    isLoading,
-  } = useConversations();
+export default function ConversationsList(props: {
+  type: ConversationListType;
+  onActive?: (id: string) => any;
+  selectedConvId: string;
+}) {
+  const { conversations, error, isLoading } = useConversations(props.type);
+
+  const { user } = useUser();
 
   return error ? (
     <p className="text-base text-subtitle text-center">
@@ -19,16 +23,17 @@ export default function ConversationsList(props: { onActive?: (id: string) => an
   ) : (
     <>
       {isLoading ? (
-        <p className="text-base text-subtitle text-center">
-          Chargement...
-        </p>
+        <p className="text-base text-subtitle text-center">Chargement...</p>
       ) : (
         <ul>
-          {conversations && conversations.length ? (
+          {user && conversations && conversations.length ? (
             conversations.map((c) => (
               <ListItem
-                onClick={() => props.onActive ? props.onActive(c.id) : null}
-                primaryText={c.users.map((u) => getUserName(u)).join(', ')}
+                onClick={() => (props.onActive ? props.onActive(c.id) : null)}
+                primaryText={c.users
+                  .filter((u) => u.id !== user.id)
+                  .map((u) => getUserName(u))
+                  .join(", ")}
                 key={c.id}
                 secondaryText="1 Nouveau Message | En Ligne"
                 active={c.id === props.selectedConvId}

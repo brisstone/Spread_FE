@@ -64,7 +64,6 @@ export default function ForgotPassword() {
               text1="Aucun problème."
               text2="Nous vous enverrons les instructions."
               btnText="🔒 Changer de mot de passe"
-              btnHref="/check-email"
             />
           </Form>
         </FormikProvider>

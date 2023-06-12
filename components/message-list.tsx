@@ -39,9 +39,9 @@ export const IncomingMessage = forwardRef(
             <div className="grow mb-4">
               <p className="flex gap-[10px] items-center text-base leading-[18px]">
                 <span>{props.name}</span>
-                <span className="text-[12px] leading-[14px]">
+                {/* <span className="text-[12px] leading-[14px]">
                   {props.extraDetail}
-                </span>
+                </span> */}
               </p>
               <p className="text-base leading-[20px] break-words">
                 {props.message}
@@ -52,7 +52,7 @@ export const IncomingMessage = forwardRef(
                 className={`text-[12px] leading-[15px] font-light`}
                 style={{ fontFamily: '"Inter", sans-serif' }}
               >
-                11:35AM
+                {props.time}
               </p>
             </div>
           </div>
@@ -69,18 +69,18 @@ export const OutgoingMessage = forwardRef(
     return (
       <li className="flex justify-end mt-8" ref={ref}>
         <div className="max-w-[60%] items-start">
-          <div className="flex gap-2 grow bg-white text-purpleblack p-2 rounded-l-[6px] rounded-b-[6px]">
+          <div className="flex gap-2 grow bg-white !text-purpleblack p-2 rounded-l-[6px] rounded-b-[6px]">
             <div className="grow mb-4">
-              <p className="text-base leading-[20px] break-words">
+              <p className="text-base leading-[20px] !text-purpleblack break-words">
                 {props.message}
               </p>
             </div>
             <div className="flex self-end mt-5 gap-1 flex-nowrap">
               <p
-                className={`text-[12px] leading-[15px] font-light`}
+                className={`text-[12px] leading-[15px] font-light !text-purpleblack`}
                 style={{ fontFamily: '"Inter", sans-serif' }}
               >
-                11:35AM
+                {props.time}
               </p>
               <Image
                 src="/images/readreceipt.svg"

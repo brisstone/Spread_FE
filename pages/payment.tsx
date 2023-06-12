@@ -67,7 +67,7 @@ function Plan(
             className={`${
               props.selected
                 ? "bg-btn shadow-btn2"
-                : " bg-white text-black shadow-blurrygrey"
+                : " bg-white !text-black shadow-blurrygrey"
             } w-full mt-[60px]`}
           >
             Passer au plan Freelance
@@ -86,7 +86,7 @@ export default function Payment() {
           Offre Marketing Puissante 🚀
         </p>
       </div>
-      <div className="w-full grow mt-11 py-11">
+      <div className="w-full grow mt-11 py-11 container mx-auto flex items-center">
         <div className="w-full flex flex-col items-center">
           <h1 className="text-xl text-center">
             Scalez votre entreprise ! Essayez Stread pendant 14 jours 🏆
@@ -95,7 +95,7 @@ export default function Payment() {
             <p>Vous avez déjà un compte?</p>
             <p className="text-icon">Se connecter</p>
           </div>
-          <div className="flex w-full justify-center items-center gap-16">
+          <div className="flex w-full justify-center items-center mt-10">
             <div className="flex justify-start gap-7">
               {/* <div className="flex gap-7"> */}
                 <Plan
@@ -128,7 +128,7 @@ export default function Payment() {
                 />
               {/* </div> */}
             </div>
-            <div className="grow">
+            {/* <div className="grow">
               <div className="grid grid-cols-2 gap-x-8 gap-y-4">
                 <Input
                   name="Adresse de facturation"
@@ -148,7 +148,7 @@ export default function Payment() {
                   placeholder="Titulaire du Compte"
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

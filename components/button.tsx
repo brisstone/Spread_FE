@@ -36,7 +36,6 @@ export default function Button(props: ButtonProps) {
 }
 
 export function AddButton(props: ButtonProps & { text: string }) {
-  console.log("props", props);
   return (
     <Button
       {...omit(props, ["text"])}

@@ -124,7 +124,7 @@ export default function Login() {
         ) : (
           <p className="text-lg">
             {error &&
-              "Échec de la récupération des données de l&apos;organisation"}
+              "Échec de la récupération des données de l'organisation"}
             {isLoading && "Chargement..."}
           </p>
         )}

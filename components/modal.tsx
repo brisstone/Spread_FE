@@ -5,7 +5,7 @@ import { omit } from "lodash";
 import Button from "./button";
 import { Dispatch, SetStateAction, useState } from "react";
 
-export type ModalProps = Props & { open: boolean; handleClose: () => any; stayPut?: boolean };
+export type ModalProps = Props & { open: boolean; handleClose?: () => any; stayPut?: boolean };
 
 export default function Modal(props: ModalProps) {
   return createPortal(
@@ -40,7 +40,7 @@ export function ConfirmationModal(
       <div className="flex justify-end mt-6">
         <div className="flex gap-4">
           <Button
-            className="!text-base bg-white text-black"
+            className="!text-base bg-white !text-black"
             onClick={() => props.onCancel(setIsCanceling)}
             loading={isCanceling}
           >
