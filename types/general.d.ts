@@ -1,4 +1,4 @@
-import { EnterpriseRole, QuestionType } from "./enum";
+import { ConversationType, EnterpriseRole, QuestionType } from "./enum";
 
 export interface BaseModel {
   id: string;
@@ -44,8 +44,11 @@ export interface Enterprise extends BaseModel {
 
 export type MinimalUser = Pick<User, "id" | "email" | "firstName" | "lastName">;
 
+export type MinimalUserWithRole = Pick<User, "id" | "email" | "firstName" | "lastName" | "enterpriseRole">
+
 export interface Conversation extends BaseModel {
-  users: MinimalUser[];
+  type: ConversationType;
+  users: MinimalUserWithRole[];
   enterpriseId: string;
 }
 
@@ -69,6 +72,7 @@ export interface CRMLead extends BaseModel {
   amount: number;
   categoryId: string;
   category: CRMCategory;
+  onboarding: LeadOnboarding | null;
 }
 
 export interface QuestionCategory extends BaseModel {
@@ -94,8 +98,8 @@ export interface QuestionCategoryWithQuestions extends QuestionCategory {
 export interface Client extends BaseModel {
   name: string;
   email: string;
-  brief: string;
-  invitationMessage: string;
+  brief: string | null;
+  invitationMessage: string | null;
   leadId?: string;
   userId?: string;
   enterpriseId: string;
@@ -157,9 +161,11 @@ export interface Invoice extends BaseModel {
   enterpriseId: string;
 }
 
-export interface Role extends BaseModel {
+export interface NameOnly extends BaseModel {
   name: EnterpriseRole;
 }
+
+export type Role = NameOnly;
 
 export interface EnterpriseInvitation extends BaseModel {
   email: string;
@@ -183,4 +189,44 @@ export interface DocumentFile extends BaseModel {
   fileType: string;
   folder: DocumentFolder;
   folderId: string;
+}
+
+type ExpenseCategory = NameOnly;
+
+export interface Expense extends BaseModel {
+  name: string;
+  description: string | null;
+  type: ExpenseType;
+  currency: InvoiceCurrency;
+  currencyId: string;
+  date: Date | null;
+  amount: number;
+  category: ExpenseCategory;
+  categoryId: string;
+  enterpriseId: string;
+}
+
+export interface SocketErrorStatus {
+  errors: string[];
+  status: string;
+}
+
+export interface LeadOnboarding extends BaseModel {
+  leadId: string;
+  lead: CRMLead;
+  data: {
+    category: string;
+    question: string;
+    answer: string;
+  }[];
+  completedAt: Date | null;
+}
+
+export interface OnboardingDetail {
+  questionCategories: QuestionCategoryWithQuestions[];
+  onboarding: LeadOnboarding;
+}
+
+export interface CRMCategoryWithCount extends CRMCategory {
+  leadCount: number;
 }

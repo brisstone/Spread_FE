@@ -10,6 +10,7 @@ import Button from "../button";
 import { useAlert } from "@/contexts/alert-context";
 import Image from "next/image";
 import TeamList from "./team-list";
+import { arrayError } from "@/lib";
 
 const Schema = object({
   invites: array().of(
@@ -78,6 +79,10 @@ export default function Team() {
                               className="grow"
                               smallerYPadding
                               {...getFieldProps(`invites[${index}].email`)}
+                              errorText={
+                                touched.invites &&
+                                arrayError(errors.invites, index, "email")
+                              }
                               // errorText={
                               //   touched.invites &&
                               //   touched.invites[index].email &&
@@ -87,6 +92,10 @@ export default function Team() {
                             />
                             <Select
                               {...getFieldProps(`invites[${index}].role`)}
+                              errorText={
+                                touched.invites &&
+                                arrayError(errors.invites, index, "role")
+                              }
                             >
                               <SelectOption value="">Select</SelectOption>
                               <SelectOption value={EnterpriseRole.READER}>
@@ -106,6 +115,7 @@ export default function Team() {
 
                           <div className="flex gap-1 ml-1">
                             <IconButton
+                              type="button"
                               width={11}
                               height={11}
                               iconUrl="/images/cancel.svg"
@@ -114,6 +124,7 @@ export default function Team() {
                               }}
                             />
                             <IconButton
+                              type="button"
                               width={11}
                               height={11}
                               iconUrl="/images/plus.svg"

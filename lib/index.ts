@@ -20,7 +20,7 @@ export function setCookie(enterpriseId: string, token: string) {
 
 export function setCookieContext(enterpriseId: string, token: string) {
   localStorage.setItem(StorageEnum.ENT_CONTEXT, enterpriseId);
-  return setCookie(enterpriseId, token);
+  setCookie(enterpriseId, token);
 }
 
 export function getCookie(enterpriseId: string) {

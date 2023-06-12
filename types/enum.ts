@@ -8,13 +8,13 @@ export enum EnterpriseRole {
 }
 
 export const roleMap = {
-  [EnterpriseRole.OWNER]: 'Propriétaire',
-  [EnterpriseRole.ADMIN]: 'Admin',
-  [EnterpriseRole.LEAD]: 'Chef de file',
-  [EnterpriseRole.OPERATOR]: 'Opérateur',
-  [EnterpriseRole.READER]: 'Accès en lecture',
-  [EnterpriseRole.CLIENT]: 'Client'
-}
+  [EnterpriseRole.OWNER]: "Propriétaire",
+  [EnterpriseRole.ADMIN]: "Admin",
+  [EnterpriseRole.LEAD]: "Chef de file",
+  [EnterpriseRole.OPERATOR]: "Opérateur",
+  [EnterpriseRole.READER]: "Accès en lecture",
+  [EnterpriseRole.CLIENT]: "Client",
+};
 
 export enum StorageEnum {
   ENT_CONTEXT = "enterprise_context",
@@ -43,6 +43,28 @@ export enum InvoiceType {
 }
 
 export enum AlertType {
-  ERROR = 'error',
-  SUCCESS = 'success',
+  ERROR = "error",
+  SUCCESS = "success",
+}
+
+export enum ExpenseType {
+  UNIQUE = "unique",
+  MONTHLY = "monthly",
+  ANNUAL = "annual",
+}
+
+export const expenseTypeMap: { [key: string]: string } = {
+  [ExpenseType.UNIQUE]: "Unique",
+  [ExpenseType.MONTHLY]: "Mensuelle",
+  [ExpenseType.ANNUAL]: "Annuelle",
+};
+
+export enum ConversationType {
+  DIRECT = "direct",
+  GROUP = "group",
+}
+
+export enum ConversationListType {
+  TEAM = 'team',
+  CLIENT = 'client'
 }

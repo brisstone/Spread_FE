@@ -8,6 +8,7 @@ import { EmailSchema, UuidSchema } from "@/util/schema";
 import { CRMLead } from "@/types/general";
 import { useAlert } from "@/contexts/alert-context";
 import Button from "../button";
+import CurrenciesDropdown from "../currency-dropdown";
 
 const LeadSchema = object({
   email: EmailSchema,
@@ -17,6 +18,7 @@ const LeadSchema = object({
   name: string().required("Nom est requis"),
   amount: number().required("Le montant est requis"),
   categoryId: UuidSchema,
+  // currencyId: UuidSchema,
 });
 
 export default function CRMLeadModal(
@@ -37,6 +39,7 @@ export default function CRMLeadModal(
       name: string;
       amount: string;
       categoryId: string;
+      // currencyId: string;
     }
   >({
     url: "/crm/leads",
@@ -47,17 +50,18 @@ export default function CRMLeadModal(
       name: "",
       amount: "",
       categoryId: props.categoryId,
+      // currencyId: "",
     },
     schema: LeadSchema,
     onComplete: (data) => {
       mutate(
-        `/crm/categories/${props.categoryId}/leads`,
+        `/crm/leads?categoryId=${props.categoryId}`,
         (existing: CRMLead[] | undefined): CRMLead[] => {
           if (!existing) return [data];
           return [...existing, data];
         }
       );
-      props.handleClose();
+      if (props.handleClose) props.handleClose();
     },
     onError: (e) => {
       pushAlert(e.message);
@@ -99,6 +103,11 @@ export default function CRMLeadModal(
             {...getFieldProps(`amount`)}
             errorText={touched.amount && errors.amount}
           />
+          {/* <CurrenciesDropdown
+            className="mt-2"
+            errorText={touched.currencyId && errors.currencyId}
+            {...getFieldProps("currencyId")}
+          /> */}
           <Button className="mt-4 w-full" type="submit" loading={isSubmitting}>
             Ajouter
           </Button>

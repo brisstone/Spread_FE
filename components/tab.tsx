@@ -38,10 +38,8 @@ export default function Tab(props: TabProps) {
   // apply active and onclick functions to TabItem props
   const childrenWithProps = React.Children.map(props.children, (child: React.ReactElement<TabItemProps>, index) => {
     if (React.isValidElement(child)) {
-      console.log('valid child' )
       return React.cloneElement(child, {
         onClick: ((e: React.SyntheticEvent) => {
-          console.log('e', e, 'changing')
           props.onChange(index);
         }),
         active: props.value === index,

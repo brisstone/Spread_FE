@@ -14,7 +14,7 @@ interface DetailProps {
   text2: string;
   input?: ReactNode;
   btnText: string;
-  btnHref?: string;
+  onButtonClick?: () => any;
   bottomItem?: ReactNode;
   isSubmitting?: boolean;
 }
@@ -52,6 +52,7 @@ export default function OnboardingDetail(props: DetailProps) {
                 <Button
                   className="w-full shadow-btn2"
                   type="submit"
+                  onClick={props.onButtonClick}
                   loading={props.isSubmitting}
                 >
                   {props.btnText}

@@ -14,6 +14,10 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
 
   const router = useRouter();
 
+  const paths = router.asPath.split('/')
+
+  console.log(paths)
+
   const { user, enterprise, isLoading, error, loggedOut } =
     useUserAndEnterprise();
 
@@ -36,53 +40,60 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
             <div className="p-6">
               <ul>
                 <NavItem
-                  svg="/images/stat.svg"
-                  active
+                  exact
+                  svg="dashboard"
                   name="Dashboard"
                   href={`/${enterprise?.id}/dashboard`}
                 />
                 <NavItem
-                  svg="/images/chat.svg"
+                  svg="chat"
                   name="Chat"
                   href={`/${enterprise?.id}/dashboard/chat`}
                 />
                 <NavItem
-                  svg="/images/chat.svg"
+                  svg="crm"
                   name="CRM"
                   href={`/${enterprise?.id}/dashboard/crm`}
                 />
-                <NavItem
-                  svg="/images/chat.svg"
+                {/* <NavItem
+                  svg="onboarding"
                   name="Onboarding"
+                  noActiveSvg
                   href={`/${enterprise?.id}/dashboard/onboarding`}
-                />
+                /> */}
                 <NavItem
-                  svg="/images/chat.svg"
+                  svg="clients"
                   name="Clients"
                   href={`/${enterprise?.id}/dashboard/clients`}
                 />
                 <NavItem
-                  svg="/images/chat.svg"
+                  svg="todo"
                   name="To Do List"
                   href={`/${enterprise?.id}/dashboard/todo`}
                 />
                 <NavItem
-                  svg="/images/chat.svg"
+                  svg="kanban"
                   name="Kanban"
                   href={`/${enterprise?.id}/dashboard/kanban`}
                 />
                 <NavItem
-                  svg="/images/chat.svg"
+                  svg="documents"
                   name="Documents"
                   href={`/${enterprise?.id}/dashboard/documents`}
                 />
                 <NavItem
-                  svg="/images/chat.svg"
+                  svg="expenses"
+                  noActiveSvg
+                  name="Dépenses"
+                  href={`/${enterprise?.id}/dashboard/expenses`}
+                />
+                <NavItem
+                  svg="invoicing"
                   name="Facturation"
                   href={`/${enterprise?.id}/dashboard/invoicing`}
                 />
                 <NavItem
-                  svg="/images/chat.svg"
+                  svg="settings"
                   name="Parameters"
                   href={`/${enterprise?.id}/dashboard/settings`}
                 />

@@ -8,6 +8,7 @@ import { getUserName } from "@/lib/util";
 import { useMemo, useState } from "react";
 import { deleteUsers } from "@/services";
 import { useAlert } from "@/contexts/alert-context";
+import { ConfirmationModal } from "../modal";
 
 interface UserTableRowProps {
   name: string;
@@ -62,7 +63,8 @@ function UserTableRow(props: UserTableRowProps) {
 }
 
 export default function TeamList() {
-  const { data, isLoading, error } = useSWR<UserDetail[]>("/enterprise/users");
+  const { data, isLoading, error, mutate } =
+    useSWR<UserDetail[]>("/enterprise/users");
 
   const [checked, setChecked] = useState<string[]>([]);
 
@@ -76,6 +78,8 @@ export default function TeamList() {
     [checked, data]
   );
 
+  const [toDelete, setToDelete] = useState<string | null>(null);
+
   return (
     <Fetched
       error={error}
@@ -83,75 +87,89 @@ export default function TeamList() {
       data={data}
       dataComp={(usrs) =>
         usrs.length > 0 ? (
-          <table className="table-auto w-full">
-            <thead>
-              <tr className="border-b border-solid border-divider">
-                <th className="py-3 w-fit text-center whitespace-nowrap">
-                  <input
-                    type="checkbox"
-                    id="logo-facture"
-                    className="mt-[3px]"
-                    checked={allChecked}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setChecked(usrs.map((u) => u.id));
-                      } else {
-                        setChecked([]);
-                      }
+          <>
+            <ConfirmationModal
+              text="Voulez-vous vraiment supprimer cet utilisateur ?"
+              open={!!toDelete}
+              onCancel={() => setToDelete(null)}
+              onConfirm={() => {
+                if (!toDelete) return;
+                deleteUsers([toDelete])
+                  .then(() => {
+                    setToDelete(null);
+                    mutate((prev) => prev?.filter((p) => p.id !== toDelete));
+                    pushAlert("Utilisateur supprimé", AlertType.SUCCESS);
+                  })
+                  .catch((e) => {
+                    setToDelete(null);
+                    pushAlert("Impossible de supprimer l'utilisateur");
+                  });
+              }}
+            />
+            <table className="table-auto w-full">
+              <thead>
+                <tr className="border-b border-solid border-divider">
+                  <th className="py-3 w-fit text-center whitespace-nowrap">
+                    <input
+                      type="checkbox"
+                      id="logo-facture"
+                      className="mt-[3px]"
+                      checked={allChecked}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setChecked(usrs.map((u) => u.id));
+                        } else {
+                          setChecked([]);
+                        }
+                      }}
+                    />
+                  </th>
+                  <th className="text-xs text-obsec font-normal text-left py-3 w-[60%]">
+                    Nom
+                  </th>
+                  <th className="text-left text-xs text-obsec font-normal py-3">
+                    <span className="inline-flex gap-1">
+                      <span>Role</span>
+                      <Image
+                        src="/images/question-more.svg"
+                        height={13.33}
+                        width={13.33}
+                        alt="Question icon"
+                        className=""
+                      />
+                    </span>
+                  </th>
+                  <th className="text-center"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {usrs.map((u) => (
+                  <UserTableRow
+                    key={u.id}
+                    name={getUserName(u)}
+                    email={u.email}
+                    role={u.enterpriseRole.name}
+                    profileImageUrl={u.profileImageUrl}
+                    checked={checked.includes(u.id)}
+                    onDelete={() => {
+                      setToDelete(u.id);
+                    }}
+                    onCheck={() => {
+                      setChecked((prev) => {
+                        if (prev.includes(u.id)) {
+                          return prev.filter((id) => id !== u.id);
+                        } else {
+                          return [...prev, u.id];
+                        }
+                      });
                     }}
                   />
-                </th>
-                <th className="text-xs text-obsec font-normal text-left py-3 w-[60%]">
-                  Nom
-                </th>
-                <th className="text-left text-xs text-obsec font-normal py-3">
-                  <span className="inline-flex gap-1">
-                    <span>Role</span>
-                    <Image
-                      src="/images/question-more.svg"
-                      height={13.33}
-                      width={13.33}
-                      alt="Question icon"
-                      className=""
-                    />
-                  </span>
-                </th>
-                <th className="text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {usrs.map((u) => (
-                <UserTableRow
-                  key={u.id}
-                  name={getUserName(u)}
-                  email={u.email}
-                  role={u.enterpriseRole.name}
-                  profileImageUrl={u.profileImageUrl}
-                  checked={checked.includes(u.id)}
-                  onDelete={() => {
-                    deleteUsers([u.id])
-                      .then(() => {
-                        pushAlert("Utilisateur supprimé", AlertType.SUCCESS);
-                      })
-                      .catch((e) =>
-                        pushAlert("Impossible de supprimer l'utilisateur")
-                      );
-                  }}
-                  onCheck={() => {
-                    setChecked((prev) => {
-                      if (prev.includes(u.id)) {
-                        return prev.filter((id) => id !== u.id);
-                      } else {
-                        return [...prev, u.id];
-                      }
-                    });
-                  }}
-                />
-              ))}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          </>
         ) : (
-          <Feedback msg="Vous n'avez pas encore ajouté de membres à l'équipe." />
+          <p className="text-base text-subtitle">Vous n&apos;avez pas encore ajouté de membres à l&apos;équipe</p>
         )
       }
     />

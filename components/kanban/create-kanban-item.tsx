@@ -58,7 +58,7 @@ export default function CreateKanbanItemModal(
           return newData;
         });
       }
-      props.handleClose();
+      if (props.handleClose) props.handleClose();
     },
     onError: (e) => {
       pushAlert(e.message);

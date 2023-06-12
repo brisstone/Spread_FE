@@ -45,10 +45,10 @@ export function TextArea(props: TextAreaProps) {
       {props.header && (
         <span className="text-base mb-[10px]">{props.header}</span>
       )}
-      <Glass className={props.containerClassName}>
+      <Glass className={`${props.containerClassName} h-full`}>
         <textarea
           {...omit(props, ["inputClassName", "errorText"])}
-          className={`w-full bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base outline-none ${props.inputClassName}`}
+          className={`w-full h-full bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base outline-none ${props.inputClassName}`}
         />
       </Glass>
       {props.errorText && (

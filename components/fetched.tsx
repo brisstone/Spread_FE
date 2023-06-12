@@ -7,6 +7,9 @@ export default function Fetched<T>(props: {
   isLoadingComp?: JSX.Element;
   data: T;
   dataComp: (data: NonNullable<T>) => JSX.Element | JSX.Element[];
+  noData?: boolean;
+  feedbackNoAbsolute?: boolean;
+  feedbackClassName?: string;
 }) {
   return (
     <>
@@ -14,10 +17,26 @@ export default function Fetched<T>(props: {
         props.dataComp(props.data)
       ) : (
         <>
-          {props.isLoading && (props.isLoadingComp || <LoadingFeedback />)}
-          {props.error && (props.errorComp || <ErrorFeedback />)}
+          {props.isLoading &&
+            (props.isLoadingComp || (
+              <LoadingFeedback
+                noAbsolute={props.feedbackNoAbsolute}
+                className={props.feedbackClassName}
+              />
+            ))}
+          {props.error &&
+            (props.errorComp || (
+              <ErrorFeedback
+                noAbsolute={props.feedbackNoAbsolute}
+                className={props.feedbackClassName}
+              />
+            ))}
           {!props.error && !props.isLoading && (
-            <Feedback msg="Pas de données disponibles" />
+            <Feedback
+              noAbsolute={props.feedbackNoAbsolute}
+              msg="Pas de données disponibles"
+              className={props.feedbackClassName}
+            />
           )}
         </>
       )}

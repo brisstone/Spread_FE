@@ -37,7 +37,7 @@ export default function CreateKanbanCatModal(
     schema: Schema,
     onComplete: (data) => {
       mutate("/kanban/categories");
-      props.handleClose();
+      if (props.handleClose) props.handleClose();
     },
     onError: (e) => {
       pushAlert(e.message);

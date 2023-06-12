@@ -74,7 +74,7 @@ export default function QuestionModal(props: ModalProps) {
 
         return copy;
       });
-      props.handleClose();
+      if (props.handleClose) props.handleClose();
     },
     onError: (e) => {
       pushAlert(e.message);

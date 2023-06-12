@@ -13,6 +13,8 @@ export const RequiredSchema = (msg?: string) =>
 
 export const UuidSchema = string().required("Ceci est nécessaire").uuid();
 
+export const UuidSchemaMsg = (msg: string) => string().required(msg || "Ceci est nécessaire").uuid();
+
 export const UuidSchemaFunc = (msg: string) => string().required(msg).uuid();
 
 const phoneRegExp =

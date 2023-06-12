@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Socket } from "socket.io-client";
-import { Message } from "@/types/general";
+import { Message, SocketErrorStatus } from "@/types/general";
 import IconButton from "../iconbutton";
 import useSWRInfinite from "swr/infinite";
 import useUser from "@/data/use-user";
@@ -10,11 +10,17 @@ import ThreeDots from "@/public/images/threedots.svg";
 import { IncomingMessage, MessageList, OutgoingMessage } from "../message-list";
 import { getPgKey, getUserName } from "@/lib/util";
 import utilStyles from "@/styles/utils.module.css";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import moment from "moment";
+import { isSocketErrorStatus } from "@/lib/util/typeGuards";
+import { ConversationListType } from "@/types/enum";
 
 export default function ChatArea({
+  listType,
   selectedConvId,
   socket,
 }: {
+  listType: ConversationListType;
   selectedConvId: string;
   socket: Socket;
 }) {
@@ -33,42 +39,17 @@ export default function ChatArea({
     )
   );
 
+  const { observerTarget } = useInfiniteScroll(setSize);
+
   const { user } = useUser();
 
-  const observer = useRef<IntersectionObserver>(); // ref to store observer
-
   const [inputValue, setInputValue] = useState("");
-
-  const lastElementRef = useCallback(
-    (element: HTMLLIElement) => {
-      //element is the react element being referenced
-
-      // disconnect observer set on previous last element
-      if (observer.current) observer.current.disconnect();
-
-      // if there's no more data to be fetched, don't set new observer
-      console.log("last array", messages && messages[messages.length - 1]);
-      const noMore = messages && messages[messages.length - 1].length === 0;
-      if (noMore) return;
-
-      // set new observer
-      observer.current = new IntersectionObserver((entries) => {
-        // increase page number when element enters (is intersecting with) viewport.
-        // This triggers the pagination hook to fetch more items in the new page
-        if (entries[0].isIntersecting && !noMore) setSize(size + 1);
-      });
-
-      // observe/monitor last element
-      if (element) observer.current.observe(element);
-    },
-    [size, setSize, messages]
-  );
 
   const {
     conversations,
     error: convError,
     isLoading: convLoading,
-  } = useConversations();
+  } = useConversations(listType);
 
   const selectedConv =
     conversations && conversations.find((c) => c.id === selectedConvId);
@@ -78,13 +59,9 @@ export default function ChatArea({
     socket.on("privateMessage", (msg: Message) => {
       console.log("new private message", msg);
       mutate((m) => {
-        console.log("about to mutate", m);
         if (!m) return m;
         const msgs = [...m];
-
         msgs[msgs.length - 1] = [...msgs[msgs.length - 1], msg];
-        console.log(msgs);
-        console.log(m);
         return msgs;
       });
     });
@@ -107,7 +84,12 @@ export default function ChatArea({
               alt="avatar"
               className="rounded-full"
             />
-            <p>{selectedConv.users.map((u) => getUserName(u)).join(", ")}</p>
+            <p>
+              {selectedConv.users
+                .filter((u) => u.id !== user.id)
+                .map((u) => getUserName(u))
+                .join(", ")}
+            </p>
             <ThreeDots />
           </div>
           {/** End of chat window header */}
@@ -117,11 +99,12 @@ export default function ChatArea({
             <MessageList>
               {messages &&
                 messages.flat().map((msg, index) => {
+                  console.log("msg", msg);
                   return msg.fromId === user.id ? (
                     <OutgoingMessage
                       key={msg.id}
                       message={msg.text}
-                      time={new Date(msg.createdAt).toTimeString()}
+                      time={moment(msg.createdAt).format("hh:mm a")}
                       // ref={
                       //   index === messages.flat().length - 1
                       //     ? lastElementRef
@@ -132,18 +115,14 @@ export default function ChatArea({
                     <IncomingMessage
                       key={msg.id}
                       message={msg.text}
-                      time="11:35 AM"
+                      time={moment(msg.createdAt).format("hh:mm a")}
                       name={getUserName(msg.from)}
                       extraDetail="CEO"
-                      ref={
-                        index === messages.flat().length - 1
-                          ? lastElementRef
-                          : undefined
-                      }
                     />
                   );
                 })}
               {messagesLoading && <li className="text-base">Chargement...</li>}
+              <li className="h-px" ref={observerTarget}></li>
             </MessageList>
           </div>
 
@@ -159,7 +138,10 @@ export default function ChatArea({
                     conversationId: selectedConv.id,
                     text: inputValue,
                   },
-                  (msg: Message) => {
+                  (msg: Message | SocketErrorStatus) => {
+                    if (isSocketErrorStatus(msg)) {
+                      return;
+                    }
                     console.log("about to mutate sending", messages);
                     mutate((m) => {
                       if (!m) return m;
