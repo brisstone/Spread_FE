@@ -147,7 +147,7 @@ export default function TeamList() {
                   <UserTableRow
                     key={u.id}
                     name={getUserName(u)}
-                    email={u.email}
+                    email={u.baseUser.email}
                     role={u.enterpriseRole.name}
                     profileImageUrl={u.profileImageUrl}
                     checked={checked.includes(u.id)}

@@ -35,7 +35,7 @@ export interface UserWithEnterprise extends User {
 type UserDetail = Pick<
   User,
   | "id"
-  | "email"
+  | "baseUser"
   | "firstName"
   | "lastName"
   | "enterpriseRole"

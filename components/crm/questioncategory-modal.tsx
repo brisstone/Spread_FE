@@ -40,7 +40,7 @@ export default function QuestionCategoryModal(
         if (!existing) return [{ ...data, questions: [] }];
         return [...existing, { ...data, questions: [] }];
       });
-      props.handleClose();
+      if (props.handleClose) props.handleClose();
     },
     onError: (e) => {
       pushAlert(e.message);

@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <Layout>
       <LayoutHeader>
-        {user && `Bienvenue, ${user.firstName || user.email} ! 👋`}
+        {user && `Bienvenue, ${user.firstName || user.baseUser.email} ! 👋`}
       </LayoutHeader>
       <div className="w-full">
         <div className="flex w-full gap-6">

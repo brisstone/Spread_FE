@@ -46,7 +46,7 @@ export default function CreateDocumentFolder(props: ModalProps) {
           return [];
         }
       );
-      props.handleClose();
+      if (props.handleClose) props.handleClose();
     },
     onError: (e) => {
       pushAlert(e.message);

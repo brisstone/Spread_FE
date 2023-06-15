@@ -14,7 +14,6 @@ export default function CheckEmail() {
           <span>Cliquez ici pour réessayer</span>
         </p>
       }
-      btnHref="/password-changed"
     />
   );
 }

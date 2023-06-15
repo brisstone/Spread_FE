@@ -69,11 +69,11 @@ export default function ClientDetails() {
           dataComp={(c) => (
             <>
               <TabPanel value={tabIndex} index={0}>
-                <NoteGlass title={`Brief - ${c.name}`} note={c.brief} />
+                <NoteGlass title={`Brief - ${c.name}`} note={c.brief || ''} />
               </TabPanel>
 
               <TabPanel value={tabIndex} index={2}>
-                <NoteGlass title={`Notes - ${c.name}`}  note={c.brief} />
+                <NoteGlass title={`Notes - ${c.name}`}  note={c.brief || ''} />
               </TabPanel>
 
               <TabPanel value={tabIndex} index={3}>
