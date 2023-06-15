@@ -24,7 +24,7 @@ export default function VerifyEmail() {
 
   const { pushAlert } = useAlert();
 
-  const { data, error, formik } = usePost<
+  const { formik } = usePost<
     {
       user: User;
       token: string;
@@ -41,7 +41,7 @@ export default function VerifyEmail() {
       console.log(data)
       console.log('user', user);
       setCookieContext(user.enterpriseId, token);
-      router.push(`/${user.enterpriseId}/dashboard`);
+      router.replace('/enterprises');
     },
     onError: (e) => {
       pushAlert(e.message);

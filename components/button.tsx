@@ -7,14 +7,20 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   iconHeight?: number;
   iconWidth?: number;
+  variant?: "primary" | "secondary";
 }
 
 export default function Button(props: ButtonProps) {
+  const variant = props.variant || "primary";
   return (
     <button
       {...omit(props, ["iconUrl", "loading", "iconHeight", "iconWidth"])}
       disabled={props.loading || props.disabled}
-      className={`bg-btn rounded-lg outline-none py-4 px-5 ${props.className} h-fit flex justify-center items-center text-white`}
+      className={` ${variant === 'secondary' ? 'bg-white' : 'bg-btn'} rounded-lg outline-none py-4 px-5 ${
+        props.className
+      } h-fit flex justify-center items-center ${
+        variant === "secondary" ? "text-black" : "text-white"
+      }`}
     >
       <span className="inline-flex gap-2 text-inherit items-center">
         {props.iconUrl && (

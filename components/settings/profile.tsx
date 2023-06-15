@@ -21,6 +21,7 @@ import {
   updateUserProfile,
   uploadToS3,
 } from "@/services";
+import { deleteCookie, getEnterpriseAccessToken } from "@/lib";
 
 const Schema = object({
   firstName: string().optional(),
@@ -236,7 +237,7 @@ export default function ProfileSettings() {
                         disabled
                         header="Email"
                         placeholder="Email"
-                        defaultValue={data.email}
+                        defaultValue={data.baseUser.email}
                         smallerYPadding
                         // inputClassName="placeholder:text-white"
                       />
@@ -311,7 +312,10 @@ export default function ProfileSettings() {
                     </div>
                   </div>
                 </div>
-                <Button className="bg-dim-white3 w-fit !text-black mt-14">
+                <Button onClick={() => {
+                  deleteCookie(getEnterpriseAccessToken(data.enterpriseId));
+                  mutate();
+                }} className="bg-dim-white3 w-fit !text-black mt-14">
                   Déconnexion
                 </Button>
               </>

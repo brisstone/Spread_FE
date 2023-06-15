@@ -45,6 +45,7 @@ export default function ExpenseList() {
                 error={error}
                 isLoading={isLoading}
                 data={expenses}
+                feedbackNoAbsolute
                 dataComp={(data) =>
                   data[0] && data[0].length > 0 ? (
                     <table className="table-auto w-full">
@@ -57,7 +58,7 @@ export default function ExpenseList() {
                       </tbody>
                     </table>
                   ) : (
-                    <Feedback msg="Vous n'avez créé aucune dépense" />
+                    <Feedback noAbsolute msg="Vous n'avez créé aucune dépense" />
                   )
                 }
               />

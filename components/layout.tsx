@@ -14,10 +14,6 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
 
   const router = useRouter();
 
-  const paths = router.asPath.split('/')
-
-  console.log(paths)
-
   const { user, enterprise, isLoading, error, loggedOut } =
     useUserAndEnterprise();
 

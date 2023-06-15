@@ -1,6 +1,15 @@
+import { getCookie } from "@/lib";
 import axiosHttp from "@/lib/axiosHttp";
 import { apiErrorParser, commonSuccessRespFilter } from "@/lib/responseHelpers";
-import { CRMLead, DocumentFile, KanbanItem, LeadOnboarding, Task, User } from "@/types/general";
+import {
+  CRMLead,
+  DocumentFile,
+  KanbanItem,
+  LeadOnboarding,
+  Task,
+  User,
+  UserWithEnterprise,
+} from "@/types/general";
 import { SuccessDataResponse } from "@/types/responses";
 import axios from "axios";
 
@@ -140,6 +149,42 @@ export function deleteUsers(ids: string[]) {
 export function onboardLead(id: string) {
   return axiosHttp
     .post<SuccessDataResponse<LeadOnboarding>>(`/crm/leads/${id}/onboard`)
+    .then(commonSuccessRespFilter)
+    .then((response) => response.data.data)
+    .catch(apiErrorParser);
+}
+
+export function createSubscription(priceId: string) {
+  return axiosHttp
+    .post<
+      SuccessDataResponse<{
+        clientSecret: string;
+        subscriptionId: string;
+      }>
+    >("/payment/subscriptions", { priceId })
+    .then(commonSuccessRespFilter)
+    .then((response) => response.data.data)
+    .catch(apiErrorParser);
+}
+
+export function markSubscriptionAsActive(data: {
+  enterpriseId: string;
+  subscriptionId: string;
+}) {
+  return axiosHttp
+    .post("/payment/subscriptions/activate", data)
+    .then(commonSuccessRespFilter)
+    .then((response) => response.data.data)
+    .catch(apiErrorParser);
+}
+
+export function getUserEnterprises() {
+  return axiosHttp
+    .get<SuccessDataResponse<UserWithEnterprise[]>>("/auth/user/enterprises", {
+      headers: {
+        Authorization: `Bearer ${getCookie('noent')}`
+      }
+    })
     .then(commonSuccessRespFilter)
     .then((response) => response.data.data)
     .catch(apiErrorParser);
