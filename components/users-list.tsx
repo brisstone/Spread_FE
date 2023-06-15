@@ -1,5 +1,5 @@
 import { Socket } from "socket.io-client";
-import { Conversation, SocketErrorStatus, User } from "@/types/general";
+import { Conversation, MinimalUser, SocketErrorStatus, User } from "@/types/general";
 import useSWR, { useSWRConfig } from "swr";
 import { ListItem, ScrollableList } from "./list";
 import { createConversation } from "@/services";
@@ -20,7 +20,7 @@ export default function UsersList({
     data: users,
     isLoading,
     error,
-  } = useSWR<Pick<User, "id" | "email" | "firstName" | "lastName">[]>(
+  } = useSWR<MinimalUser[]>(
     `/enterprise/users${listType === ConversationListType.CLIENT ? `?roles=${EnterpriseRole.CLIENT}` : ''}`
   );
 

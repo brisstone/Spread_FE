@@ -21,7 +21,7 @@ import {
   updateUserProfile,
   uploadToS3,
 } from "@/services";
-import { deleteCookie, getEnterpriseAccessToken } from "@/lib";
+import { deleteCookie, getEnterpriseAccessTokenName } from "@/lib";
 
 const Schema = object({
   firstName: string().optional(),
@@ -313,7 +313,7 @@ export default function ProfileSettings() {
                   </div>
                 </div>
                 <Button onClick={() => {
-                  deleteCookie(getEnterpriseAccessToken(data.enterpriseId));
+                  deleteCookie(getEnterpriseAccessTokenName(data.enterpriseId));
                   mutate();
                 }} className="bg-dim-white3 w-fit !text-black mt-14">
                   Déconnexion
