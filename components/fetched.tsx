@@ -11,6 +11,7 @@ export default function Fetched<T>(props: {
   feedbackNoAbsolute?: boolean;
   feedbackClassName?: string;
 }) {
+  console.log('ERR', props.error);
   return (
     <>
       {props.data ? (

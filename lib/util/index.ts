@@ -1,13 +1,12 @@
-import { User } from "@/types/general";
-import { Dispatch, SetStateAction } from "react";
+import { MinimalUser,  } from "@/types/general";
 import { MutatorCallback } from "swr";
 
 export function getUserName(
-  user: Pick<User, "id" | "email" | "firstName" | "lastName">
+  user: MinimalUser,
 ) {
   return (
     `${user.firstName || ""}${user.lastName ? ` ${user.lastName}` : ""}` ||
-    user.email
+    user.baseUser.email
   );
 }
 

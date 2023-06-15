@@ -12,6 +12,8 @@ import { useRouter } from "next/router";
 import React, { FunctionComponent, ReactNode, useEffect } from "react";
 import { Provider } from "react-redux";
 import { SWRConfig } from "swr";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 type ComponentType = NextComponentType<NextPageContext, any, any> & {
   Layout?: FunctionComponent<LayoutProps>;
@@ -37,7 +39,7 @@ export default function App({
     header?: string;
   };
 }) {
-  const Layout = Component.Layout || React.Fragment;
+  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUB_KEY!);
 
   return (
     <Provider store={store}>
@@ -46,10 +48,22 @@ export default function App({
           fetcher,
         }}
       >
-        <AlertContextProvider>
-          <Alert />
-          <Component {...pageProps} />
-        </AlertContextProvider>
+        <Elements stripe={stripePromise} options={{
+          locale: 'fr',
+          appearance: {
+            theme: 'none',
+            variables: {
+              colorPrimary: '#ffffff',
+              colorText: '#ffffff',
+              colorTextPlaceholder: '#ffffff'
+            }
+          }
+        }}>
+          <AlertContextProvider>
+            <Alert />
+            <Component {...pageProps} />
+          </AlertContextProvider>
+        </Elements>
       </SWRConfig>
     </Provider>
   );

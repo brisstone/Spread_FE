@@ -9,7 +9,7 @@ import { object } from "yup";
 import { EmailSchema, PasswordSchema, UuidSchema } from "@/util/schema";
 import Cookies from "js-cookie";
 import { Form, FormikProvider } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAlert } from "@/contexts/alert-context";
 import { setCookie, setCookieContext } from "@/lib";
 import Link from "next/link";
@@ -28,6 +28,23 @@ export default function Login() {
     router.query.id ? `/enterprise/check/${router.query.id}` : null
   );
 
+  const { email } = router.query;
+
+  const [emailValid, setEmailValid] = useState(false);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    EmailSchema.validate(email)
+      .then(() => {
+        setEmailValid(true);
+        setShow(true);
+      })
+      .catch(() => {
+        setEmailValid(false);
+        setShow(true);
+      });
+  }, [email]);
+
   const { pushAlert } = useAlert();
 
   const { formik } = usePost<
@@ -40,7 +57,7 @@ export default function Login() {
     url: "/auth/login",
     enableReinitialize: true,
     initialValues: {
-      email: "",
+      email: (email as string | undefined) || "",
       password: "",
       enterpriseId: (router.query.id as string | undefined) || "",
     },
@@ -55,6 +72,8 @@ export default function Login() {
   });
 
   const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+
+  if (!show) return <Onboarding />;
 
   return (
     // <div className="min-h-screen w-screen">
@@ -81,13 +100,15 @@ export default function Login() {
                   className="w-full"
                 >
                   <div className="w-full flex flex-col mt-8 gap-5">
-                    <Input
-                      header="Email"
-                      placeholder="Votre email"
-                      {...getFieldProps("email")}
-                      errorText={touched.email && errors.email}
-                      className="w-full"
-                    />
+                    {!emailValid && (
+                      <Input
+                        header="Email"
+                        placeholder="Votre email"
+                        {...getFieldProps("email")}
+                        errorText={touched.email && errors.email}
+                        className="w-full"
+                      />
+                    )}
                     <Input
                       header="Mot de passe"
                       type="password"
@@ -123,8 +144,7 @@ export default function Login() {
           </>
         ) : (
           <p className="text-lg">
-            {error &&
-              "Échec de la récupération des données de l'organisation"}
+            {error && "Échec de la récupération des données de l'organisation"}
             {isLoading && "Chargement..."}
           </p>
         )}

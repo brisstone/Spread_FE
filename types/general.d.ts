@@ -5,8 +5,15 @@ export interface BaseModel {
   createdAt: string;
   updatedAt: string;
 }
-export interface User extends BaseModel {
+
+export interface BaseUser extends BaseModel {
   email: string;
+  emailVerifiedAt: string;
+}
+
+export interface User extends BaseModel {
+  baseUser: BaseUser;
+  baseUserId: string;
   firstName: string;
   lastName: string;
   dob: string | null;
@@ -19,6 +26,10 @@ export interface User extends BaseModel {
   postalCode: string | null;
   enterpriseId: string;
   enterpriseRole: Role;
+}
+
+export interface UserWithEnterprise extends User {
+  enterprise: Enterprise;
 }
 
 type UserDetail = Pick<
@@ -40,11 +51,18 @@ export interface Enterprise extends BaseModel {
   socials: string[];
   includeLogoInInvoice: boolean;
   includeLogoInEmail: boolean;
+  subscriptionActive: boolean;
 }
 
-export type MinimalUser = Pick<User, "id" | "email" | "firstName" | "lastName">;
+type MinimalBaseUser = Pick<BaseUser, "id" | "email">
 
-export type MinimalUserWithRole = Pick<User, "id" | "email" | "firstName" | "lastName" | "enterpriseRole">
+type IMinimalBaseUser = {
+  baseUser: MinimalBaseUser
+}
+
+export type MinimalUser = Pick<User, "id" | "firstName" | "lastName"> & IMinimalBaseUser;
+
+export type MinimalUserWithRole = Pick<User, "id" | "firstName" | "lastName" | "enterpriseRole"> & IMinimalBaseUser
 
 export interface Conversation extends BaseModel {
   type: ConversationType;
@@ -229,4 +247,21 @@ export interface OnboardingDetail {
 
 export interface CRMCategoryWithCount extends CRMCategory {
   leadCount: number;
+}
+
+export interface StripePrice {
+  id: string;
+  currency: string;
+  product: StripeProduct;
+  unit_amount: number;
+  lookup_key?: string;
+}
+
+export interface StripeProduct {
+  id: string;
+  description: string;
+  name:string;
+  metadata: {
+    rank: `${number}`
+  }
 }

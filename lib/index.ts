@@ -23,12 +23,22 @@ export function setCookieContext(enterpriseId: string, token: string) {
   setCookie(enterpriseId, token);
 }
 
+export const getEnterpriseAccessTokenName = (e: string) => `${e}_access_token`;
+
+export const getCurrentEntAccessTokenName = () => {
+  return getEnterpriseAccessTokenName(localStorage.getItem(StorageEnum.ENT_CONTEXT) || '')
+}
+
 export function getCookie(enterpriseId: string) {
-  return Cookies.get(`${enterpriseId}_access_token`);
+  return Cookies.get(getEnterpriseAccessTokenName(enterpriseId));
 }
 
 export function getCookieContext() {
   return getCookie(localStorage.getItem(StorageEnum.ENT_CONTEXT) || "");
+}
+
+export function deleteCookie(key: string) {
+  return Cookies.remove(key);
 }
 
 function isStringArr(err: any[], index: number): err is string[] {

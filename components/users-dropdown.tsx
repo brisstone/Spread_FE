@@ -27,7 +27,7 @@ export default function UsersDropdown(
     data: users,
     isLoading: usersLoading,
     error: usersError,
-  } = useSWR<Pick<User, "id" | "email" | "firstName" | "lastName">[]>(
+  } = useSWR<Pick<User, "id" | "baseUser" | "firstName" | "lastName">[]>(
     `/enterprise/users${genQueryFromArr(props.roles, 'role')}`
   );
 

@@ -55,7 +55,7 @@ export function Team(props: { data: MinimalUser[], name: string }) {
               />
               <div className="grow ml-5">
                 <p className="text-base">{getUserName(u)}</p>
-                {/* <p className="text-[13px] leading-[19px]">{u.email}</p> */}
+                <p className="text-[13px] leading-[19px] whitespace-nowrap text-ellipsis">{u.baseUser.email}</p>
               </div>
               <Tag>Actif</Tag>
             </div>

@@ -64,7 +64,7 @@ export function ExpenseTableRow(props: { data: Expense, smallerPadding?: boolean
         </span>
       </td>
       <td className={`${props.smallerPadding ? 'py-4' : 'py-5'}`}>
-        <Tag className="!bg-btn !text-[9px] !leading-[150%]">Gestion</Tag>
+        <Tag className="!bg-btn !text-[9px] !leading-[150%]">{data.category.name}</Tag>
       </td>
     </tr>
   );

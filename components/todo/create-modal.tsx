@@ -44,7 +44,7 @@ export default function CreateTodoModal(
     },
     schema: Schema,
     onComplete: (data) => {
-      if (props.mutate)
+      if (props.mutate) {
         props.mutate((m) => {
           if (!m) return m;
           const newData = [...m];
@@ -52,6 +52,9 @@ export default function CreateTodoModal(
           newData[0] = [data, ...newData[0]];
           return newData;
         });
+      }
+
+      if (props.handleClose) props.handleClose();
     },
     onError: (e) => {
       pushAlert(e.message);
