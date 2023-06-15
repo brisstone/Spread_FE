@@ -109,7 +109,6 @@ export default function Checkout() {
 
   // }
 
-  console.log(getCookieContext())
   return (
     <Onboarding>
       <Fetched
@@ -158,6 +157,13 @@ export default function Checkout() {
 
                           <div className="mt-5">
                             <CardElement
+                              options={{
+                                style: {
+                                  base: {
+                                    color: '#ffffff'
+                                  }
+                                }
+                              }}
                               className={`${utilStyles.glass} px-5 py-4 !text-white`}
                             />
                             {paymentError && (

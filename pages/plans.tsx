@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import useUser from "@/data/use-user";
 import { useEffect, useState } from "react";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
+import { omit } from "lodash";
 
 function FeatureItem({ text, className }: { text: string } & Props) {
   return (
@@ -145,7 +146,10 @@ export default function Payment() {
                                 console.log("data", data);
                                 router.push({
                                   pathname: "/checkout",
-                                  query: data,
+                                  query: {
+                                    ...omit(data, ['enterpriseId']),
+                                    id: data.enterpriseId,
+                                  },
                                 });
                                 setIsSubmitting(null);
                               })
