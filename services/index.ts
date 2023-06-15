@@ -160,6 +160,7 @@ export function createSubscription(priceId: string) {
       SuccessDataResponse<{
         clientSecret: string;
         subscriptionId: string;
+        enterpriseId: string;
       }>
     >("/payment/subscriptions", { priceId })
     .then(commonSuccessRespFilter)

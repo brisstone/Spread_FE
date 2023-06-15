@@ -73,6 +73,12 @@ export default function Login() {
 
   const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
+  useEffect(() => {
+    if (error && !data) {
+      router.replace('/start');
+    }
+  }, [error, data, router]);
+
   if (!show) return <Onboarding />;
 
   return (
@@ -136,7 +142,7 @@ export default function Login() {
                 <p className="mt-7 text-base">
                   <span>Vous n’avez pas de compte?</span>
                   <span className="text-icon ml-0.5">
-                    <Link href="/signup">Inscrivez-vous</Link>
+                    <Link href="/start">Inscrivez-vous</Link>
                   </span>
                 </p>
               </OnboardingGlass>
