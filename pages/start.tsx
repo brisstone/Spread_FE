@@ -14,6 +14,7 @@ import { useAlert } from "@/contexts/alert-context";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
 import { useEffect } from "react";
 import useBaseUser from "@/data/use-base-user";
+import { baseUserTokenId } from "@/types/enum";
 
 const Schema = object({
   email: EmailSchema,
@@ -41,7 +42,7 @@ export default function Signup() {
     initialValues,
     schema: Schema,
     onComplete: (data) => {
-      setCookieContext("noent", data.token);
+      setCookieContext(baseUserTokenId, data.token);
       router.replace("/verify-email");
     },
     onError: (e) => {

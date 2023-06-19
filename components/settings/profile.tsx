@@ -21,7 +21,7 @@ import {
   updateUserProfile,
   uploadToS3,
 } from "@/services";
-import { deleteCookie, getEnterpriseAccessTokenName } from "@/lib";
+import { logout } from "@/lib";
 
 const Schema = object({
   firstName: string().optional(),
@@ -262,10 +262,14 @@ export default function ProfileSettings() {
                         // {...getFieldProps("dueDate")}
                         onChange={(e) => {
                           console.log((e.target as any).value);
-                          setFieldValue(
-                            "dob",
-                            new Date((e.target as any).value).toISOString()
-                          );
+                          try {
+                            setFieldValue(
+                              "dob",
+                              new Date((e.target as any).value).toISOString()
+                            );
+                          } catch (e) {
+                            setFieldValue("dob", undefined);
+                          }
                         }}
                       />
                       <PhoneInput
@@ -312,10 +316,13 @@ export default function ProfileSettings() {
                     </div>
                   </div>
                 </div>
-                <Button onClick={() => {
-                  deleteCookie(getEnterpriseAccessTokenName(data.enterpriseId));
-                  mutate();
-                }} className="bg-dim-white3 w-fit !text-black mt-14">
+                <Button
+                  onClick={() => {
+                    logout(data.enterpriseId);
+                    mutate();
+                  }}
+                  className="bg-dim-white3 w-fit !text-black mt-14"
+                >
                   Déconnexion
                 </Button>
               </>

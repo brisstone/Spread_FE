@@ -3,21 +3,23 @@ import Select, { SelectOption, SelectProps } from "./select";
 import { Client } from "@/types/general";
 import Fetched from "./fetched";
 
-export default function ClientsDropdown(props: SelectProps) {
+export default function ClientsDropdown(
+  props: SelectProps & { defaultLabel?: string }
+) {
   const {
     data: clients,
     isLoading: clientsLoading,
     error: clientsError,
-  } = useSWR<Client[]>(
-    "/crm/clients"
-  );
+  } = useSWR<Client[]>("/crm/clients");
 
   return (
     <Select
       {...props}
       // errorText={touched.team && errors.team}
     >
-      <SelectOption value="">Séléctionner un client</SelectOption>
+      <SelectOption value="">
+        {props.defaultLabel || "Séléctionner un client"}
+      </SelectOption>
       <Fetched
         error={clientsError}
         errorComp={

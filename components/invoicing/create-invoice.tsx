@@ -147,10 +147,14 @@ export default function CreateInvoice(props: { onCreate: () => any }) {
                   // {...getFieldProps("dueDate")}
                   onChange={(e) => {
                     console.log((e.target as any).value);
-                    setFieldValue(
-                      "dueDate",
-                      new Date((e.target as any).value).toISOString()
-                    );
+                    try {
+                      setFieldValue(
+                        "dueDate",
+                        new Date((e.target as any).value).toISOString()
+                      );
+                    } catch (e) {
+                      setFieldValue("dueDate", undefined);
+                    }
                   }}
                 />
               </div>

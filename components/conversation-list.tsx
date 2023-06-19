@@ -7,9 +7,10 @@ import useUser from "@/data/use-user";
 import { ConversationListType } from "@/types/enum";
 
 export default function ConversationsList(props: {
+  noXPadding?: boolean;
   type: ConversationListType;
   onActive?: (id: string) => any;
-  selectedConvId: string;
+  selectedConvId?: string;
 }) {
   const { conversations, error, isLoading } = useConversations(props.type);
 
@@ -29,6 +30,7 @@ export default function ConversationsList(props: {
           {user && conversations && conversations.length ? (
             conversations.map((c) => (
               <ListItem
+                noXPadding={props.noXPadding}
                 onClick={() => (props.onActive ? props.onActive(c.id) : null)}
                 primaryText={c.users
                   .filter((u) => u.id !== user.id)

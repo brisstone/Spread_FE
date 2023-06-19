@@ -5,7 +5,7 @@ import { useAlert } from "@/contexts/alert-context";
 import { usePost } from "@/hooks/apiHooks";
 import { setCookie, setCookieContext } from "@/lib";
 import axiosHttp from "@/lib/axiosHttp";
-import { StorageEnum } from "@/types/enum";
+import { StorageEnum, baseUserTokenId } from "@/types/enum";
 import { User } from "@/types/general";
 import axios from "axios";
 import { Form, FormikProvider } from "formik";
@@ -40,7 +40,9 @@ export default function VerifyEmail() {
       const { user, token } = data;
       console.log(data)
       console.log('user', user);
-      setCookieContext(user.enterpriseId, token);
+
+      console.log('TOKEN from VERIFY', token);
+      setCookieContext(baseUserTokenId, token);
       router.replace('/enterprises');
     },
     onError: (e) => {

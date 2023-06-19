@@ -54,15 +54,20 @@ export interface Enterprise extends BaseModel {
   subscriptionActive: boolean;
 }
 
-type MinimalBaseUser = Pick<BaseUser, "id" | "email">
+type MinimalBaseUser = Pick<BaseUser, "id" | "email">;
 
 type IMinimalBaseUser = {
-  baseUser: MinimalBaseUser
-}
+  baseUser: MinimalBaseUser;
+};
 
-export type MinimalUser = Pick<User, "id" | "firstName" | "lastName"> & IMinimalBaseUser;
+export type MinimalUser = Pick<User, "id" | "firstName" | "lastName" | "profileImageKey" | "profileImageUrl"> &
+  IMinimalBaseUser;
 
-export type MinimalUserWithRole = Pick<User, "id" | "firstName" | "lastName" | "enterpriseRole"> & IMinimalBaseUser
+export type MinimalUserWithRole = Pick<
+  User,
+  "id" | "firstName" | "lastName" | "enterpriseRole"
+> &
+  IMinimalBaseUser;
 
 export interface Conversation extends BaseModel {
   type: ConversationType;
@@ -260,8 +265,54 @@ export interface StripePrice {
 export interface StripeProduct {
   id: string;
   description: string;
-  name:string;
+  name: string;
   metadata: {
-    rank: `${number}`
-  }
+    rank: `${number}`;
+  };
+}
+
+export type InvoiceReport = Client & { unpaidCount: `${number}` };
+
+export interface StripeInvoice {
+  id: string;
+  currency: string;
+  amount_paid: number;
+  amount_due: number;
+  invoice_pdf: string;
+  status_transitions: {
+    finalized_at: number | null;
+    marked_uncollectible_at: number | null;
+    paid_at: number | null;
+    voided_at: number | null;
+  };
+}
+
+export interface StripeSubscription {
+  id: string;
+  default_payment_method: {
+    card: {
+      brand: string;
+      exp_month: number;
+      exp_year: number;
+      last4: string;
+    };
+  };
+}
+
+export interface IKPI {
+  name: string;
+  value: string;
+  sideValue?: string;
+}
+
+export interface ClientTurnover {
+  yearCreated: number;
+  monthCreated: number;
+  totalClients: number;
+}
+
+export interface TurnoverData {
+  month: number;
+  currentYearData: `${number}` | number;
+  prevYearData: `${number}` | number;
 }

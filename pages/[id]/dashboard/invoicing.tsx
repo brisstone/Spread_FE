@@ -3,12 +3,14 @@ import Card, { CardContent, CardHeader } from "@/components/card";
 import Input, { TextArea } from "@/components/input";
 import CreateInvoice from "@/components/invoicing/create-invoice";
 import {InvoiceList} from "@/components/invoicing/invoice-list";
+import InvoiceReportList from "@/components/invoicing/invoice-report-list";
 import KPI from "@/components/kpi";
 import Layout from "@/components/layout";
 import Select, { SelectOption } from "@/components/select";
 import Tab, { TabItem, TabPanel } from "@/components/tab";
 import dummyChartData from "@/data/dummy-chart";
 import { valueFormatter } from "@/lib/util";
+import { InvoiceType } from "@/types/enum";
 import { AreaChart } from "@tremor/react";
 import { useState } from "react";
 
@@ -36,13 +38,25 @@ export default function Invoicing() {
 
         <TabPanel index={0} value={tabIndex}>
           <Card className="mt-7 relative flex flex-col grow h-full">
-            <CreateInvoice onCreate={() => setTabIndex} />
+            <CreateInvoice onCreate={() => setTabIndex(1)} />
           </Card>
         </TabPanel>
 
         <TabPanel index={1} value={tabIndex}>
           <Card className="mt-7 relative flex flex-col grow h-full">
-            <InvoiceList />
+            <InvoiceList type={InvoiceType.SIMPLE} />
+          </Card>
+        </TabPanel>
+
+        <TabPanel index={2} value={tabIndex}>
+          <Card className="mt-7 relative flex flex-col grow h-full">
+            <InvoiceList type={InvoiceType.RECURRENT} />
+          </Card>
+        </TabPanel>
+
+        <TabPanel index={3} value={tabIndex}>
+          <Card className="mt-7 relative flex flex-col grow h-full">
+            <InvoiceReportList />
           </Card>
         </TabPanel>
 

@@ -1,5 +1,5 @@
 import { ApiError } from "@/lib/ApiError";
-import { StorageEnum } from "@/types/enum";
+import { StorageEnum, baseUserTokenId } from "@/types/enum";
 import { FormikErrors } from "formik";
 import Cookies from "js-cookie";
 
@@ -26,8 +26,10 @@ export function setCookieContext(enterpriseId: string, token: string) {
 export const getEnterpriseAccessTokenName = (e: string) => `${e}_access_token`;
 
 export const getCurrentEntAccessTokenName = () => {
-  return getEnterpriseAccessTokenName(localStorage.getItem(StorageEnum.ENT_CONTEXT) || '')
-}
+  return getEnterpriseAccessTokenName(
+    localStorage.getItem(StorageEnum.ENT_CONTEXT) || ""
+  );
+};
 
 export function getCookie(enterpriseId: string) {
   return Cookies.get(getEnterpriseAccessTokenName(enterpriseId));
@@ -37,8 +39,9 @@ export function getCookieContext() {
   return getCookie(localStorage.getItem(StorageEnum.ENT_CONTEXT) || "");
 }
 
-export function deleteCookie(key: string) {
-  return Cookies.remove(key);
+export function logout(enterpriseId: string) {
+  localStorage.setItem(StorageEnum.ENT_CONTEXT, baseUserTokenId);
+  return Cookies.remove(getEnterpriseAccessTokenName(enterpriseId));
 }
 
 function isStringArr(err: any[], index: number): err is string[] {

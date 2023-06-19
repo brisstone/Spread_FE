@@ -90,6 +90,11 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                 />
                 <NavItem
                   svg="settings"
+                  name="Affiliation"
+                  href={`/${enterprise?.id}/dashboard/affiliation`}
+                />
+                <NavItem
+                  svg="settings"
                   name="Parameters"
                   href={`/${enterprise?.id}/dashboard/settings`}
                 />

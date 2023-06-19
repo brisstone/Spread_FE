@@ -13,15 +13,16 @@ export default function fetcher(url: string) {
 }
 
 export function authFetcher([url, enterpriseId]: string[]) {
+  console.log("Cookie", getCookie(enterpriseId));
   return axiosAuth
-  .get(url, {
-    headers: {
-      Authorization: `Bearer ${getCookie(enterpriseId)}`
-    }
-  })
-  .then(commonSuccessRespFilter)
-  .then((response) => response.data.data)
-  .catch(apiErrorParser);
+    .get(url, {
+      headers: {
+        Authorization: `Bearer ${getCookie(enterpriseId)}`,
+      },
+    })
+    .then(commonSuccessRespFilter)
+    .then((response) => response.data.data)
+    .catch(apiErrorParser);
 }
 
 export function customFetcher(action: (resp: PaginationResponse<any>) => any) {

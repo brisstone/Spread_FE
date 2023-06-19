@@ -5,12 +5,22 @@ import Link from "next/link";
 import { Client } from "@/types/general";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
 
-export default function ClientCard({ client }: { client: Client }) {
-  const { enterprise } = useUserAndEnterprise();
-
+export default function ClientCard({
+  id,
+  brief,
+  name,
+  href,
+  createdAt,
+}: {
+  id: string;
+  brief: string | null;
+  createdAt?: Date;
+  name: string;
+  href: string;
+}) {
   return (
     <Glass className="py-10 px-14">
-      <Link href={`/${enterprise?.id}/dashboard/clients/${client.id}`} className="block w-full">
+      <Link href={href} className="block w-full">
         <div className="w-full flex gap-4 items-center">
           <Image
             src="/images/genericavatar.png"
@@ -21,11 +31,11 @@ export default function ClientCard({ client }: { client: Client }) {
           />
 
           <p className="text-[23px] leading-[28px] tracking-[-0.19159px]">
-            {client.name}
+            {name}
           </p>
         </div>
         <div className="mt-8">
-          <p className="text-base">{client.brief}</p>
+          <p className="text-base">{brief}</p>
 
           <GradientHDivider className="my-8" />
 

@@ -9,7 +9,7 @@ import { CRMLead, Task } from "@/types/general";
 import { useAlert } from "@/contexts/alert-context";
 import Button from "../button";
 import UsersDropdown from "../users-dropdown";
-import { EnterpriseRole } from "@/types/enum";
+import { EnterpriseRole, TaskType } from "@/types/enum";
 
 const Schema = object({
   title: RequiredSchema(),
@@ -21,6 +21,8 @@ const Schema = object({
 export default function CreateTodoModal(
   props: ModalProps & {
     mutate: KeyedMutator<Task[][]>;
+    type: TaskType;
+    clientId?: string;
   }
 ) {
   const { pushAlert } = useAlert();
@@ -34,7 +36,7 @@ export default function CreateTodoModal(
       dueDate: string | undefined;
     }
   >({
-    url: "/tasks",
+    url: `/tasks?type=${props.type}${props.clientId ? `&clientId=${props.clientId}` : ""}`,
     enableReinitialize: true,
     initialValues: {
       title: "",

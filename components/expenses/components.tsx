@@ -2,6 +2,13 @@ import Image from "next/image";
 import Tag from "../tag";
 import { Expense } from "@/types/general";
 import { ExpenseType, expenseTypeMap } from "@/types/enum";
+import {
+  TableHead,
+  TableHeadCell,
+  TableHeadRow,
+  TableRow,
+  TableRowCell,
+} from "../table";
 
 export function RecentExpenseItem(props: {
   name: string;
@@ -31,11 +38,14 @@ export function RecentExpenseItem(props: {
   );
 }
 
-export function ExpenseTableRow(props: { data: Expense, smallerPadding?: boolean }) {
+export function ExpenseTableRow(props: {
+  data: Expense;
+  smallerPadding?: boolean;
+}) {
   const { data } = props;
   return (
-    <tr className="border-b border-solid border-[#56577A] last:border-0">
-      <td className={`${props.smallerPadding ? 'py-4' : 'py-5'}`}>
+    <TableRow>
+      <TableRowCell smallerPadding={props.smallerPadding}>
         <div className="flex">
           <Image
             src="/images/xd.png"
@@ -46,8 +56,8 @@ export function ExpenseTableRow(props: { data: Expense, smallerPadding?: boolean
           />
           <span className="text-base ml-4">{data.name}</span>
         </div>
-      </td>
-      <td className={`${props.smallerPadding ? 'py-4' : 'py-5'}`}>
+      </TableRowCell>
+      <TableRowCell smallerPadding={props.smallerPadding}>
         <Tag
           className={`${
             (data.type === ExpenseType.MONTHLY && "!bg-[#BC7EFF]") ||
@@ -57,36 +67,30 @@ export function ExpenseTableRow(props: { data: Expense, smallerPadding?: boolean
         >
           {expenseTypeMap[data.type]}
         </Tag>
-      </td>
-      <td className={`${props.smallerPadding ? 'py-4' : 'py-5'}`}>
+      </TableRowCell>
+      <TableRowCell smallerPadding={props.smallerPadding}>
         <span className="text-base">
           {data.currency.name} {data.amount}
         </span>
-      </td>
-      <td className={`${props.smallerPadding ? 'py-4' : 'py-5'}`}>
-        <Tag className="!bg-btn !text-[9px] !leading-[150%]">{data.category.name}</Tag>
-      </td>
-    </tr>
+      </TableRowCell>
+      <TableRowCell smallerPadding={props.smallerPadding}>
+        <Tag className="!bg-btn !text-[9px] !leading-[150%]">
+          {data.category.name}
+        </Tag>
+      </TableRowCell>
+    </TableRow>
   );
 }
 
 export function ExpenseTableHead() {
   return (
-    <thead>
-      <tr className="border-b border-solid border-[#56577A]">
-        <th className="text-left text-[10px] leading-[150%] text-obsec font-normal py-3">
-          Depense
-        </th>
-        <th className="text-left text-[10px] leading-[150%] text-obsec font-normal py-3">
-          Récurrence
-        </th>
-        <th className="text-left text-[10px] leading-[150%] text-obsec font-normal py-3">
-          Montant
-        </th>
-        <th className="text-left text-[10px] leading-[150%] text-obsec font-normal py-3">
-          Catégorie
-        </th>
-      </tr>
-    </thead>
+    <TableHead>
+      <TableHeadRow>
+        <TableHeadCell>Depense</TableHeadCell>
+        <TableHeadCell>Récurrence</TableHeadCell>
+        <TableHeadCell>Montant</TableHeadCell>
+        <TableHeadCell>Catégorie</TableHeadCell>
+      </TableHeadRow>
+    </TableHead>
   );
 }
