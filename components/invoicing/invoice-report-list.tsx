@@ -1,18 +1,13 @@
 import useSWRInfinite from "swr/infinite";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import InvoiceListItem from "./invoice-list-item";
-import { Invoice } from "@/types/general";
+import { ReportItem } from "./invoice-list-item";
+import { Invoice, InvoiceReport } from "@/types/general";
 import { getPgKey } from "@/lib/util";
 import { ScrollableList } from "../list";
 import Fetched from "../fetched";
 import { Feedback } from "../feedback";
-import { InvoiceType } from "@/types/enum";
 
-export function InvoiceList({
-  type,
-}: {
-  type: InvoiceType;
-}) {
+export default function InvoiceReportList() {
   const {
     data: items,
     error,
@@ -20,9 +15,9 @@ export function InvoiceList({
     size,
     mutate,
     setSize,
-  } = useSWRInfinite<Invoice[]>(
-    getPgKey<Invoice>(
-      () => `/invoices?type=${type}`
+  } = useSWRInfinite<InvoiceReport[]>(
+    getPgKey<InvoiceReport>(
+      () => '/invoices/reports'
     )
   );
 
@@ -40,7 +35,7 @@ export function InvoiceList({
 
             return inv.length > 0 ? (
               inv.map((i) => (
-                <InvoiceListItem
+                <ReportItem
                   data={i}
                   key={i.id}
                   className="mt-20 first:mt-0"

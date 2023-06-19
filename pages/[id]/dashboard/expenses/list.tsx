@@ -10,6 +10,7 @@ import { getPgKey } from "@/lib/util";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Fetched from "@/components/fetched";
 import { Feedback } from "@/components/feedback";
+import { Table, TableBody } from "@/components/table";
 
 export default function ExpenseList() {
   const { asPath } = useRouter();
@@ -48,15 +49,15 @@ export default function ExpenseList() {
                 feedbackNoAbsolute
                 dataComp={(data) =>
                   data[0] && data[0].length > 0 ? (
-                    <table className="table-auto w-full">
+                    <Table>
                       <ExpenseTableHead />
-                      <tbody>
+                      <TableBody>
                         {data.flat().map((d) => (
                           <ExpenseTableRow data={d} key={d.id} />
                         ))}
                         <tr className="h-px" ref={observerTarget}></tr>
-                      </tbody>
-                    </table>
+                      </TableBody>
+                    </Table>
                   ) : (
                     <Feedback noAbsolute msg="Vous n'avez créé aucune dépense" />
                   )

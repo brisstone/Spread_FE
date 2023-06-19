@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useState } from "react";
 import ChangePassword from "@/components/settings/change-password";
 import Team from "@/components/settings/team";
+import Plan from "@/components/settings/plan";
 
 export default function Settings() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -33,20 +34,29 @@ export default function Settings() {
         </Tab>
 
         <div className="flex flex-col mt-7 grow">
-          <Card className="flex flex-col grow sticky py-5 px-6">
-            <TabPanel index={0} value={tabIndex}>
+          <TabPanel index={0} value={tabIndex}>
+            <Card className="flex flex-col grow sticky py-5 px-6">
               <EnterpriseSettings />
-            </TabPanel>
-            <TabPanel index={1} value={tabIndex}>
+            </Card>
+          </TabPanel>
+          <TabPanel index={1} value={tabIndex}>
+            <Card className="flex flex-col grow sticky py-5 px-6">
               <ProfileSettings />
-            </TabPanel>
-            <TabPanel index={2} value={tabIndex}>
+            </Card>
+          </TabPanel>
+          <TabPanel index={2} value={tabIndex}>
+            <Card className="flex flex-col grow sticky py-5 px-6">
               <ChangePassword />
-            </TabPanel>
-            <TabPanel index={3} value={tabIndex}>
+            </Card>
+          </TabPanel>
+          <TabPanel index={3} value={tabIndex}>
+            <Card className="flex flex-col grow sticky py-5 px-6">
               <Team />
-            </TabPanel>
-          </Card>
+            </Card>
+          </TabPanel>
+          <TabPanel index={4} value={tabIndex}>
+            <Plan />
+          </TabPanel>
         </div>
       </div>
     </Layout>

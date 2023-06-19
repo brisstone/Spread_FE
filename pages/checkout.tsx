@@ -56,7 +56,6 @@ export default function Checkout() {
       const cardElement = elements.getElement(CardElement);
       // Use card Element to tokenize payment details
 
-      console.log("values.name");
       let { error, setupIntent } = await stripe.confirmCardSetup(
         clientSecret as string,
         {
@@ -66,8 +65,10 @@ export default function Checkout() {
               name: values.name,
             },
           },
+          // return_url: `${window.location.protocol}//${window.location.host}/checkout/confirm`,
         }
       );
+
       if (error) {
         console.log("payment error", error);
         // show error and collect new card details.
@@ -76,19 +77,22 @@ export default function Checkout() {
       }
 
       if (setupIntent) {
-        setMarking("in-progress");
-        markSubscriptionAsActive({
-          subscriptionId: subscriptionId as string,
-          enterpriseId: enterprise.id,
-        })
-          .then((data) => {
-            setMarking("successful");
-            router.push(`/${enterprise.id}/dashboard`);
-          })
-          .catch((e) => {
-            setMarking("failed");
-            setMarkingError("");
-          });
+        if (setupIntent.payment_method) {
+          router.replace(`/${enterprise.id}/dashboard`);
+        }
+        // setMarking("in-progress");
+        // markSubscriptionAsActive({
+        //   subscriptionId: subscriptionId as string,
+        //   enterpriseId: enterprise.id,
+        // })
+        //   .then((data) => {
+        //     setMarking("successful");
+        //     router.push(`/${enterprise.id}/dashboard`);
+        //   })
+        //   .catch((e) => {
+        //     setMarking("failed");
+        //     setMarkingError("");
+        //   });
       }
     },
   });
@@ -160,9 +164,9 @@ export default function Checkout() {
                               options={{
                                 style: {
                                   base: {
-                                    color: '#ffffff'
-                                  }
-                                }
+                                    color: "#ffffff",
+                                  },
+                                },
                               }}
                               className={`${utilStyles.glass} px-5 py-4 !text-white`}
                             />

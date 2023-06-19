@@ -6,24 +6,18 @@ import { authFetcher } from "@/lib/fetcher";
 import { useRouter } from "next/router";
 
 export default function useUserAndEnterprise() {
-  const router = useRouter();
-
-  const { id } = router.query;
-
-  const ID = id instanceof Array ? id[0] : (id || '')
-
   const {
     user,
     isLoading: userLoading,
     error: userError,
     loggedOut: userLoggedOut,
-  } = useUser(ID);
+  } = useUser();
 
   const {
     data: enterprise,
     isLoading: enterpriseLoading,
     error: enterpriseError,
-  } = useSWR<Enterprise>(["/enterprise", ID], authFetcher);
+  } = useSWR<Enterprise>("/enterprise");
 
   const error = userError || enterpriseError;
 

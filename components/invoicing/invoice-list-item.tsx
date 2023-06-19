@@ -1,7 +1,8 @@
 import { Props } from "@/types/props";
 import { VerticalDivider } from "../divider";
 import IconButton from "../iconbutton";
-import { Invoice } from "@/types/general";
+import { Client, Invoice, InvoiceReport } from "@/types/general";
+import moment from "moment";
 
 function InvoiceTag({ paid }: { paid: boolean }) {
   return (
@@ -24,7 +25,7 @@ function StatusContainer(
     <div
       className={`flex flex-col items-center gap-8 w-1/4 px-5 ${props.className}`}
     >
-      <div className="text-md">{props.heading}</div>
+      <p className="text-md">{props.heading}</p>
       <div className="w-full">
         {props.first && (
           <p className="text-center text-base leading-[26px] text-ellipsis overflow-hidden whitespace-nowrap">
@@ -93,6 +94,48 @@ export default function InvoiceListItem(
           width={14}
           // TODO edge not working, fix
           // edge="left"
+        />
+      </div>
+    </li>
+  );
+}
+
+export function ReportItem({
+  data,
+  className,
+}: Props & {
+  data: InvoiceReport;
+}) {
+  return (
+    <li
+      className={`flex items-center justify-between w-full pr-6 ${className}`}
+    >
+      <div className="flex items-start w-3/4 max-w-[75%]">
+        <StatusContainer className="" heading="Nom" first={data.name} />
+        <VerticalDivider className="self-stretch" />
+        <StatusContainer
+          heading="Facture"
+          first={`${data.unpaidCount} ${
+            Number(data.unpaidCount) > 1
+              ? "Factures Impayées"
+              : "Facture Impayée"
+          }`}
+          // second={new Date(data.createdAt).toLocaleDateString()}
+        />
+        <VerticalDivider className="self-stretch" />
+        <StatusContainer
+          heading="Client"
+          first={data.name}
+          second={data.email}
+        />
+        <VerticalDivider className="self-stretch" />
+        <StatusContainer
+          heading="LTV"
+          first={`Depuis ${moment(new Date()).diff(
+            new Date(data.createdAt),
+            "days"
+          )} jours`}
+          // second="Sent 1m"
         />
       </div>
     </li>

@@ -4,6 +4,7 @@ import { MutatorCallback } from "swr";
 export function getUserName(
   user: MinimalUser,
 ) {
+  console.log('USER', user)
   return (
     `${user.firstName || ""}${user.lastName ? ` ${user.lastName}` : ""}` ||
     user.baseUser.email
@@ -50,4 +51,4 @@ export const swrInfiniteMutate =
   };
 
 export const valueFormatter = (number: number) =>
-  `$ ${Intl.NumberFormat("us").format(number).toString()}`;
+  `${Intl.NumberFormat("us").format(number).toString()}`;

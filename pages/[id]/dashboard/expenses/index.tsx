@@ -9,7 +9,6 @@ import {
 } from "@/components/expenses/components";
 import KPI from "@/components/kpi";
 import Layout, { LayoutHeader } from "@/components/layout";
-import CustomTable from "@/components/table";
 import Tag from "@/components/tag";
 import dummyChartData from "@/data/dummy-chart";
 import { valueFormatter } from "@/lib/util";
@@ -122,7 +121,13 @@ export default function Expenses() {
         <div className="grow w-full flex">
           <div className="basis-[30%] max-w-[30%]">
             <div className="">
-              <KPI className="mt-9" />
+              <KPI
+                data={{
+                  name: "Aujourd’hui | C.A",
+                  value: "$12,000",
+                }}
+                className="grow"
+              />
             </div>
             <div className="mt-5">
               <div>

@@ -8,8 +8,6 @@ import Link from "next/link";
 import { Client } from "@/types/general";
 import Fetched from "@/components/fetched";
 
-import utilStyles from "@/styles/utils.module.css";
-
 export default function Clients() {
   const { enterprise } = useUserAndEnterprise();
 
@@ -17,7 +15,7 @@ export default function Clients() {
 
   return (
     <Layout header="Clients ‍🧑‍💼">
-      <Card className="">
+      <Card className="flex flex-col p-8 grow">
         <Fetched
           error={error}
           errorComp={
@@ -33,11 +31,17 @@ export default function Clients() {
           dataComp={(data) => (
             <div className="w-full h-full flex flex-wrap justify-center items-center px-10 py-10 gap-10">
               {data.length > 0 ? (
-                data.map((d) => <ClientCard client={d} key={d.id} />)
+                data.map((d) => (
+                  <ClientCard
+                    id={d.id}
+                    name={d.name}
+                    brief={d.brief}
+                    href={`/${enterprise?.id}/dashboard/clients/${d.id}`}
+                    key={d.id}
+                  />
+                ))
               ) : (
-                <p
-                  className={`text-base text-subtitle text-center`}
-                >
+                <p className={`text-base text-subtitle text-center`}>
                   Vous n&apos;avez pas encore créé de données client
                 </p>
               )}

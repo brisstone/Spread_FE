@@ -8,42 +8,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserWithEnterprise } from "@/types/general";
 import { Feedback } from "@/components/feedback";
-import { roleMap } from "@/types/enum";
+import { baseUserTokenId, roleMap } from "@/types/enum";
 import { useEffect, useState } from "react";
 import { getUserEnterprises } from "@/services";
+import { authFetcher } from "@/lib/fetcher";
 
 export default function Enterprises() {
   // const { user, error: userError, isLoading } = useBaseUser();
-  // const {
-  //   data,
-  //   error,
-  //   isLoading: userWithEntLoading,
-  // } = useSWR<UserWithEnterprise[]>("/auth/user/enterprises");
-
-  const [error, setError] = useState<string | undefined>(undefined);
-  const [data, setData] = useState<UserWithEnterprise[] | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    getUserEnterprises()
-      .then((d) => {
-        setData(d);
-        setError(undefined)
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        setData(undefined);
-        setError(e.message);
-        setIsLoading(false);
-      })
-  }, [])
+  const {
+    data,
+    error,
+    isLoading: userWithEntLoading,
+  } = useSWR<UserWithEnterprise[]>(["/auth/user/enterprises", baseUserTokenId], authFetcher);
 
   return (
     <Onboarding>
       <Fetched
         error={error}
-        isLoading={isLoading}
+        isLoading={userWithEntLoading}
         data={data}
         dataComp={(d) => (
           <Glass>

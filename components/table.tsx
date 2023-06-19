@@ -1,92 +1,53 @@
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableHeaderCell,
-  TableBody,
-  TableCell,
-  Text,
-  Title,
-  Badge,
-} from "@tremor/react";
+import { Props } from "@/types/props";
 
-const tdata = [
-  {
-    name: "Viola Amherd",
-    Role: "Federal Councillor",
-    departement:
-      "The Federal Department of Defence, Civil Protection and Sport (DDPS)",
-    status: "active",
-  },
-  {
-    name: "Simonetta Sommaruga",
-    Role: "Federal Councillor",
-    departement:
-      "The Federal Department of the Environment, Transport, Energy and Communications (DETEC)",
-    status: "active",
-  },
-  {
-    name: "Alain Berset",
-    Role: "Federal Councillor",
-    departement: "The Federal Department of Home Affairs (FDHA)",
-    status: "active",
-  },
-  {
-    name: "Ignazio Cassis",
-    Role: "Federal Councillor",
-    departement: "The Federal Department of Foreign Affairs (FDFA)",
-    status: "active",
-  },
-  {
-    name: "Ueli Maurer",
-    Role: "Federal Councillor",
-    departement: "The Federal Department of Finance (FDF)",
-    status: "active",
-  },
-  {
-    name: "Guy Parmelin",
-    Role: "Federal Councillor",
-    departement:
-      "The Federal Department of Economic Affairs, Education and Research (EAER)",
-    status: "active",
-  },
-  {
-    name: "Karin Keller-Sutter",
-    Role: "Federal Councillor",
-    departement: "The Federal Department of Justice and Police (FDJP)",
-    status: "active",
-  },
-];
-
-export default function CustomTable() {
+export function TableRow(props: Props) {
   return (
-    <Table className="mt-5">
-      <TableHead>
-        <TableRow>
-          <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Position</TableHeaderCell>
-          <TableHeaderCell>Department</TableHeaderCell>
-          <TableHeaderCell>Status</TableHeaderCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {tdata.map((item) => (
-          <TableRow key={item.name}>
-            <TableCell>{item.name}</TableCell>
-            <TableCell>
-              <Text>{item.Role}</Text>
-            </TableCell>
-            <TableCell>
-              <Text>{item.departement}</Text>
-            </TableCell>
-            <TableCell>
-              {/* <Badge color="emerald" icon={StatusOnlineIcon}> */}
-              {item.status}
-              {/* </Badge> */}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <tr className="border-b border-solid border-[#56577A] last:border-0">
+      {props.children}
+    </tr>
+  );
+}
+
+export function TableRowCell(props: Props & { smallerPadding?: boolean }) {
+  return (
+    <td className={`${props.smallerPadding ? "py-4" : "py-5"}`}>
+      {props.children}
+    </td>
+  );
+}
+
+export function TableHead(props: Props) {
+  return <thead>{props.children}</thead>;
+}
+
+export function TableHeadRow(props: Props) {
+  return (
+    <tr className="border-b border-solid border-[#56577A]">{props.children}</tr>
+  );
+}
+
+export function TableHeadCell(props: Props) {
+  return (
+    <th className="text-left text-[10px] leading-[150%] text-subtitle font-normal py-3">
+      {props.children}
+    </th>
+  );
+}
+
+export function Table(props: Props) {
+  return (
+    <table className={`table-auto w-full ${props.className}`}>
+      {props.children}
+    </table>
+  );
+}
+
+export function TableBody(props: Props) {
+  return <tbody className={props.className}>{props.children}</tbody>;
+}
+
+export function TableCellText(props: Props) {
+  return (
+    <span className={`text-base ${props.className}`}>{props.children}</span>
   );
 }

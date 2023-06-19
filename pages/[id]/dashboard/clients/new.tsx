@@ -82,6 +82,8 @@ export default function NewClient() {
     setFieldValue,
   } = formik;
 
+  console.log('ERRORS', errors)
+
   return (
     <Layout header="Nouveau Client ℹ️">
       <FormikProvider value={formik}>

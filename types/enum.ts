@@ -68,3 +68,10 @@ export enum ConversationListType {
   TEAM = 'team',
   CLIENT = 'client'
 }
+
+export const baseUserTokenId = 'noent';
+
+export enum TaskType {
+  CLIENT = 'client',
+  ENTERPRISE = 'enterprise',
+}

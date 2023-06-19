@@ -42,7 +42,7 @@ export default function NewExpense() {
   const { pushAlert } = useAlert();
 
   const [modalOpen, setModalOpen] = useState(false);
-  const {asPath, push} = useRouter();
+  const { asPath, push } = useRouter();
 
   const {
     data: categories,
@@ -55,7 +55,7 @@ export default function NewExpense() {
     initialValues,
     schema: Schema,
     onComplete: (data) => {
-      push(`${asPath.substring(0, asPath.lastIndexOf("/"))}/list`)
+      push(`${asPath.substring(0, asPath.lastIndexOf("/"))}/list`);
     },
     onError: (e) => {
       pushAlert(e.message);
@@ -135,10 +135,14 @@ export default function NewExpense() {
                         // {...getFieldProps("dueDate")}
                         onChange={(e) => {
                           console.log((e.target as any).value);
-                          setFieldValue(
-                            "date",
-                            new Date((e.target as any).value).toISOString()
-                          );
+                          try {
+                            setFieldValue(
+                              "date",
+                              new Date((e.target as any).value).toISOString()
+                            );
+                          } catch (e) {
+                            setFieldValue("date", undefined);
+                          }
                         }}
                       />
                       <Input

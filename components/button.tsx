@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes, FC, HTMLProps } from "react";
 import { omit } from "lodash";
 import Image from "next/image";
+import { ClipLoader } from "react-spinners";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconUrl?: string;
@@ -16,7 +17,9 @@ export default function Button(props: ButtonProps) {
     <button
       {...omit(props, ["iconUrl", "loading", "iconHeight", "iconWidth"])}
       disabled={props.loading || props.disabled}
-      className={` ${variant === 'secondary' ? 'bg-white' : 'bg-btn'} rounded-lg outline-none py-4 px-5 ${
+      className={` ${
+        variant === "secondary" ? "bg-white" : "bg-btn"
+      } rounded-lg outline-none py-4 px-5 ${
         props.className
       } h-fit flex justify-center items-center ${
         variant === "secondary" ? "text-black" : "text-white"
@@ -34,7 +37,20 @@ export default function Button(props: ButtonProps) {
           </span>
         )}
         <span className="leading-[18px] text-inherit">
-          {props.loading ? "Chargement..." : props.children}
+          {props.loading ? (
+            <ClipLoader
+              color="#fff"
+              loading={true}
+              // cssOverride={{
+              //   display: "block",
+              // }}
+              size={15}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            props.children
+          )}
         </span>
       </span>
     </button>
