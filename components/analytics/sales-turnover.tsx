@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Card, { CardContent, CardHeader } from "@/components/card";
 import Fetched from "@/components/fetched";
-import { ClientTurnover, TurnoverData } from "@/types/general";
+import { TurnoverData } from "@/types/general";
 import moment from "moment";
 import { AreaChart } from "@tremor/react";
 import { valueFormatter } from "@/lib/util";

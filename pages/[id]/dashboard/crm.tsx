@@ -1,20 +1,11 @@
 import { useState } from "react";
-import Image from "next/image";
-import Button from "@/components/button";
 import Card, { CardContent, CardHeader } from "@/components/card";
 import CardPanel from "@/components/crm/card-panel";
 import OnboardingQuestions from "@/components/crm/onboarding";
-import IconButton from "@/components/iconbutton";
-import Input from "@/components/input";
-import KPI from "@/components/kpi";
 import Layout, { LayoutHeader } from "@/components/layout";
 import Tab, { TabItem, TabPanel } from "@/components/tab";
-import { Props } from "@/types/props";
-import { AreaChart } from "@tremor/react";
 import ClientsTable from "@/components/clients-table";
-import dummyChartData from "@/data/dummy-chart";
-import { valueFormatter } from "@/lib/util";
-import ClientTurnoverChart from "../../../components/analytics/client-turnover";
+import SalesTurnoverChart from "@/components/analytics/sales-turnover";
 
 export default function CRM() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -41,7 +32,7 @@ export default function CRM() {
           </TabPanel>
 
           <TabPanel index={1} value={tabIndex}>
-            <ClientTurnoverChart className="w-full mt-5" />
+            <SalesTurnoverChart className="w-full mt-5" />
 
             <Card className="w-full mt-5">
               <div className="p-7">
