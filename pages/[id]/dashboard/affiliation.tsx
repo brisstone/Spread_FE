@@ -8,7 +8,9 @@ import { ClipLoader } from "react-spinners";
 import { Feedback } from "@/components/feedback";
 
 export default function Affiliation() {
-  const { data, isLoading, error } = useSWR<string>("/enterprise/referral/code");
+  const { data, isLoading, error } = useSWR<string>(
+    "/enterprise/referral/code"
+  );
 
   return (
     <Layout header="Affiliation">
@@ -54,7 +56,14 @@ export default function Affiliation() {
                   className="my-4 lg:min-w-[417px]"
                   value={data}
                 />
-                <Button className="font-[600] lg:min-w-[417px] shadow-btn2">
+                <Button
+                  onClick={async () => {
+                    navigator.clipboard
+                      .writeText(data)
+                      .catch((e) => console.error("Failed to copy: ", e));
+                  }}
+                  className="font-[600] lg:min-w-[417px] shadow-btn2"
+                >
                   Copier mon code promotionnel
                 </Button>
               </>

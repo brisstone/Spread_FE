@@ -60,12 +60,20 @@ type IMinimalBaseUser = {
   baseUser: MinimalBaseUser;
 };
 
-export type MinimalUser = Pick<User, "id" | "firstName" | "lastName" | "profileImageKey" | "profileImageUrl"> &
+export type MinimalUser = Pick<
+  User,
+  "id" | "firstName" | "lastName" | "profileImageKey" | "profileImageUrl"
+> &
   IMinimalBaseUser;
 
 export type MinimalUserWithRole = Pick<
   User,
-  "id" | "firstName" | "lastName" | "enterpriseRole"
+  | "id"
+  | "firstName"
+  | "lastName"
+  | "enterpriseRole"
+  | "profileImageKey"
+  | "profileImageUrl"
 > &
   IMinimalBaseUser;
 

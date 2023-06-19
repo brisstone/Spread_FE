@@ -2,12 +2,12 @@ import useSWR from "swr";
 import { omit } from "lodash";
 import { getUserName } from "@/lib/util";
 import Select, { SelectOption, SelectProps } from "./select";
-import { Enterprise, User } from "@/types/general";
+import { MinimalUser } from "@/types/general";
 import { EnterpriseRole } from "@/types/enum";
 import Fetched from "./fetched";
 
 const genQueryFromArr = (arr: any, name: string): string => {
-  let str: string = '';
+  let str: string = "";
 
   for (let i = 0; i < arr.length; i++) {
     if (i === 0) {
@@ -18,7 +18,7 @@ const genQueryFromArr = (arr: any, name: string): string => {
   }
 
   return str;
-}
+};
 
 export default function UsersDropdown(
   props: SelectProps & { roles: EnterpriseRole[] }
@@ -27,8 +27,8 @@ export default function UsersDropdown(
     data: users,
     isLoading: usersLoading,
     error: usersError,
-  } = useSWR<Pick<User, "id" | "baseUser" | "firstName" | "lastName">[]>(
-    `/enterprise/users${genQueryFromArr(props.roles, 'role')}`
+  } = useSWR<MinimalUser[]>(
+    `/enterprise/users${genQueryFromArr(props.roles, "role")}`
   );
 
   return (

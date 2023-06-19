@@ -2,7 +2,7 @@ import Button from "@/components/button";
 import Card, { CardContent, CardHeader } from "@/components/card";
 import Input, { TextArea } from "@/components/input";
 import CreateInvoice from "@/components/invoicing/create-invoice";
-import {InvoiceList} from "@/components/invoicing/invoice-list";
+import { InvoiceList } from "@/components/invoicing/invoice-list";
 import InvoiceReportList from "@/components/invoicing/invoice-report-list";
 import KPI from "@/components/kpi";
 import Layout from "@/components/layout";
@@ -13,6 +13,8 @@ import { valueFormatter } from "@/lib/util";
 import { InvoiceType } from "@/types/enum";
 import { AreaChart } from "@tremor/react";
 import { useState } from "react";
+import { KPIGroup } from ".";
+import SalesTurnoverChart from "@/components/analytics/sales-turnover";
 
 export default function Invoicing() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -62,34 +64,9 @@ export default function Invoicing() {
 
         <TabPanel index={4} value={tabIndex}>
           <div className="w-full mt-6">
-            <div className="flex w-full gap-6">
-              <KPI className="grow" />
-              <KPI className="grow" />
-              <KPI className="grow" />
-              <KPI className="grow" />
-            </div>
+            <KPIGroup />
 
-            <Card className="w-full mt-5">
-              <div className="p-7">
-                <CardHeader
-                  title="Chiffre d’Affaires 💰"
-                  subTitle="(+5k) ce mois ci en 2023"
-                />
-
-                <CardContent>
-                  <AreaChart
-                    className="mt-8 h-44"
-                    data={dummyChartData}
-                    categories={["Gross Volume"]}
-                    index="Month"
-                    colors={["indigo"]}
-                    valueFormatter={valueFormatter}
-                    showYAxis={false}
-                    showLegend={false}
-                  />
-                </CardContent>
-              </div>
-            </Card>
+            <SalesTurnoverChart className="w-full mt-5" />
           </div>
         </TabPanel>
         <TabPanel index={5} value={tabIndex}>
