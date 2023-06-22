@@ -14,6 +14,7 @@ import { FieldArray, Form, FormikProvider } from "formik";
 import { useState } from "react";
 import IconButton from "../iconbutton";
 import { AlertType } from "@/types/enum";
+import DragDropFile from "../drag-drop-file";
 
 const Schema = object({
   name: string().optional(),
@@ -145,12 +146,18 @@ export default function EnterpriseSettings() {
                   subtitle="Téléchargez votre Logo."
                   className="mt-7"
                 >
-                  <Image
-                    src="/images/logo.png"
-                    height={111}
-                    width={111}
-                    alt="Logo"
-                  />
+                  <div className="flex items-stretch">
+                    <Image
+                      src="/images/logo.png"
+                      height={111}
+                      width={111}
+                      alt="Logo"
+                      className="w-[111px] h-[111px]"
+                    />
+                    <DragDropFile onFile={(file) => {
+                      console.log('FILE', file);
+                    }} id="enterprise-img" className="grow ml-10" />
+                  </div>
                 </Section>
 
                 <Section
@@ -210,7 +217,10 @@ export default function EnterpriseSettings() {
                         {values.socials && values.socials.length > 0 ? (
                           <div className="relative grid grid-cols-2 gap-x-7 gap-y-7">
                             {values.socials.map((s, index) => (
-                              <div key={index} className="flex items-center gap-2">
+                              <div
+                                key={index}
+                                className="flex items-center gap-2"
+                              >
                                 <Input
                                   className="grow"
                                   disabled={disabled}

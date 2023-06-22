@@ -8,7 +8,6 @@ import { EmailSchema, UuidSchema } from "@/util/schema";
 import { CRMLead } from "@/types/general";
 import { useAlert } from "@/contexts/alert-context";
 import Button from "../button";
-import CurrenciesDropdown from "../currency-dropdown";
 
 const LeadSchema = object({
   email: EmailSchema,

@@ -33,7 +33,7 @@ export function NoteGlass(props: NoteGlassProps) {
   );
 }
 
-export function Team(props: { data: MinimalUser[], name: string }) {
+export function Team(props: { data: MinimalUser[]; name: string }) {
   return (
     <ClientDetailGlass title={`Equipe - ${props.name}`}>
       {props.data.length > 0 ? (
@@ -47,7 +47,7 @@ export function Team(props: { data: MinimalUser[], name: string }) {
           {props.data.map((u) => (
             <div className="flex items-center mt-5" key={u.id}>
               <Image
-                src="/images/profilecompany2.png"
+                src={u.profileImageUrl || "/images/profilecompany2.png"}
                 height={50}
                 width={50}
                 alt="avatar"
@@ -55,7 +55,9 @@ export function Team(props: { data: MinimalUser[], name: string }) {
               />
               <div className="grow ml-5">
                 <p className="text-base">{getUserName(u)}</p>
-                <p className="text-[13px] leading-[19px] whitespace-nowrap text-ellipsis">{u.baseUser.email}</p>
+                <p className="text-[13px] leading-[19px] whitespace-nowrap text-ellipsis">
+                  {u.baseUser.email}
+                </p>
               </div>
               <Tag>Actif</Tag>
             </div>
