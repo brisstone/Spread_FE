@@ -14,7 +14,7 @@ export default function CardPanel() {
   return (
     <DndProvider backend={HTML5Backend}>
       <KPIGroup />
-      <div className="flex overflow-x-auto w-full mt-7 gap-6 justify-evenly items-stretch">
+      <div className="flex overflow-x-auto mt-7 gap-6 items-stretch grow scrollbar-thin scrollbar-track-transparent scrollbar-thumb-icon-back pb-2">
         <Fetched
           error={error}
           errorComp={

@@ -26,7 +26,7 @@ export default function CRM() {
           <TabItem>🛟 Onboarding</TabItem>
         </Tab>
 
-        <div className="mt-7">
+        <div className="mt-7 grow flex flex-col">
           <TabPanel index={0} value={tabIndex}>
             <CardPanel />
           </TabPanel>

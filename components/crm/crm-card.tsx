@@ -14,6 +14,7 @@ import IconButton from "../iconbutton";
 import CRMLeadModal from "./lead-modal";
 import Fetched from "../fetched";
 import useLeads from "@/data/use-leads";
+import { ScrollableList } from "../list";
 // import useUserAndEnterprise from "@/data/user-user-enterprise";
 // import Link from "next/link";
 
@@ -130,8 +131,8 @@ export default function CRMCard(props: CRMCardProps) {
         handleClose={() => setModalOpen(false)}
         categoryId={props.data.id}
       />
-      <Card className={`basis-1/2`}>
-        <div className="p-5">
+      <Card className={`!h-full basis-1/4 min-w-[25%] flex flex-col`}>
+        <div className="p-5 h-full flex flex-col">
           <div className="flex w-full items-center gap-4 justify-between">
             <p className="text-[16px] leading-[20px]">{props.data.name}</p>
             <p className="text-base leading-[20px]">
@@ -144,7 +145,7 @@ export default function CRMCard(props: CRMCardProps) {
             />
           </div>
 
-          <div className="mt-8 w-full">
+          <div className="mt-8 w-full relative grow">
             <Fetched
               error={error}
               errorComp={
@@ -160,7 +161,12 @@ export default function CRMCard(props: CRMCardProps) {
               }
               data={data}
               dataComp={(leads) => (
-                <ul className={`w-full ${isOver ? "bg-red" : ""}`} ref={drop}>
+                <ScrollableList
+                  className={`grow relative w-full h-full ${
+                    isOver ? "bg-red" : ""
+                  }`}
+                  ref={drop}
+                >
                   {leads.length > 0 ? (
                     leads.map((l) => <CRMLeadItem lead={l} key={l.id} />)
                   ) : (
@@ -168,7 +174,7 @@ export default function CRMCard(props: CRMCardProps) {
                       Aucun prospect dans cette catégorie
                     </p>
                   )}
-                </ul>
+                </ScrollableList>
               )}
             />
           </div>
