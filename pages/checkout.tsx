@@ -134,7 +134,6 @@ export default function Checkout() {
                         alt="key"
                       />
                     </div>
-
                     <div className="w-full">
                       <h1 className="text-3xl mt-6 text-center">
                         Détails du paiement de l&apos;abonnement
