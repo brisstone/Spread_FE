@@ -12,6 +12,16 @@ export default function DragDropFile(
 ) {
   const [dragActive, setDragActive] = useState(false);
 
+
+  let newData = {
+    profilePublic: "",
+    description: "",
+    logo: "",
+  };
+
+
+  // const { formik} =
+
   // handle drag events
   const handleDragEnter = function (e: DragEvent<HTMLInputElement>) {
     e.preventDefault();
