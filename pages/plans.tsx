@@ -116,7 +116,7 @@ export default function Payment() {
           <>
             <div className="sticky z-10 top-0 left-0 right-0 w-full bg-btn py-5">
               <p className="text-[20px] leading-6 text-center">
-                Offre Marketing Puissante 🚀
+              Application tout-en-un pour votre agence ou votre activité de Freelance 👨‍💻  
               </p>
             </div>
             <div className="w-full grow mt-11 py-11 container mx-auto flex items-center">
