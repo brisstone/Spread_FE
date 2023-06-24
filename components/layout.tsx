@@ -95,7 +95,7 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                 />
                 <NavItem
                   svg="settings"
-                  name="Parameters"
+                  name="Paramètres"
                   href={`/${enterprise?.id}/dashboard/settings`}
                 />
               </ul>

@@ -96,7 +96,7 @@ export default function Login() {
 
             <div className="mt-7">
               <OnboardingGlass>
-                <h2 className="text-lg">S’inscrire avec</h2>
+                <h2 className="text-lg">Connectez-vous avec</h2>
 
                 <Social />
 
@@ -136,7 +136,7 @@ export default function Login() {
                     loading={isSubmitting}
                     className="mt-6 w-full shadow-btn"
                   >
-                    👉 S’inscrire
+                    👉 Connexion
                   </Button>
                 </Form>
                 <p className="mt-7 text-base">
