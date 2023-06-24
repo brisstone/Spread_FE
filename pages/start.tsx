@@ -15,6 +15,12 @@ import useUserAndEnterprise from "@/data/user-user-enterprise";
 import { useEffect } from "react";
 import useBaseUser from "@/data/use-base-user";
 import { baseUserTokenId } from "@/types/enum";
+import 'react-notifications/lib/notifications.css';
+
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
+
+
+
 
 const Schema = object({
   email: EmailSchema,
@@ -22,6 +28,10 @@ const Schema = object({
 
 const initialValues = {
   email: "",
+  password : "",
+  confirmpassword : "",
+  personname : "",
+
 };
 
 export default function Signup() {
@@ -42,6 +52,8 @@ export default function Signup() {
     initialValues,
     schema: Schema,
     onComplete: (data) => {
+      pushAlert("");
+      
       setCookieContext(baseUserTokenId, data.token);
       router.replace("/verify-email");
     },
@@ -78,7 +90,13 @@ export default function Signup() {
             {/* <Social /> */}
 
             <Form autoComplete="off" onSubmit={handleSubmit} className="w-full">
-              <div className="w-full flex flex-col gap-5">
+              <div className="w-[300px] flex flex-col gap-5">
+              <Input
+                  header="Mot de passe"
+                  type="text"
+                  placeholder="Nom" 
+                  {...getFieldProps("personname")}
+                />
                 <Input
                   header="Email"
                   type="email"
@@ -88,6 +106,20 @@ export default function Signup() {
                   errorText={touched.email && errors.email}
                 />
                 {/* <Input name="Nom" placeholder="Prénom, Nom" /> */}
+
+                <Input
+                  header="Mot de passe"
+                  type="password"
+                  placeholder="Votre mot de passe"
+                  {...getFieldProps("password")}
+                />
+
+                <Input
+                  header="Mot de passe"
+                  type="password"
+                  placeholder="Confirmez le mot de passe"
+                  {...getFieldProps("confirmpassword")}
+                />
               </div>
 
               <Button
