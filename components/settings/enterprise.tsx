@@ -50,6 +50,8 @@ export default function EnterpriseSettings() {
 
   const [disabled, setDisabled] = useState(true);
 
+  const [image, setImage] = useState("");
+
   const { formik } = usePost<Enterprise, typeof initialValues>({
     url: "/enterprise",
     type: "patch",
@@ -71,6 +73,13 @@ export default function EnterpriseSettings() {
     formik;
 
   console.log(values, errors);
+
+  function reader(file: any, callback: any) {
+    const fr = new FileReader();
+    fr.onload = () => callback(null, fr.result);
+    fr.onerror = (err) => callback(err);
+    fr.readAsDataURL(file);
+  }
 
   return (
     <FormikProvider value={formik}>
@@ -147,16 +156,27 @@ export default function EnterpriseSettings() {
                   className="mt-7"
                 >
                   <div className="flex items-stretch">
-                    <Image
-                      src="/images/logo.png"
-                      height={111}
-                      width={111}
-                      alt="Logo"
-                      className="w-[111px] h-[111px]"
+                    {image == "" ? (
+                      ""
+                    ) : (
+                      <Image
+                        src={image}
+                        height={111}
+                        width={111}
+                        alt="Logo"
+                        className="w-[111px] h-[111px]"
+                      />
+                    )}
+                    <DragDropFile
+                      onFile={(file) => {
+                        console.log("FILE", file);
+                        reader(file, (err: any, res: any) => {
+                          setImage(res);
+                        });
+                      }}
+                      id="enterprise-img"
+                      className="grow ml-10"
                     />
-                    <DragDropFile onFile={(file) => {
-                      console.log('FILE', file);
-                    }} id="enterprise-img" className="grow ml-10" />
                   </div>
                 </Section>
 
