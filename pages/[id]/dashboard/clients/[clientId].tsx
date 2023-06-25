@@ -7,7 +7,7 @@ import { NoteGlass, Team } from "@/components/client-details";
 import Tab, { TabItem, TabPanel } from "@/components/tab";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { ClientWithTeam } from "@/types/general";
+import { CRMLead, ClientWithTeam, OnboardingDetail } from "@/types/general";
 import Fetched from "@/components/fetched";
 
 import utilStyles from "@/styles/utils.module.css";
@@ -23,6 +23,19 @@ export default function ClientDetails() {
   const [tabIndex, setTabIndex] = useState(0);
   const router = useRouter();
 
+  const { onboardingId, e, token } = router.query;
+
+  console.log(onboardingId, e, token,'sjjs');
+  
+  const { data, isLoading: ld, error: err } = useSWR<OnboardingDetail>(() =>
+  onboardingId && e && token
+    ? `/crm/onboarding/details?id=${onboardingId}&enterpriseId=${e}&token=${token}`
+    : null
+);
+
+
+console.log(data,'datadatadatadata');
+
   const {
     data: client,
     error,
@@ -31,8 +44,22 @@ export default function ClientDetails() {
     router.query.id ? `/crm/clients/${router.query.clientId}` : null
   );
 
+
+  console.log(client?.leadId,'clientclient', router.query.clientId);
+
+
+  const {
+    data: lead,
+    error: errLead,
+    isLoading: isLeadLoading,
+  } = useSWR<CRMLead>(() => (client?.leadId ? `/crm/leads/${client?.leadId}/onboard` : null));
+
+
+  console.log(lead,'leadleadleadleadlead99');
+  
+
   return (
-    <Layout header="Brief Client 📝">
+    <Layout header="Bref client 📝">
       <Card className="flex flex-col p-8 grow">
         <Tab
           value={tabIndex}
@@ -42,7 +69,7 @@ export default function ClientDetails() {
           }}
           className="w-full"
         >
-          <TabItem>Brief 📝</TabItem>
+          <TabItem>Bref 📝</TabItem>
           <TabItem>Tâches 🎯</TabItem>
           <TabItem>Notes</TabItem>
           <TabItem>Équipe</TabItem>
@@ -69,7 +96,7 @@ export default function ClientDetails() {
           dataComp={(c) => (
             <>
               <TabPanel value={tabIndex} index={0}>
-                <NoteGlass title={`Brief - ${c.name}`} note={c.brief || ""} />
+                <NoteGlass lead={lead} title={`Bref - ${c.name}`} note={c.brief || ""} />
               </TabPanel>
 
               <TabPanel value={tabIndex} index={1}>

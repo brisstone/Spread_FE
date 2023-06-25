@@ -31,9 +31,13 @@ export default function UsersDropdown(
     `/enterprise/users${genQueryFromArr(props.roles, "role")}`
   );
 
+  console.log(users,'ffjfjjfj');
+  
+
   return (
     <Select
       {...omit(props, ["role"])}
+      {...props}
       // errorText={touched.team && errors.team}
     >
       <SelectOption value="">Séléctionner un membre</SelectOption>

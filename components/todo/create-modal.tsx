@@ -10,11 +10,12 @@ import { useAlert } from "@/contexts/alert-context";
 import Button from "../button";
 import UsersDropdown from "../users-dropdown";
 import { EnterpriseRole, TaskType } from "@/types/enum";
+import { useState } from "react";
 
 const Schema = object({
   title: RequiredSchema(),
   description: RequiredSchema(),
-  assigneeId: RequiredSchema(),
+  assigneeId:  string().optional(),
   dueDate: string().optional(),
 });
 
@@ -26,6 +27,7 @@ export default function CreateTodoModal(
   }
 ) {
   const { pushAlert } = useAlert();
+  const [assigneeIdd, setassigneeIdd] = useState<string>("")
 
   const { formik } = usePost<
     Task,
@@ -41,7 +43,7 @@ export default function CreateTodoModal(
     initialValues: {
       title: "",
       description: "",
-      assigneeId: "",
+      assigneeId: assigneeIdd,
       dueDate: undefined,
     },
     schema: Schema,
@@ -102,7 +104,7 @@ export default function CreateTodoModal(
             onChange={(e) => {
               setFieldValue(
                 "dueDate",
-                new Date((e.target as any).value).toISOString()
+                new Date((e?.target as any)?.value)?.toISOString()
               );
             }}
           />
@@ -116,6 +118,11 @@ export default function CreateTodoModal(
               EnterpriseRole.ADMIN,
               EnterpriseRole.READER,
             ]}
+
+            // onChange={(e: Event)=>{
+            //   console.log(e?.target?.value,'asss');
+              
+            // }}
             {...getFieldProps("assigneeId")}
             // className="mt-2"
             errorText={touched.assigneeId && errors.assigneeId}

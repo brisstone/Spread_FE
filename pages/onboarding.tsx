@@ -51,6 +51,9 @@ export default function ClientOnboarding() {
       : null
   );
 
+  console.log(data,'datadatadatadatadata');
+  
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const { formik } = usePost<
