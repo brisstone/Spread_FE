@@ -78,11 +78,12 @@ export default function ChatArea({
           {/** Chat window header */}
           <div className="flex justify-between items-center w-full rounded-3xl border-2 border-misc py-[10px] px-4">
             <Image
-              src="/images/avatar.png"
-              height={32}
-              width={32}
+              src={user.profileImageUrl||"/avart.png"}
+              height={22}
+              width={22}
               alt="avatar"
               className="rounded-full"
+              style={{borderRadius:"100px"}}
             />
             <p>
               {selectedConv.users
@@ -102,6 +103,7 @@ export default function ChatArea({
                   console.log("msg", msg);
                   return msg.fromId === user.id ? (
                     <OutgoingMessage
+                      user={user}
                       key={msg.id}
                       message={msg.text}
                       time={moment(msg.createdAt).format("hh:mm a")}
@@ -113,6 +115,7 @@ export default function ChatArea({
                     />
                   ) : (
                     <IncomingMessage
+                    user={user}
                       key={msg.id}
                       message={msg.text}
                       time={moment(msg.createdAt).format("hh:mm a")}

@@ -16,6 +16,9 @@ export default function ConversationsList(props: {
 
   const { user } = useUser();
 
+  console.log(user,'useruseruseruserusery');
+  
+
   return error ? (
     <p className="text-base text-subtitle text-center">
       Quelque chose s&apos;est mal passé. Nous n&apos;avons pas pu récupérer vos
@@ -29,17 +32,22 @@ export default function ConversationsList(props: {
         <ul>
           {user && conversations && conversations.length ? (
             conversations.map((c) => (
-              <ListItem
-                noXPadding={props.noXPadding}
-                onClick={() => (props.onActive ? props.onActive(c.id) : null)}
-                primaryText={c.users
-                  .filter((u) => u.id !== user.id)
-                  .map((u) => getUserName(u))
-                  .join(", ")}
-                key={c.id}
-                secondaryText="1 Nouveau Message | En Ligne"
-                active={c.id === props.selectedConvId}
-              />
+              <>
+              {console.log(c,'sjjsjsjs')
+              }
+                <ListItem
+                  user={user}
+                  noXPadding={props.noXPadding}
+                  onClick={() => (props.onActive ? props.onActive(c.id) : null)}
+                  primaryText={c.users
+                    .filter((u) => u.id !== user.id)
+                    .map((u) => getUserName(u))
+                    .join(", ")}
+                  key={c.id}
+                  secondaryText="1 Nouveau Message | En Ligne"
+                  active={c.id === props.selectedConvId}
+                />
+              </>
             ))
           ) : (
             <p className="text-base text-subtitle text-center">

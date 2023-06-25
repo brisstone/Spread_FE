@@ -40,10 +40,10 @@ export default function EnterpriseSettings() {
     mutate,
   } = useSWR<Enterprise>("/enterprise");
   const { pushAlert } = useAlert();
-  const [imageUrl, setimageUrl] = useState(enterprise!.logo)
+  const [imageUrl, setimageUrl] = useState();
 
-  console.log(enterprise!.logo,'jjjjjjjj', imageUrl);
-  
+  console.log(enterprise!.logo, "jjjjjjjj", imageUrl);
+
   const initialValues = {
     name: enterprise?.name,
     description: enterprise?.description || "",
@@ -57,7 +57,6 @@ export default function EnterpriseSettings() {
   const [disabled, setDisabled] = useState(true);
 
   const [image, setImage] = useState(enterprise!.logo || "/logo.png");
-
 
   const { formik } = usePost<Enterprise, typeof initialValues>({
     url: "/enterprise",
@@ -83,18 +82,17 @@ export default function EnterpriseSettings() {
 
   async function uploadProfileImage(file: File) {
     const { key, url } = await getProfileImageUploadSignedUrl();
-  
+
     await uploadToS3(url, file);
-  
-    setimageUrl(key)
+
+    setimageUrl(key);
     // const d = await updateUserProfile({
     //   profileImageKey: key,
     // });
-  
+
     // return d;
   }
 
-  
   function reader(file: any, callback: any) {
     const fr = new FileReader();
     fr.onload = () => callback(null, fr.result);
@@ -176,7 +174,7 @@ export default function EnterpriseSettings() {
                   subtitle="Téléchargez votre Logo."
                   className="mt-7"
                 >
-                  <div className="flex items-stretch">
+                  <div className="flex items-stretch cursor-pointer">
                     {image == "" ? (
                       ""
                     ) : (
@@ -195,22 +193,22 @@ export default function EnterpriseSettings() {
                         reader(file, (err: any, res: any) => {
                           setImage(res);
                           uploadProfileImage(file)
-                          .then((data) => {
-                            console.log("upload data", data);
-                            // mutate(data);
-                            // setUploading(false);
-                            // pushAlert(
-                            //   "Image de profil mise à jour",
-                            //   AlertType.SUCCESS
-                            // );
-                          })
-                          .catch(() => {
-                            // setUploading(false);
-                            pushAlert(
-                              "Quelque chose s'est mal passé",
-                              AlertType.ERROR
-                            );
-                          });
+                            .then((data) => {
+                              console.log("upload data", data);
+                              // mutate(data);
+                              // setUploading(false);
+                              // pushAlert(
+                              //   "Image de profil mise à jour",
+                              //   AlertType.SUCCESS
+                              // );
+                            })
+                            .catch(() => {
+                              // setUploading(false);
+                              pushAlert(
+                                "Quelque chose s'est mal passé",
+                                AlertType.ERROR
+                              );
+                            });
                         });
                       }}
                       id="enterprise-img"
@@ -272,7 +270,7 @@ export default function EnterpriseSettings() {
                   <FieldArray
                     name="socials"
                     render={(arrayHelpers) => (
-                      <>
+                      <div className="">
                         {values.socials && values.socials.length > 0 ? (
                           <div className="relative grid grid-cols-2 gap-x-7 gap-y-7">
                             {values.socials.map((s, index) => (
@@ -314,13 +312,21 @@ export default function EnterpriseSettings() {
                         )}
                         <Button
                           type="button"
-                          disabled={disabled}
-                          className="!text-base bg-white !text-black mt-5"
-                          onClick={() => arrayHelpers.push("")}
+                          // disabled={disabled}
+                          className="!text-base bg-white !text-black mt-5 cursor-pointer"
+                          onClick={() => {
+                            if (disabled) {
+                              pushAlert(
+                                "Cliquez sur l'icône d'édition en haut à droite"
+                              );
+                            } else {
+                              arrayHelpers.push("");
+                            }
+                          }}
                         >
-                          Ajouter
+                          Ajouter Sociaux
                         </Button>
-                      </>
+                      </div>
                     )}
                   />
                 </Section>

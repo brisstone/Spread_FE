@@ -36,6 +36,7 @@ export default function UsersList({
             {users.length > 0 ? (
               users.map((user) => (
                 <ListItem
+                  user={user}
                   onClick={async () => {
                     socket.emit(
                       "newConversation",

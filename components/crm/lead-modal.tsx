@@ -8,6 +8,9 @@ import { EmailSchema, UuidSchema } from "@/util/schema";
 import { CRMLead } from "@/types/general";
 import { useAlert } from "@/contexts/alert-context";
 import Button from "../button";
+import PhoneInput from "react-phone-input-2";
+import utilStyles from "@/styles/utils.module.css";
+import "react-phone-input-2/lib/style.css";
 
 const LeadSchema = object({
   email: EmailSchema,
@@ -67,7 +70,15 @@ export default function CRMLeadModal(
     },
   });
 
-  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const {
+    errors,
+    values,
+    setFieldValue,
+    touched,
+    isSubmitting,
+    handleSubmit,
+    getFieldProps,
+  } = formik;
 
   return (
     <Modal open={props.open} handleClose={props.handleClose}>
@@ -86,13 +97,25 @@ export default function CRMLeadModal(
             {...getFieldProps(`name`)}
             errorText={touched.name && errors.name}
           />
-          <Input
+          {/* <Input
             placeholder="Numéro de téléphoner"
             type="tel"
             className="mt-2"
             smallerYPadding
             {...getFieldProps(`phoneNumber`)}
             errorText={touched.phoneNumber && errors.phoneNumber}
+          /> */}
+          <PhoneInput
+            // disabled={disabled}
+            country="fr"
+            containerClass={`${utilStyles.glass} grow !z-[1]`}
+            inputClass="!w-full py-[10px] !h-full !bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base !outline-none !border-none"
+            dropdownClass="!bg-[#1c1025] !z-50"
+            buttonClass="!bg-transparent !border-none hover:bg-btn"
+            // className="bg-transparent text-base px-5 py-[10px] placeholder:text-subtitle placeholder:text-base outline-none"
+            placeholder="Enter phone number"
+            value={values.phoneNumber}
+            onChange={(v) => setFieldValue("phoneNumber", `+${v}`)}
           />
           <Input
             placeholder="Montant"

@@ -1,3 +1,4 @@
+import { BaseUser, MinimalBaseUser, MinimalUser } from "@/types/general";
 import { Props } from "@/types/props";
 import Image from "next/image";
 import { ForwardedRef, forwardRef } from "react";
@@ -5,11 +6,13 @@ import { ForwardedRef, forwardRef } from "react";
 interface MessageProps extends Props {
   message: string;
   time: string;
+  user: MinimalUser
 }
 
 interface IncomingMessageProps extends MessageProps {
   name: string;
   extraDetail: string;
+  user: MinimalUser
 }
 
 export function MessageList(props: Props) {
@@ -27,7 +30,7 @@ export const IncomingMessage = forwardRef(
         <div className="flex gap-3 max-w-[60%] items-start">
           {/* <div className=""> */}
           <Image
-            src="/images/avatar.png"
+            src={props.user.profileImageUrl || "/avart.png"}
             height={32}
             width={32}
             alt="avatar"
@@ -83,7 +86,7 @@ export const OutgoingMessage = forwardRef(
                 {props.time}
               </p>
               <Image
-                src="/images/readreceipt.svg"
+                src={props.user.profileImageUrl || "/images/readreceipt.svg"}
                 height={8}
                 width={16}
                 alt="avatar"
