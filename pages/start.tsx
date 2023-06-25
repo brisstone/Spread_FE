@@ -8,31 +8,53 @@ import { object, string } from "yup";
 import { User } from "@/types/general";
 import { Form, FormikProvider } from "formik";
 import { omit } from "lodash";
-import { EmailSchema, PasswordSchema } from "@/util/schema";
+import {
+  EmailSchema,
+  PasswordSchema,
+  PersonnelSchema,
+  RequiredSchema,
+} from "@/util/schema";
 import { setCookie, setCookieContext } from "@/lib";
 import { useAlert } from "@/contexts/alert-context";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
 import { useEffect } from "react";
 import useBaseUser from "@/data/use-base-user";
 import { baseUserTokenId } from "@/types/enum";
-import 'react-notifications/lib/notifications.css';
-
-// import {NotificationContainer, NotificationManager} from 'react-notifications';
-
-
-
+import "react-notifications/lib/notifications.css";
+// import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import { ref } from "yup";
 
 const Schema = object({
   email: EmailSchema,
+  password: PasswordSchema,
+  // confirmPassword: PasswordSchema,
+  name: PersonnelSchema,
+  confirmPassword: PasswordSchema.oneOf(
+    [ref("password")],
+    "Cela devrait correspondre à votre nouveau mot de passe"
+  ),
 });
 
 const initialValues = {
   email: "",
-  password : "",
-  confirmpassword : "",
-  personname : "",
-
+  password: "",
+  confirmPassword: "",
+  name: "",
 };
+
+// toast.info(`Check your email for OTP to proceed.`, {
+//   position: "top-right",
+//   autoClose: 2000000000,
+//   hideProgressBar: false,
+//   closeOnClick: true,
+//   draggable: false,
+// });
 
 export default function Signup() {
   const { user, enterprise, loggedOut } = useUserAndEnterprise();
@@ -45,17 +67,41 @@ export default function Signup() {
     {
       user: User;
       token: string;
+      status: boolean;
+      message: string
     },
     typeof initialValues
   >({
     url: "/auth/register",
     initialValues,
     schema: Schema,
+    modifyBefore: (values) => {
+      return omit(values, ["confirmPassword"]);
+    },
     onComplete: (data) => {
-      pushAlert("");
-      
+      console.log(data, "djdjdjdjjd");
+
+      if (data.status == false) {
+        pushAlert(`${data.message}`);
+        return;
+      }
+
+      // pushAlert("Check your email for OTP to proceed.");
+      toast.info(`Check your email for OTP to proceed.`, {
+        position: "top-right",
+        autoClose: 2000000000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: false,
+      });
+
+      setTimeout(() => {
+        console.log("OKOLI__JOHN");
+        pushAlert("Check your email for OTP to proceed.");
+
+        router.push("/verify-email");
+      }, 1000);
       setCookieContext(baseUserTokenId, data.token);
-      router.replace("/verify-email");
     },
     onError: (e) => {
       pushAlert(e.message);
@@ -78,9 +124,11 @@ export default function Signup() {
     // <div className="min-h-screen w-screen">
     <FormikProvider value={formik}>
       <Onboarding>
+        <ToastContainer />
+        <NotificationContainer />
         <div className="flex flex-col items-center">
           <h1 className="text-3xl">Bienvenue 👋</h1>
-          <p className="mt-5 text-sm">Entrez votre email pour continuer </p>
+          {/* <p className="mt-5 text-sm">Entrez votre email pour continuer </p> */}
         </div>
 
         <div className="mt-7">
@@ -91,16 +139,17 @@ export default function Signup() {
 
             <Form autoComplete="off" onSubmit={handleSubmit} className="w-full">
               <div className="w-[300px] flex flex-col gap-5">
-              <Input
-                  header="Mot de passe"
+                <Input
+                  header="Nom"
                   type="text"
-                  placeholder="Nom" 
-                  {...getFieldProps("personname")}
+                  placeholder="Nom"
+                  {...getFieldProps("name")}
+                  errorText={touched.name && errors.name}
                 />
                 <Input
                   header="Email"
                   type="email"
-                  className="w-full"
+                  // className="w-full"
                   placeholder="Votre email"
                   {...getFieldProps("email")}
                   errorText={touched.email && errors.email}
@@ -112,13 +161,15 @@ export default function Signup() {
                   type="password"
                   placeholder="Votre mot de passe"
                   {...getFieldProps("password")}
+                  errorText={touched.password && errors.password}
                 />
 
                 <Input
-                  header="Mot de passe"
+                  header="Confirmez le mot de passe"
                   type="password"
                   placeholder="Confirmez le mot de passe"
-                  {...getFieldProps("confirmpassword")}
+                  {...getFieldProps("confirmPassword")}
+                  errorText={touched.confirmPassword && errors.confirmPassword}
                 />
               </div>
 

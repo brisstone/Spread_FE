@@ -104,6 +104,10 @@ export default function ProfileSettings() {
 
   const [uploading, setUploading] = useState(false);
 
+
+
+  
+
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" onSubmit={handleSubmit}>
@@ -139,11 +143,12 @@ export default function ProfileSettings() {
             dataComp={(data) => (
               <>
                 <div className="flex mt-12 gap-14 lg:max-w-[75%]">
+      
                   <div className="relative h-fit">
                     {!uploading ? (
                       <Image
                         src={
-                          data.profileImageUrl || "/images/profilecompany2.png"
+                          data.profileImageUrl || "/avart.png"
                         }
                         height={108}
                         width={108}

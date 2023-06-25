@@ -3,6 +3,11 @@ import { string } from "yup";
 export const PasswordSchema = string()
   .required("Mot de passe requis")
   .min(6, "Votre mot de passe doit contenir au moins 6 caractères");
+  export const OAuthSchema = string()
+  // .required("Mot de passe requis")
+  export const PersonnelSchema = string()
+  .required("Mot de passe requis")
+  // .min(6, "Votre mot de passe doit contenir au moins 6 caractères");
 
 export const EmailSchema = string()
   .required("Email est requis")

@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import { SWRConfig } from "swr";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 type ComponentType = NextComponentType<NextPageContext, any, any> & {
   Layout?: FunctionComponent<LayoutProps>;
@@ -41,30 +42,36 @@ export default function App({
 }) {
   const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUB_KEY!);
 
+  // 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
   return (
-    <Provider store={store}>
-      <SWRConfig
-        value={{
-          fetcher,
-        }}
-      >
-        <Elements stripe={stripePromise} options={{
-          locale: 'fr',
-          appearance: {
-            theme: 'none',
-            variables: {
-              colorPrimary: '#ffffff',
-              colorText: '#ffffff',
-              colorTextPlaceholder: '#ffffff'
-            }
-          }
-        }}>
-          <AlertContextProvider>
-            <Alert />
-            <Component {...pageProps} />
-          </AlertContextProvider>
-        </Elements>
-      </SWRConfig>
-    </Provider>
+    <GoogleOAuthProvider clientId="190245129087-d6lcmcnt20rj5tc3viamga6jtg96lnej.apps.googleusercontent.com">
+      <Provider store={store}>
+        <SWRConfig
+          value={{
+            fetcher,
+          }}
+        >
+          <Elements
+            stripe={stripePromise}
+            options={{
+              locale: "fr",
+              appearance: {
+                theme: "none",
+                variables: {
+                  colorPrimary: "#ffffff",
+                  colorText: "#ffffff",
+                  colorTextPlaceholder: "#ffffff",
+                },
+              },
+            }}
+          >
+            <AlertContextProvider>
+              <Alert />
+              <Component {...pageProps} />
+            </AlertContextProvider>
+          </Elements>
+        </SWRConfig>
+      </Provider>
+    </GoogleOAuthProvider>
   );
 }

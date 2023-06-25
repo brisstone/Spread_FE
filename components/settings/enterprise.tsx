@@ -15,10 +15,12 @@ import { useState } from "react";
 import IconButton from "../iconbutton";
 import { AlertType } from "@/types/enum";
 import DragDropFile from "../drag-drop-file";
+import { getProfileImageUploadSignedUrl, uploadToS3 } from "@/services";
 
 const Schema = object({
   name: string().optional(),
   description: string().optional(),
+  logo: string().optional(),
   includeLogoInEmail: boolean().optional(),
   includeLogoInInvoice: boolean().optional(),
   socials: array()
@@ -38,19 +40,24 @@ export default function EnterpriseSettings() {
     mutate,
   } = useSWR<Enterprise>("/enterprise");
   const { pushAlert } = useAlert();
+  const [imageUrl, setimageUrl] = useState(enterprise!.logo)
 
+  console.log(enterprise!.logo,'jjjjjjjj', imageUrl);
+  
   const initialValues = {
     name: enterprise?.name,
     description: enterprise?.description || "",
     includeLogoInEmail: enterprise?.includeLogoInEmail,
     includeLogoInInvoice: enterprise?.includeLogoInInvoice,
     socials: enterprise?.socials,
+    logo: imageUrl,
     // categoryId: props.categoryId,
   };
 
   const [disabled, setDisabled] = useState(true);
 
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(enterprise!.logo || "/logo.png");
+
 
   const { formik } = usePost<Enterprise, typeof initialValues>({
     url: "/enterprise",
@@ -74,6 +81,20 @@ export default function EnterpriseSettings() {
 
   console.log(values, errors);
 
+  async function uploadProfileImage(file: File) {
+    const { key, url } = await getProfileImageUploadSignedUrl();
+  
+    await uploadToS3(url, file);
+  
+    setimageUrl(key)
+    // const d = await updateUserProfile({
+    //   profileImageKey: key,
+    // });
+  
+    // return d;
+  }
+
+  
   function reader(file: any, callback: any) {
     const fr = new FileReader();
     fr.onload = () => callback(null, fr.result);
@@ -168,10 +189,28 @@ export default function EnterpriseSettings() {
                       />
                     )}
                     <DragDropFile
+                      {...getFieldProps("logo")}
                       onFile={(file) => {
                         console.log("FILE", file);
                         reader(file, (err: any, res: any) => {
                           setImage(res);
+                          uploadProfileImage(file)
+                          .then((data) => {
+                            console.log("upload data", data);
+                            // mutate(data);
+                            // setUploading(false);
+                            // pushAlert(
+                            //   "Image de profil mise à jour",
+                            //   AlertType.SUCCESS
+                            // );
+                          })
+                          .catch(() => {
+                            // setUploading(false);
+                            pushAlert(
+                              "Quelque chose s'est mal passé",
+                              AlertType.ERROR
+                            );
+                          });
                         });
                       }}
                       id="enterprise-img"

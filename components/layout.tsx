@@ -24,7 +24,7 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
   // console.log("enterprise", enterprise);
 
   useEffect(() => {
-    if (loggedOut) router.replace(`/${router.query.id}/login`);
+    if (loggedOut) router.replace(`/login`);
   }, [loggedOut, router]);
 
   return (

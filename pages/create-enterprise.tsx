@@ -23,11 +23,11 @@ import useUser from "@/data/use-user";
 const Schema = object({
   firstName: RequiredSchema(),
   lastName: RequiredSchema(),
-  password: PasswordSchema,
-  confirmPassword: PasswordSchema.oneOf(
-    [ref("password")],
-    "Cela devrait correspondre à votre nouveau mot de passe"
-  ),
+  // password: PasswordSchema,
+  // confirmPassword: PasswordSchema.oneOf(
+  //   [ref("password")],
+  //   "Cela devrait correspondre à votre nouveau mot de passe"
+  // ),
   enterpriseName: RequiredSchema(),
 });
 
@@ -40,29 +40,33 @@ export default function CreateEnterprise() {
   const initialValues = {
     firstName: "",
     lastName: "",
-    password: "",
-    confirmPassword: "",
+    // password: "",
+    // confirmPassword: "",
     enterpriseName: "",
   };
 
-  const { formik } = usePost<{
-    enterprise: Enterprise,
-    user: User,
-    token: string,
-  }, typeof initialValues>({
+  const { formik } = usePost<
+    {
+      enterprise: Enterprise;
+      user: User;
+      token: string;
+    },
+    typeof initialValues
+  >({
     url: "/enterprise",
     enableReinitialize: true,
     initialValues,
     schema: Schema,
-    modifyBefore: (values) => {
-      return omit(values, ["confirmPassword"]);
-    },
+    // modifyBefore: (values) => {
+    //   return omit(values, ["confirmPassword"]);
+    // },
     onComplete: (data) => {
       console.log("DATA", data);
       setCookieContext(data.enterprise.id, data.token);
       router.replace(`/plans`);
     },
     onError: (e) => {
+      console.log(e, "dkddjdjdjdj");
       pushAlert(e.message);
     },
   });
@@ -126,16 +130,16 @@ export default function CreateEnterprise() {
                           errorText={touched.lastName && errors.lastName}
                         />
 
-                        <Input
+                        {/* <Input
                           className="w-full mt-5"
-                          header="Mot de passe"
+                          header="Entrer le mot de passe"
                           type="password"
                           placeholder="Votre mot de passe"
                           {...getFieldProps("password")}
                           errorText={touched.password && errors.password}
-                        />
+                        /> */}
 
-                        <Input
+                        {/* <Input
                           className="w-full mt-5"
                           header="Confirmer le mot de passe"
                           type="password"
@@ -144,7 +148,7 @@ export default function CreateEnterprise() {
                           errorText={
                             touched.confirmPassword && errors.confirmPassword
                           }
-                        />
+                        /> */}
 
                         <Button
                           loading={isSubmitting}
