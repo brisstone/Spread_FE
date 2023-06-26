@@ -144,6 +144,7 @@ export default function Payment() {
                           isSubmitting={isSubmitting === p.id}
                           onSelected={() => {
                             setIsSubmitting(p.id)
+                            //Api to Create Subscription for user on stripe
                             createSubscription(p.id)
                               .then((data) => {
                                 console.log("data", data);

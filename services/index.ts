@@ -169,6 +169,8 @@ export function createSubscription(priceId: string) {
         clientSecret: string;
         subscriptionId: string;
         enterpriseId: string;
+        referralId: string;
+        email: string
       }>
     >("/payment/subscriptions", { priceId })
     .then(commonSuccessRespFilter)

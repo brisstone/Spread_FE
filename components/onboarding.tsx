@@ -2,11 +2,11 @@ import { Props } from "@/types/props";
 import Glass from "./glass";
 import Image from "next/image";
 import Background from "./background";
-import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
 // import FacebookLogin from "react-facebook-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useState } from "react";
+import AppleLogin from "react-apple-login";
 
 export default function Onboarding({ children, className }: Props) {
   return (
@@ -50,6 +50,10 @@ export function Social({
       setloginFacebook(false);
     }
   };
+
+  const appleResponse = (e) => {
+    console.log(e, "jjjjsjjsjsjjs");
+  };
   return (
     <div className="flex justify-evenly items-center gap-4 mt-8">
       {["facebook", "apple", "google"].map((m) => (
@@ -81,7 +85,7 @@ export function Social({
                 {" "}
                 {!loginFacebook && (
                   <FacebookLogin
-                    appId="675301831110231"
+                    appId={`${process.env.NEXT_FACEBOOK_KEY}`}
                     // autoLoad
                     autoLoad={true}
                     fields="first_name, last_name, email, picture, birthday"
@@ -115,13 +119,31 @@ export function Social({
               </>
             )}
             {m == "apple" && (
-              <Image
-                priority
-                src={`/images/${m}.svg`}
-                height={25}
-                width={25}
-                alt={`${m} logo`}
-              />
+              <div className="cursor-pointer">
+                {" "}
+                <AppleLogin
+                  clientId={`${
+                    process.env.NEXT_APPLE_KEY || "com.react.apple.login"
+                  }`}
+                  redirectURI={`${window.location.host}`}
+                  usePopup={true}
+                  callback={appleResponse} // Catch the response
+                  scope="email name"
+                  responseMode="query"
+                  render={(
+                    renderProps //Custom Apple Sign in Button
+                  ) => (
+                    <Image
+                      onClick={renderProps.onClick}
+                      priority
+                      src={`/images/${m}.svg`}
+                      height={25}
+                      width={25}
+                      alt={`${m} logo`}
+                    />
+                  )}
+                />
+              </div>
             )}
           </div>
         </Glass>
