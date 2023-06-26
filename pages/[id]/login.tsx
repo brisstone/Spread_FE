@@ -75,7 +75,7 @@ export default function Login() {
 
   useEffect(() => {
     if (error && !data) {
-      router.replace('/start');
+      router.replace('/login');
     }
   }, [error, data, router]);
 
@@ -142,7 +142,7 @@ export default function Login() {
                 <p className="mt-7 text-base">
                   <span>Vous n’avez pas de compte?</span>
                   <span className="text-icon ml-0.5">
-                    <Link href="/start">Inscrivez-vous</Link>
+                    <Link href="/register/1">Inscrivez-vous</Link>
                   </span>
                 </p>
               </OnboardingGlass>

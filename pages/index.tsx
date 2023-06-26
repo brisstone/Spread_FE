@@ -9,7 +9,7 @@ export default function Index() {
     const context = localStorage.getItem(StorageEnum.ENT_CONTEXT);
 
     if (!context || context === 'noent') {
-      router.replace('/start');
+      router.replace('/login');
     } else {
       router.replace(`/${context}/dashboard`);
     }
