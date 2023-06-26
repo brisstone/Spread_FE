@@ -47,6 +47,14 @@ export function checkAndUncheckTask(id: string, done: boolean) {
     .catch(apiErrorParser);
 }
 
+export function checkAndUncheckNotes(id: string, done: boolean) {
+  return axiosHttp
+    .patch<SuccessDataResponse<Task>>(`/notes/${id}`, { done })
+    .then(commonSuccessRespFilter)
+    .then((response) => response.data.data)
+    .catch(apiErrorParser);
+}
+
 export function moveKanbanItem(id: string, newCategory: string) {
   return axiosHttp
     .patch<SuccessDataResponse<KanbanItem>>(`/kanban/items/${id}/move`, {

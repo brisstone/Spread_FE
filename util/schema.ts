@@ -3,22 +3,27 @@ import { string } from "yup";
 export const PasswordSchema = string()
   .required("Mot de passe requis")
   .min(6, "Votre mot de passe doit contenir au moins 6 caractères");
-  export const OAuthSchema = string()
-  // .required("Mot de passe requis")
-  export const PersonnelSchema = string()
-  .required("Mot de passe requis")
-  // .min(6, "Votre mot de passe doit contenir au moins 6 caractères");
+export const OAuthSchema = string();
+// .required("Mot de passe requis")
+export const PersonnelSchema = string().required("Mot de passe requis");
+// .min(6, "Votre mot de passe doit contenir au moins 6 caractères");
 
 export const EmailSchema = string()
   .required("Email est requis")
   .email("L'e-mail doit être dans un format valide");
+
+export const ReferralSchema = string().optional();
+// .email("L'e-mail doit être dans un format valide");
 
 export const RequiredSchema = (msg?: string) =>
   string().required(msg || "Ceci est nécessaire");
 
 export const UuidSchema = string().required("Ceci est nécessaire").uuid();
 
-export const UuidSchemaMsg = (msg: string) => string().required(msg || "Ceci est nécessaire").uuid();
+export const UuidSchemaMsg = (msg: string) =>
+  string()
+    .required(msg || "Ceci est nécessaire")
+    .uuid();
 
 export const UuidSchemaFunc = (msg: string) => string().required(msg).uuid();
 

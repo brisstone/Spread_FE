@@ -66,6 +66,38 @@ export function NoteGlass(props: NoteGlassProps) {
   );
 }
 
+export function BriefGlass(props: NoteGlassProps) {
+
+  const groupedData: Record<string, Item[]> = props.lead?.data.reduce((result: Record<string, Item[]>, item: Item) => {
+    const { category } = item;
+    if (!result[category]) {
+      result[category] = [];
+    }
+    result[category].push(item);
+    return result;
+  }, {}) || {};
+  
+
+  return (
+    <ClientDetailGlass title={props.title}>
+      <p className="text-base mt-5 mb-5">{props.note}</p>
+      {Object?.entries(groupedData).map(([category, items]) => (
+        <div key={category} className="mb-[30px]">
+          <h3><b>{category}</b> </h3>
+          <ul>
+            {items.map((item: { question: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; answer: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) => (
+              <li key={index} className="mb-[10px]">
+                <p>Question: {item.question}</p>
+                <p className="text-[blue]">Answer: {item.answer}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </ClientDetailGlass>
+  );
+}
+
 export function Team(props: { data: MinimalUser[]; name: string }) {
   return (
     <ClientDetailGlass title={`Equipe - ${props.name}`}>

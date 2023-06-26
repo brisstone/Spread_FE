@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import useSWR from "swr";
 import Button from "@/components/button";
 import Card from "@/components/card";
@@ -8,11 +9,31 @@ import { ClipLoader } from "react-spinners";
 import { Feedback } from "@/components/feedback";
 import Tab, { TabItem, TabPanel } from "@/components/tab";
 import { useState } from "react";
+import Router from "next/router";
+import {
+  TableHead,
+  TableHeadCell,
+  TableHeadRow,
+  TableRow,
+  TableRowCell,
+} from "@/components/table";
 
 export default function Affiliation() {
+  // const { id } = Router?.query;
+
+  // console.log(Router?.query,'RouterqueryRouterquery');
+
   const { data, isLoading, error } = useSWR<string>(
     "/enterprise/referral/code"
   );
+
+  const {
+    data: referrals,
+    isLoading: referralLoading,
+    error: referralError,
+  } = useSWR<string>("/referral");
+
+  // console.log(referrals,'referralsreferrals');
 
   const [newTabIndex, setNewTabIndex] = useState(0);
 
@@ -37,6 +58,13 @@ export default function Affiliation() {
               <h2 className="text-3xl text-center">
                 Partagez votre code promotionnel 💰
               </h2>
+              <h5 className="text-[15px] text-center mt-[20px]">
+                Gagnez 10% sur la vente d'abonnement et la personne qui utilise
+                votre code
+              </h5>
+              <h5 className="text-[15px] text-center">
+                bénéficie également de 10 % de réduction sur l'abonnement.
+              </h5>
 
               <Image
                 src="/images/logo.png"
@@ -71,12 +99,12 @@ export default function Affiliation() {
                   <Input
                     disabled
                     className="my-4 lg:min-w-[417px]"
-                    value={data}
+                    value={`${window.location.host}/login/${data}`}
                   />
                   <Button
                     onClick={async () => {
                       navigator.clipboard
-                        .writeText(data)
+                        .writeText(`${window.location.host}/login/${data}`)
                         .catch((e) => console.error("Failed to copy: ", e));
                     }}
                     className="font-[600] lg:min-w-[417px] shadow-btn2"
@@ -90,7 +118,63 @@ export default function Affiliation() {
         </div>
       </TabPanel>
 
-      <TabPanel index={1} value={newTabIndex}>oooojjjujujjjj</TabPanel>
+      <TabPanel index={1} value={newTabIndex}>
+        <div className="w-full grow flex text-[white] pt-[5%] pl-[5%]">
+          <div>
+            <table className="table-auto w-full">
+              <TableHead>
+                <TableHeadRow>
+                  <TableHeadCell>S/N</TableHeadCell>
+                  <TableHeadCell>${`ID de l'utilisateur`}</TableHeadCell>
+                  <TableHeadCell>Nom</TableHeadCell>
+                  <TableHeadCell>utilisateur abonné</TableHeadCell>
+                  <TableHeadCell>prime</TableHeadCell>
+                </TableHeadRow>
+              </TableHead>
+              <tbody>
+                {referrals?.map((referral: any, index: number) => (
+                  <TableRow>
+                    <TableRowCell>
+                      <div className="flex">
+                        <span className="text-base ml-4">{index + 1}</span>
+                      </div>
+                    </TableRowCell>
+                    <TableRowCell>
+                      <div className="flex">
+                        <span className="text-base ml-4">
+                          {referral.referredUserId}
+                        </span>
+                      </div>
+                    </TableRowCell>
+                    <TableRowCell>
+                      <div className="flex">
+                        <span className="text-base ml-4">
+                          {referral.name ?? "N/A"}
+                        </span>
+                      </div>
+                    </TableRowCell>
+                    <TableRowCell>
+                      <div className="flex">
+                        <span className="text-base ml-4">
+                          {" "}
+                          {referral.referredSubscribed == false ? "No" : "Yes"}
+                        </span>
+                      </div>
+                    </TableRowCell>
+                    <TableRowCell>
+                      <div className="flex">
+                        <span className="text-base ml-4">
+                          {referral.amount || "0"}
+                        </span>
+                      </div>
+                    </TableRowCell>
+                  </TableRow>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </TabPanel>
     </Layout>
   );
 }

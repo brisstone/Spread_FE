@@ -21,6 +21,8 @@ export function Feedback(props: Omit<FeedbackProps, 'msg'> & {msg: string}) {
 }
 
 export function ErrorFeedback(props: FeedbackProps) {
+
+  
   return <Feedback {...omit(props, ['msg'])} msg={props.msg || "Échec de la récupération des données"} />
 }
 

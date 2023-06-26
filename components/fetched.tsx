@@ -11,7 +11,7 @@ export default function Fetched<T>(props: {
   feedbackNoAbsolute?: boolean;
   feedbackClassName?: string;
 }) {
-  console.log('ERR', props.error);
+  console.log('ERR', props.error?.message, 'mpppm');
   return (
     <>
       {props.data ? (
@@ -30,8 +30,16 @@ export default function Fetched<T>(props: {
               <ErrorFeedback
                 noAbsolute={props.feedbackNoAbsolute}
                 className={props.feedbackClassName}
+                     msg={props?.error?.message?.response?.data?.message}
               />
             ))}
+              {!props.error && !props.isLoading && (
+            <Feedback
+              noAbsolute={props.feedbackNoAbsolute}
+              msg={props?.error?.message?.response?.data?.message}
+              className={props.feedbackClassName}
+            />
+          )}
           {!props.error && !props.isLoading && (
             <Feedback
               noAbsolute={props.feedbackNoAbsolute}

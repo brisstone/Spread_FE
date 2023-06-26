@@ -77,7 +77,7 @@ export default function Plan() {
                     <div className="flex">
                       <Image
                         src={`/images/payment/${
-                          cardBrands[s.default_payment_method.card.brand] ||
+                          cardBrands[s?.default_payment_method?.card?.brand] ||
                           "card.png"
                         }`}
                         height={14}
@@ -86,7 +86,7 @@ export default function Plan() {
                         className=""
                       />
                       <p className="text-base ml-4">
-                        XXXX XXXX XXXX {s.default_payment_method.card.last4}
+                        XXXX XXXX XXXX {s?.default_payment_method?.card?.last4}
                       </p>
                     </div>
                   </Glass>
@@ -113,8 +113,12 @@ export default function Plan() {
               isLoading={invLoading}
               data={invoices}
               dataComp={(invs) =>
-                invs.length > 0 ? (
-                  invs.map((inv) => <PlanInvoiceItem data={inv} key={inv.id} />)
+                // console.log(invs,'invsinvsinvs')
+
+                invs?.length > 0 ? (
+                  invs?.map((inv) => (
+                    <PlanInvoiceItem data={inv} key={inv.id} />
+                  ))
                 ) : (
                   <Feedback
                     noAbsolute

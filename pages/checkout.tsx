@@ -6,7 +6,16 @@ import Input from "@/components/input";
 import Onboarding from "@/components/onboarding";
 import useBaseUser from "@/data/use-base-user";
 import { RequiredSchema } from "@/util/schema";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  CardCvcElement,
+  CardElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
+  // injectStripe,
+} from "@stripe/react-stripe-js";
+import { StripeProvider, Elements } from "react-stripe-elements";
 import { Form, FormikProvider, useFormik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,17 +28,42 @@ import { markSubscriptionAsActive } from "@/services";
 import { ClipLoader } from "react-spinners";
 import { Feedback } from "@/components/feedback";
 import { getCookieContext } from "@/lib";
+import { loadStripe } from "@stripe/stripe-js";
+
+// const CardInputWrapper = styled.div`
+//   border: 2px solid #00f;
+//   border-radius: 8px;
+//   padding: 20px 4px;
+// `;
 
 const Schema = object({
   name: RequiredSchema(),
 });
 
-export default function Checkout() {
+function Checkout() {
   const { enterprise, error, isLoading } = useUserAndEnterprise();
 
   const [paymentError, setPaymentError] = useState<string | undefined>(
     undefined
   );
+
+  const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUB_KEY}`);
+
+  // Create payment method
+  // stripe.createPaymentMethod({
+  //   type: 'card',
+  //   card: cardElement,
+  // }).then((result) => {
+  //   if (result.error) {
+  //     console.error(result.error.message);
+  //   } else {
+  //     // Payment method created successfully
+  //     const paymentMethod = result.paymentMethod;
+  //     console.log(paymentMethod);
+  //   }
+  // }).catch((error) => {
+  //   console.error(error);
+  // });
 
   const stripe = useStripe();
   const elements = useElements();
@@ -53,6 +87,10 @@ export default function Checkout() {
       // Get a reference to a mounted CardElement. Elements knows how
       // to find your CardElement because there can only ever be one of
       // each type of element.
+      const cardNumberElement = elements?.getElement(CardNumberElement);
+
+      console.log(cardNumberElement);
+
       const cardElement = elements.getElement(CardElement);
       // Use card Element to tokenize payment details
 
@@ -77,10 +115,10 @@ export default function Checkout() {
       }
 
       if (setupIntent) {
-        if (setupIntent.payment_method) {
-          router.replace(`/${enterprise.id}/dashboard`);
-        }
-        // setMarking("in-progress");
+        // if (setupIntent.payment_method) {
+        //   router.replace(`/${enterprise.id}/dashboard`);
+        // }
+        // // setMarking("in-progress");
         // markSubscriptionAsActive({
         //   subscriptionId: subscriptionId as string,
         //   enterpriseId: enterprise.id,
@@ -97,6 +135,36 @@ export default function Checkout() {
     },
   });
 
+  // const handleSubmit2 = async (e) => {
+  //   e.preventDefault();
+  //   console.log('inside handleSubmit');
+
+  //   if (!stripe || !elements) {
+  //     console.log('!stripe || !elements');
+  //     return;
+  //   }
+
+  //   const cardElement = elements.getElement(CardElement);
+
+  //   /*
+  //   Returns:
+  //   result.paymentMethod: a PaymentMethod was created successfully.
+  //   result.error: there was an error.
+  //   */
+  //   const { paymentMethod, error: backendError } = await stripe.createPaymentMethod({
+  //     type: 'card',
+  //     card: cardElement,
+  //     billing_details: {
+  //       name: 'Jenny Rosen',
+  //     },
+  //   });
+
+  //   if (backendError) {
+  //     console.error(backendError.message);
+  //     return;
+  //   }
+  // };
+
   const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   if (!stripe || !elements) {
@@ -112,6 +180,21 @@ export default function Checkout() {
   // const handleSubmit = async (e: any) => {
 
   // }
+
+  const inputStyle = {
+    iconColor: "#c4f0ff",
+    color: "#ff0",
+    fontWeight: "500",
+    fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+    fontSize: "16px",
+    fontSmoothing: "antialiased",
+    ":-webkit-autofill": {
+      color: "#fce883",
+    },
+    "::placeholder": {
+      color: "#87BBFD",
+    },
+  };
 
   return (
     <Onboarding>
@@ -149,42 +232,140 @@ export default function Checkout() {
 
                     <div className="w-full">
                       <div className="w-full mt-6">
-                        <Form onSubmit={handleSubmit}>
-                          <Input
-                            header="Nom"
-                            className="w-full"
-                            placeholder="Votre nom"
-                            {...getFieldProps("name")}
-                            errorText={touched.name && errors.name}
-                          />
+                        <StripeProvider
+                          apiKey={`${process.env.NEXT_PUBLIC_STRIPE_PUB_KEY}`}
+                        >
+                          <Elements>
+                            <Form onSubmit={handleSubmit}>
+                              <Input
+                                header="Nom"
+                                className="w-full"
+                                placeholder="Votre nom"
+                                {...getFieldProps("name")}
+                                errorText={touched.name && errors.name}
+                              />
 
-                          <div className="mt-5">
-                            <CardElement
+                              <div className="mt-5">
+                                <CardElement
+                                  options={{
+                                    style: {
+                                      base: {
+                                        color: "#ffffff",
+                                      },
+                                    },
+                                  }}
+                                  className={`${utilStyles.glass} px-5 py-4 !text-white`}
+                                />
+                                {/* <Glass className="h-[30px] pl-[10px]">
+                                  <CardNumberElement
+                                    options={{
+                                      style: {
+                                        base: inputStyle,
+                                      },
+                                    }}
+                                  />
+                                </Glass>
+
+                                <div>
+                                  <Glass className="h-[30px] pl-[10px]">
+                                    {" "}
+                                    <CardExpiryElement
+                                      options={{
+                                        style: {
+                                          base: inputStyle,
+                                        },
+                                      }}
+                                    />
+                                  </Glass>
+                                </div>
+                                <div>
+                                  <Glass className="h-[30px] pl-[10px]">
+                                    {" "}
+                                    <CardCvcElement
+                                      options={{
+                                        style: {
+                                          base: inputStyle,
+                                        },
+                                      }}
+                                    />
+                                  </Glass>
+                                </div> */}
+                                {paymentError && (
+                                  <div className="mt-5 w-full text-base bg-red-400 text-white p-5 rounded-lg">
+                                    <p className="text-center">
+                                      {paymentError}
+                                    </p>
+                                  </div>
+                                )}
+                                <Button
+                                  className="w-full shadow-btn2 mt-5"
+                                  type="submit"
+                                  loading={isSubmitting}
+                                  // onClick={props.onButtonClick}
+                                  // loading={props.isSubmitting}
+                                >
+                                  👉 Commencer mes 14 jours gratuits
+                                </Button>
+
+                                <div>
+                                  {/* <div style={{ border: "2px solid green" }}>
+                                <CardNumberElement
+                                  options={{
+                                    style: {
+                                      base: inputStyle,
+                                    },
+                                  }}
+                                />
+                              </div> */}
+                                </div>
+                              </div>
+                            </Form>
+                          </Elements>
+                        </StripeProvider>
+                        {/* <Elements stripe={stripePromise}>
+                        <form
+                          onSubmit={(e) => {
+                            // handleSubmit2(e);
+                          }}
+                        >
+                          <Glass className="h-[30px] pl-[10px]">
+                            <CardNumberElement
                               options={{
                                 style: {
-                                  base: {
-                                    color: "#ffffff",
-                                  },
+                                  base: inputStyle,
                                 },
                               }}
-                              className={`${utilStyles.glass} px-5 py-4 !text-white`}
                             />
-                            {paymentError && (
-                              <div className="mt-5 w-full text-base bg-red-400 text-white p-5 rounded-lg">
-                                <p className="text-center">{paymentError}</p>
-                              </div>
-                            )}
-                            <Button
-                              className="w-full shadow-btn2 mt-5"
-                              type="submit"
-                              loading={isSubmitting}
-                              // onClick={props.onButtonClick}
-                              // loading={props.isSubmitting}
-                            >
-                              👉 Commencer mes 14 jours gratuits
-                            </Button>
+                          </Glass>
+
+                          <div>
+                            <Glass className="h-[30px] pl-[10px]">
+                              {" "}
+                              <CardExpiryElement
+                                options={{
+                                  style: {
+                                    base: inputStyle,
+                                  },
+                                }}
+                              />
+                            </Glass>
                           </div>
-                        </Form>
+                          <div>
+                            <Glass className="h-[30px] pl-[10px]">
+                              {" "}
+                              <CardCvcElement
+                                options={{
+                                  style: {
+                                    base: inputStyle,
+                                  },
+                                }}
+                              />
+                            </Glass>
+                          </div>
+
+                          <button className="text-[white]">[submit /]</button>
+                        </form>
+                        </Elements> */}
                       </div>
                     </div>
                   </div>
@@ -215,3 +396,5 @@ export default function Checkout() {
     </Onboarding>
   );
 }
+
+export default Checkout;

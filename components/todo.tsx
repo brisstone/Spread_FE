@@ -5,7 +5,7 @@ import Image from "next/image";
 import Checkbox from "./checkbox/index";
 import { KeyedMutator, mutate } from "swr";
 import { Task } from "@/types/general";
-import { checkAndUncheckTask } from "@/services";
+import { checkAndUncheckNotes, checkAndUncheckTask } from "@/services";
 import { useAlert } from "@/contexts/alert-context";
 import Input from "./input";
 
@@ -36,7 +36,7 @@ export function TodoItem(props: {
                   id={props.id}
                   name={props.id}
                   onChange={(e) => {
-                    checkAndUncheckTask(props.id, !props.checked)
+                    checkAndUncheckNotes(props.id, !props.checked)
                       .then(() => {
                         if (props.mutate) props.mutate();
                       })

@@ -131,7 +131,10 @@ export default function Login() {
 
           // setProfile(res.data);
         })
-        .catch((err) => pushAlert(err.message));
+        .catch((err) => {
+          console.log(err, 'sjjdjdjjdd');
+          
+          pushAlert(err?.response?.data?.message || err?.message)});
     }
   }, [user]);
 

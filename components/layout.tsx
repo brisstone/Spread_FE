@@ -4,6 +4,8 @@ import { NavItem } from "./navigation";
 import Background from "./background";
 import { useRouter } from "next/router";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
+import { User } from "@/types/general";
+import Image from "next/image";
 
 export interface LayoutProps extends Props {
   header?: string;
@@ -12,12 +14,14 @@ export interface LayoutProps extends Props {
 const Layout: FC<LayoutProps> = (props: LayoutProps) => {
   // const [id, setId] = useState(v4());
 
+  // const { data: user, error, isLoading, mutate } = useSWR<User>("/auth/user");
+
   const router = useRouter();
 
   const { user, enterprise, isLoading, error, loggedOut } =
     useUserAndEnterprise();
 
-  // console.log("user:", user);
+  console.log("enterprffffise:", enterprise);
   // console.log("isLoading:", isLoading);
   // console.log("error:", error);
   // console.log("loggedOut:", loggedOut);
@@ -32,6 +36,15 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
       {/** TODO add container for large screens */}
       <div className="flex min-h-screen w-full overflow-y-auto">
         <nav className="fixed top-0 left-0 bottom-0 w-1/5 p-[10px]">
+          <div>
+            <Image
+              src={enterprise?.logo ?? "/avart.png"}
+              height={40}
+              width={40}
+              alt="avatar"
+              className="rounded-full w-[40px] h-[40px] object-cover"
+            />
+          </div>
           <div className="bg-gradient-nav h-screen w-full rounded-2xl backdrop-blur-3xl">
             <div className="p-6">
               <ul>
@@ -99,6 +112,29 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                   href={`/${enterprise?.id}/dashboard/settings`}
                 />
               </ul>
+            </div>
+            <div
+              style={{ border: "2px solid red" }}
+              className="flex flex-col w-[100%] justify-center items-center text-[white]"
+            >
+              <img src="/become_aff.svg" alt="refer" />{" "}
+              <div className="flex gap-[20px]">
+                <div>
+                  <Image
+                    src={user?.profileImageUrl ?? "/avart.png"}
+                    height={40}
+                    width={40}
+                    alt="avatar"
+                    className="rounded-full w-[40px] h-[40px] object-cover"
+                  />
+                </div>
+                <div className="flex flex-col text-[10px]">
+                  <div className="flex">
+                    {user?.firstName} {user?.lastName}
+                  </div>
+                  <div>{user?.baseUser?.email}</div>
+                </div>
+              </div>
             </div>
           </div>
         </nav>

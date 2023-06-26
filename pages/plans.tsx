@@ -99,6 +99,9 @@ export default function Payment() {
     publishableKey: string;
   }>("/payment/plans");
 
+  console.log(data,'datadatadatadata');
+  
+
   useEffect(() => {
     if (enterprise && enterprise.subscriptionActive) {
       router.replace(`/${enterprise.id}/dashboard`);
