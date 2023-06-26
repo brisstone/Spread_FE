@@ -30,6 +30,7 @@ import {
   NotificationManager,
 } from "react-notifications";
 import { ref } from "yup";
+import Link from "next/link";
 
 const Schema = object({
   email: EmailSchema,
@@ -193,6 +194,12 @@ export default function Signup() {
               >
                 👉 Continuer
               </Button>
+              <p className="mt-7 text-base">
+                <span>Vous avez déjà un compte?</span>
+                <span className="text-icon ml-0.5">
+                  <Link href="/login">Connexion</Link>
+                </span>
+              </p>
             </Form>
           </OnboardingGlass>
         </div>
