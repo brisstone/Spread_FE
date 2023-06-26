@@ -114,22 +114,23 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
               </ul>
             </div>
             <div
-              style={{ border: "2px solid red" }}
+              // style={{ border: "2px solid red" }}
               className="flex flex-col w-[100%] justify-center items-center text-[white]"
             >
-              <img src="/become_aff.svg" alt="refer" />{" "}
-              <div className="flex gap-[20px]">
+              <img className="mr-8 pt-6"
+              src="/become_aff.svg" alt="refer" />{" "}
+              <div className="flex gap-[6px] pb-12">
                 <div>
                   <Image
                     src={user?.profileImageUrl ?? "/avart.png"}
                     height={40}
                     width={40}
                     alt="avatar"
-                    className="rounded-full w-[40px] h-[40px] object-cover"
+                    className="rounded-full w-[40px] h-[40px] object-cover mt-6"
                   />
                 </div>
-                <div className="flex flex-col text-[10px]">
-                  <div className="flex">
+                <div className="flex flex-col text-[12px]">
+                  <div className="flex mt-6">
                     {user?.firstName} {user?.lastName}
                   </div>
                   <div>{user?.baseUser?.email}</div>
