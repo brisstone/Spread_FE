@@ -60,14 +60,19 @@ const CheckoutForm = () => {
       seterrorName("Le nom est requis!");
     }
     setissubmitting(true);
-
+    console.log('ERRTTTS');
     if (!stripe || !elements) {
       setissubmitting(false);
       // Stripe.js has not loaded yet, handle error or show loading state
       return;
     }
 
+    console.log('SJDJDDJD');
+    
+
     const cardElement = elements.getElement(CardNumberElement);
+
+    console.log('EEEEEEE');
 
     try {
       // const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -90,36 +95,74 @@ const CheckoutForm = () => {
       //   console.log(paymentMethod, "sdjjdjdjd");
       // }
 
-
-      const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret as string, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            name: name,
-            postal_code: postalCode,
-
-          },
-        },
-        payment_intent_data: {
-          receipt_email: email,
-          // Apply coupon code
-          coupon: 'REFERRAL_DISCOUNT',
-        },
-      });
-
-      // let { error, setupIntent } = await stripe.confirmCardSetup(
-      //   clientSecret as string,
-      //   {
-      //     payment_method: {
-      //       card: cardElement!,
-      //       billing_details: {
-      //         name: name,
-      //       },
+      // const { setupIntent, error } = await stripe.confirmCardSetup(clientSecret as string, {
+      //   payment_method: {
+      //     card: cardElement,
+      //     billing_details: {
+      //       name: name,
+      //       postal_code: postalCode,
       //     },
-      //     customer: 'CUSTOMER_ID',
-      //     coupon: 'COUPON_CODE',
-      //   }
-      // );
+      //   },
+      //   subscription_data: {
+      //     // Apply coupon code
+      //     coupon: 'REFERRAL_DISCOUNT',
+      //   },
+      // });
+
+      // const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret as string, {
+      //   payment_method: {
+      //     card: cardElement,
+      //     billing_details: {
+      //       name: name,
+      //       postal_code: postalCode,
+
+      //     },
+      //   },
+        // payment_intent_data: {
+        //   receipt_email: email,
+        //   // Apply coupon code
+        //   coupon: 'REFERRAL_DISCOUNT',
+        // },
+      // });
+
+
+      // const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
+      //   type: 'card',
+      //   card: cardElement,
+      // });
+  
+      // if (paymentMethodError) {
+      //   setError(paymentMethodError.message);
+      //   return;
+      // }
+  
+      // Confirm the setup of the payment method on the subscription
+      // const { error: confirmError, setupIntent } = await stripe.confirmCardSetup(clientSecret as string, {
+      //   payment_method: {
+      //     card: cardElement,
+      //     billing_details: {
+      //       name: name,
+      //       postal_code: postalCode,
+      //       email: email
+      //     },
+      //   },
+      //   // update: {
+      //   //   coupon: 'REFERRAL_DISCOUNT',
+      //   // },
+      // });
+
+      let { error, setupIntent } = await stripe.confirmCardSetup(
+        clientSecret as string,
+        {
+          payment_method: {
+            card: cardElement!,
+            billing_details: {
+              name: name,
+            },
+          },
+        
+        }
+      );
       if (error) {
         setissubmitting(false);
         console.log("payment error", error);
@@ -129,47 +172,54 @@ const CheckoutForm = () => {
         return;
       }
 
-      console.log(paymentIntent, "setupIntentsetupIntent");
+      console.log(setupIntent, "setupIntentsetupIntent");
 
-      if (paymentIntent) {
+      if (setupIntent) {
+        setissubmitting(false);
         // setMarking("in-progress");
-        markSubscriptionAsActive({
-          subscriptionId: subscriptionId as string,
-          enterpriseId: enterprise!.id,
-        })
-          .then(async(data) => {
-            if (referralId !== "") {
-              // Proceed with additional logic (e.g., create subscription, charge customer, etc.)
+        router.push(`/${enterprise!.id}/dashboard`);
 
-              // Calculate the amount to be credited to the other customer (10% of the payment)
-              const amountToCredit = calculateAmountToCredit();
 
-              // Create a transfer to credit the other customer
-              //@ts-ignore
-              const transfer = await stripe.transfers.create({
-                amount: amountToCredit,
-                currency: "usd",
-                destination: referralId, // Replace with the Stripe account ID of the recipient
-                description: 'Transfer from your Stripe account',
-              });
+        // markSubscriptionAsActive({
+        //   subscriptionId: subscriptionId as string,
+        //   enterpriseId: enterprise!.id,
+        // })
+        //   .then(async(data) => {
+        //     if (referralId !== "") {
+        //       // Proceed with additional logic (e.g., create subscription, charge customer, etc.)
 
-              // Handle the transfer success
-              console.log("Transfer successful!", transfer);
-            }
-            setissubmitting(false);
-            // setMarking("successful");
-            // router.push(`/${enterprise!.id}/dashboard`);
-          })
-          .catch((e) => {
-            console.log(e);
-            pushAlert("failed");
+        //       // Calculate the amount to be credited to the other customer (10% of the payment)
+        //       const amountToCredit = calculateAmountToCredit();
 
-            // setMarking("failed");
-            // setMarkingError("");
-          });
+        //       // Create a transfer to credit the other customer
+        //       //@ts-ignore
+        //       const transfer = await stripe.transfers.create({
+        //         amount: amountToCredit,
+        //         currency: "usd",
+        //         destination: referralId, // Replace with the Stripe account ID of the recipient
+        //         description: 'Transfer from your Stripe account',
+        //       });
+
+        //       // Handle the transfer success
+        //       console.log("Transfer successful!", transfer);
+        //     }
+        //     setissubmitting(false);
+        //     // setMarking("successful");
+        //     // router.push(`/${enterprise!.id}/dashboard`);
+        //   })
+        //   .catch((e) => {
+        //     console.log(e);
+        //     pushAlert("failed");
+
+        //     // setMarking("failed");
+        //     // setMarkingError("");
+        //   });
       }
     } catch (error) {
       setissubmitting(false);
+
+      console.log(error,'jjjjj');
+      
       // Handle any other errors during payment method creation
       pushAlert("An error occurred. Please try again later.")
       // setError("An error occurred. Please try again later.");
@@ -202,6 +252,7 @@ const CheckoutForm = () => {
               </div>
 
               <Input
+              style={{height:"48px"}}
                 header="Nom"
                 className="w-full"
                 placeholder="Votre nom"
@@ -211,6 +262,7 @@ const CheckoutForm = () => {
                   setName(e.target.value);
                   seterrorName("");
                 }}
+                // inputClassName="h-[2px]"
                 // {...getFieldProps("name")}
                 // errorText={touched.name && errors.name}
               />
@@ -310,6 +362,7 @@ const CheckoutForm = () => {
                 <label className="text-[white]">
                   Postal Code{" "}
                   <Input
+                  style={{height:"48px"}}
                     // options={
                     //   {
                     //     /* Customize CardExpiryElement styling */

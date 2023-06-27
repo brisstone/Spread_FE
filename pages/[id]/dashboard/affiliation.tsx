@@ -119,8 +119,9 @@ export default function Affiliation() {
       </TabPanel>
 
       <TabPanel index={1} value={newTabIndex}>
-        <div className="w-full grow flex text-[white] pt-[5%] pl-[5%]">
+        <div className="w-full grow flex text-[white] justify-center mt-[5%]">
           <div>
+          {referrals?.length == 0 && <>vous n'avez actuellement aucune référence</>}
             <table className="table-auto w-full">
               <TableHead>
                 <TableHeadRow>
@@ -132,6 +133,8 @@ export default function Affiliation() {
                 </TableHeadRow>
               </TableHead>
               <tbody>
+                {/* //@ts-ignore */}
+         
                 {referrals?.map((referral: any, index: number) => (
                   <TableRow>
                     <TableRowCell>

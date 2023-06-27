@@ -36,16 +36,26 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
       {/** TODO add container for large screens */}
       <div className="flex min-h-screen w-full overflow-y-auto">
         <nav className="fixed top-0 left-0 bottom-0 w-1/5 p-[10px]">
-          <div>
-            <Image
-              src={enterprise?.logo ?? "/avart.png"}
+          {/* <div  className="w-[100%] flex justify-center items-center">
+            <img
+              src={ "/seperation-line.jpg"}
               height={40}
               width={40}
               alt="avatar"
               className="rounded-full w-[40px] h-[40px] object-cover"
             />
-          </div>
-          <div className="bg-gradient-nav h-screen w-full rounded-2xl backdrop-blur-3xl">
+          </div> */}
+
+          <div className="bg-gradient-nav h-screen w-full rounded-2xl backdrop-blur-3xl overflow-auto">
+            <div className="w-[100%] flex justify-center items-center">
+              <Image
+                src={enterprise?.logo ?? "/logo.png"}
+                height={80}
+                width={80}
+                alt="avatar"
+                className="rounded-full w-[70px] h-[70px] object-cover"
+              />
+            </div>
             <div className="p-6">
               <ul>
                 <NavItem
@@ -117,8 +127,7 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
               // style={{ border: "2px solid red" }}
               className="flex flex-col w-[100%] justify-center items-center text-[white]"
             >
-              <img className="mr-8 pt-6"
-              src="/become_aff.svg" alt="refer" />{" "}
+              <img className="mr-8 pt-6" src="/become_aff.svg" alt="refer" />{" "}
               <div className="flex gap-[6px] pb-12">
                 <div>
                   <Image
