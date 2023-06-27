@@ -52,10 +52,12 @@ export function Social({
     }
   };
 
+  //@ts-ignore
   const appleResponse = (e) => {
     console.log(e, "EE");
   };
 
+  //@ts-ignore
   const onFacebookClick = (e) => {
     console.log(e, "EE");
   };
