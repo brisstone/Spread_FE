@@ -97,22 +97,22 @@ export default function Login() {
   //   }
   // }, [error, data, router]);
 
-  console.log(user, "ssjssjsjjss");
 
   useEffect(() => {
     if (user) {
       axios
         .get(
+            //@ts-ignore
           `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
           {
             headers: {
+              //@ts-ignore
               Authorization: `Bearer ${user.access_token}`,
               Accept: "application/json",
             },
           }
         )
         .then(async (res) => {
-          console.log(res.data, "dddddddddddd");
 
           const data: any = {
             //@ts-ignore
@@ -125,14 +125,14 @@ export default function Login() {
             `${process.env.NEXT_PUBLIC_API_URL}/auth/login?auth=google`,
             data
           );
-          console.log(response.data, "response");
+  
           setCookieContext(response.data.data.user.enterpriseId, response.data.data.token);
           router.replace(`/${response.data.data.user.enterpriseId}/dashboard`);
 
           // setProfile(res.data);
         })
         .catch((err) => {
-          console.log(err, 'sjjdjdjjdd');
+   
           
           pushAlert(err?.response?.data?.message || err?.message)});
     }

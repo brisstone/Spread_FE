@@ -66,7 +66,7 @@ export default function CreateEnterprise() {
       router.replace(`/plans`);
     },
     onError: (e) => {
-      console.log(e, "dkddjdjdjdj");
+
       pushAlert(e.message);
     },
   });

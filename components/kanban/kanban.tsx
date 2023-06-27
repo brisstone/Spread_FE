@@ -102,7 +102,7 @@ export function KanbanCard({ category }: { category: KanbanCategory }) {
     )
   );
 
-  console.log('items', items);
+
   const { pushAlert } = useAlert();
 
   const [modalOpen, setModalOpen] = useState(false);

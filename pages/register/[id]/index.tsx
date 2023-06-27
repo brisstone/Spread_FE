@@ -61,7 +61,6 @@ export default function Signup() {
 
   const [referralCode, setreferralCode] = useState(id);
 
-  console.log(id, "ididid");
 
   useEffect(() => {}, [id, referralCode]);
 
@@ -86,14 +85,14 @@ export default function Signup() {
     initialValues,
     schema: Schema,
     modifyBefore: (values) => {
-      console.log(values, "valuesvalues", id, referralCode);
+  
       values["referralCode"] = id
       
 
       return omit(values, ["confirmPassword"]);
     },
     onComplete: (data) => {
-      console.log(data, "djdjdjdjjd");
+   
 
       if (data.status == false) {
         pushAlert(`${data.message}`);
@@ -110,8 +109,7 @@ export default function Signup() {
       });
 
       setTimeout(() => {
-        console.log("OKOLI__JOHN");
-        pushAlert("Check your email for OTP to proceed.");
+        pushAlert("Check your email for OTP to proceed.",);
 
         router.push("/verify-email");
       }, 1000);

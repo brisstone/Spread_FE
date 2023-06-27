@@ -21,7 +21,7 @@ export default function Settings() {
         <Tab
           value={tabIndex}
           onChange={(newValue) => {
-            console.log("new value", newValue);
+       
             setTabIndex(newValue);
           }}
           className="w-full"

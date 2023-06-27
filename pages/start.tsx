@@ -19,7 +19,7 @@ import { useAlert } from "@/contexts/alert-context";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
 import { useEffect } from "react";
 import useBaseUser from "@/data/use-base-user";
-import { baseUserTokenId } from "@/types/enum";
+import { AlertType, baseUserTokenId } from "@/types/enum";
 import "react-notifications/lib/notifications.css";
 // import { toast } from "react-toastify";
 import { ToastContainer, toast } from "react-toastify";
@@ -79,7 +79,6 @@ export default function Signup() {
       return omit(values, ["confirmPassword"]);
     },
     onComplete: (data) => {
-      console.log(data, "djdjdjdjjd");
 
       if (data.status == false) {
         pushAlert(`${data.message}`);
@@ -96,8 +95,7 @@ export default function Signup() {
       });
 
       setTimeout(() => {
-        console.log("OKOLI__JOHN");
-        pushAlert("Check your email for OTP to proceed.");
+        pushAlert("Check your email for OTP to proceed.", AlertType.SUCCESS);
 
         router.push("/verify-email");
       }, 1000);

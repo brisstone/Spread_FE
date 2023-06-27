@@ -21,7 +21,7 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
   const { user, enterprise, isLoading, error, loggedOut } =
     useUserAndEnterprise();
 
-  console.log("enterprffffise:", enterprise);
+
   // console.log("isLoading:", isLoading);
   // console.log("error:", error);
   // console.log("loggedOut:", loggedOut);

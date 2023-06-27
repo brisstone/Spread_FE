@@ -42,8 +42,6 @@ export default function EnterpriseSettings() {
   const { pushAlert } = useAlert();
   const [imageUrl, setimageUrl] = useState();
 
-  console.log(enterprise!.logo, "jjjjjjjj", imageUrl);
-
   const initialValues = {
     name: enterprise?.name,
     description: enterprise?.description || "",

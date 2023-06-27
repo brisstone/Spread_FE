@@ -48,8 +48,6 @@ export default function NewClient() {
     isLoading,
   } = useSWR<CRMLead>(() => (leadId ? `/crm/leads/${leadId}` : null));
 
-
-  console.log(lead,'leadleadleadleadlead');
   
   const {
     data: users,

@@ -42,7 +42,7 @@ export default function Affiliation() {
       <Tab
         value={newTabIndex}
         onChange={(newValue) => {
-          console.log("new value", newValue);
+    
           setNewTabIndex(newValue);
         }}
         className="w-full"
