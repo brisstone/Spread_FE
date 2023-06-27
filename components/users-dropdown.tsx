@@ -31,7 +31,7 @@ export default function UsersDropdown(
     `/enterprise/users${genQueryFromArr(props.roles, "role")}`
   );
 
-  console.log(users,'ffjfjjfj');
+
   
 
   return (

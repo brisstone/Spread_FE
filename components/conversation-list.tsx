@@ -15,8 +15,6 @@ export default function ConversationsList(props: {
   const { conversations, error, isLoading } = useConversations(props.type);
 
   const { user } = useUser();
-
-  console.log(user,'useruseruseruserusery');
   
 
   return error ? (
@@ -33,8 +31,6 @@ export default function ConversationsList(props: {
           {user && conversations && conversations.length ? (
             conversations.map((c) => (
               <>
-              {console.log(c,'sjjsjsjs')
-              }
                 <ListItem
                   user={user}
                   noXPadding={props.noXPadding}

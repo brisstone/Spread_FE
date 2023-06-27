@@ -53,11 +53,11 @@ export function Social({
   };
 
   const appleResponse = (e) => {
-    console.log(e, "jjjjsjjsjsjjs");
+    console.log(e, "EE");
   };
 
   const onFacebookClick = (e) => {
-    console.log(e, "jjjjsjjsjsjjs");
+    console.log(e, "EE");
   };
 
   useEffect(() => {

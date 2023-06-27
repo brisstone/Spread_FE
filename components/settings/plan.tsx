@@ -113,8 +113,6 @@ export default function Plan() {
               isLoading={invLoading}
               data={invoices}
               dataComp={(invs) =>
-                // console.log(invs,'invsinvsinvs')
-
                 invs?.length > 0 ? (
                   invs?.map((inv) => (
                     <PlanInvoiceItem data={inv} key={inv.id} />

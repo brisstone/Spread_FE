@@ -26,7 +26,6 @@ export default function ClientDetails() {
 
   const { onboardingId, e, token } = router.query;
 
-  console.log(onboardingId, e, token, "sjjs");
 
   const {
     data,
@@ -38,7 +37,7 @@ export default function ClientDetails() {
       : null
   );
 
-  console.log(data, "datadatadatadata");
+
 
   const {
     data: client,
@@ -48,7 +47,7 @@ export default function ClientDetails() {
     router.query.id ? `/crm/clients/${router.query.clientId}` : null
   );
 
-  console.log(client?.leadId, "clientclient", router.query.clientId);
+
 
   const {
     data: lead,
@@ -58,7 +57,6 @@ export default function ClientDetails() {
     client?.leadId ? `/crm/leads/${client?.leadId}/onboard` : null
   );
 
-  console.log(lead, "leadleadleadleadlead99");
 
   return (
     <Layout header="Bref client 📝">
@@ -66,7 +64,6 @@ export default function ClientDetails() {
         <Tab
           value={tabIndex}
           onChange={(newValue) => {
-            console.log("new value", newValue);
             setTabIndex(newValue);
           }}
           className="w-full"

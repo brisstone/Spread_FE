@@ -37,11 +37,6 @@ const CheckoutForm = () => {
   const { clientSecret, subscriptionId, referralId, email } = router.query;
 
 
-  // console.log(clientSecret, subscriptionId, referralId, email,'jjjjjjjj');
-  
-
-  console.log(clientSecret, "clientSecretclientSecret", subscriptionId);
-
   const calculateAmountToCredit = () => {
     // Calculate and return the amount to be credited to the other customer
     // For example, if the payment is $100, the amount to be credited would be $10 (10% of $100)
@@ -51,28 +46,22 @@ const CheckoutForm = () => {
     return amountToCredit;
   };
 
+    //@ts-ignore
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    console.log(name, "jdjdjjd");
 
     if (name.length == 0) {
       seterrorName("Le nom est requis!");
     }
     setissubmitting(true);
-    console.log('ERRTTTS');
+    console.log("ERRTTTS");
     if (!stripe || !elements) {
       setissubmitting(false);
       // Stripe.js has not loaded yet, handle error or show loading state
       return;
     }
 
-    console.log('SJDJDDJD');
-    
-
     const cardElement = elements.getElement(CardNumberElement);
-
-    console.log('EEEEEEE');
 
     try {
       // const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -118,24 +107,23 @@ const CheckoutForm = () => {
 
       //     },
       //   },
-        // payment_intent_data: {
-        //   receipt_email: email,
-        //   // Apply coupon code
-        //   coupon: 'REFERRAL_DISCOUNT',
-        // },
+      // payment_intent_data: {
+      //   receipt_email: email,
+      //   // Apply coupon code
+      //   coupon: 'REFERRAL_DISCOUNT',
+      // },
       // });
-
 
       // const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
       //   type: 'card',
       //   card: cardElement,
       // });
-  
+
       // if (paymentMethodError) {
       //   setError(paymentMethodError.message);
       //   return;
       // }
-  
+
       // Confirm the setup of the payment method on the subscription
       // const { error: confirmError, setupIntent } = await stripe.confirmCardSetup(clientSecret as string, {
       //   payment_method: {
@@ -160,7 +148,6 @@ const CheckoutForm = () => {
               name: name,
             },
           },
-        
         }
       );
       if (error) {
@@ -178,7 +165,6 @@ const CheckoutForm = () => {
         setissubmitting(false);
         // setMarking("in-progress");
         router.push(`/${enterprise!.id}/dashboard`);
-
 
         // markSubscriptionAsActive({
         //   subscriptionId: subscriptionId as string,
@@ -218,10 +204,10 @@ const CheckoutForm = () => {
     } catch (error) {
       setissubmitting(false);
 
-      console.log(error,'jjjjj');
-      
+      console.log(error, "jjjjj");
+
       // Handle any other errors during payment method creation
-      pushAlert("An error occurred. Please try again later.")
+      pushAlert("An error occurred. Please try again later.");
       // setError("An error occurred. Please try again later.");
     }
   };
@@ -252,13 +238,12 @@ const CheckoutForm = () => {
               </div>
 
               <Input
-              style={{height:"48px"}}
+                style={{ height: "48px" }}
                 header="Nom"
                 className="w-full"
                 placeholder="Votre nom"
                 onChange={(e) => {
-                  console.log(e, "dddhdhd");
-
+                  //@ts-ignore
                   setName(e.target.value);
                   seterrorName("");
                 }}
@@ -293,6 +278,7 @@ const CheckoutForm = () => {
                           },
                         },
                       }}
+                        //@ts-ignore
                       onChange={(e) => setCardNumber(e.complete ? e.value : "")}
                     />{" "}
                   </Glass>
@@ -323,6 +309,7 @@ const CheckoutForm = () => {
                             },
                           },
                         }}
+                          //@ts-ignore
                         onChange={(e) => setExpiry(e.complete ? e.value : "")}
                       />
                     </Glass>
@@ -352,6 +339,7 @@ const CheckoutForm = () => {
                             },
                           },
                         }}
+                          //@ts-ignore
                         onChange={(e) => setCvv(e.complete ? e.value : "")}
                       />
                     </Glass>
@@ -362,12 +350,13 @@ const CheckoutForm = () => {
                 <label className="text-[white]">
                   Postal Code{" "}
                   <Input
-                  style={{height:"48px"}}
+                    style={{ height: "48px" }}
                     // options={
                     //   {
                     //     /* Customize CardExpiryElement styling */
                     //   }
                     // }
+                      //@ts-ignore
                     onChange={(e) => setpostalCode(e.complete ? e.value : "")}
                   />
                 </label>

@@ -4,7 +4,6 @@ import { ApiError } from "./ApiError";
 
 export const apiErrorParser = (e: Error | AxiosError<Response>) => {
   if (axios.isAxiosError(e) && e.response) {
-    console.log(e,'ddjdjjdjd');
     
     throw new ApiError(e.response?.data.message, e.response);
   } else {
