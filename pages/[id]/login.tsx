@@ -98,7 +98,8 @@ export default function Login() {
               <OnboardingGlass>
                 <h2 className="text-lg">Connectez-vous avec</h2>
 
-                <Social />
+            
+                {/* <Social /> */}
 
                 <Form
                   autoComplete="off"
