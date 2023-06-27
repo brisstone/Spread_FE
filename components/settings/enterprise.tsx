@@ -83,6 +83,7 @@ export default function EnterpriseSettings() {
 
     await uploadToS3(url, file);
 
+    //@ts-ignore
     setimageUrl(key);
     // const d = await updateUserProfile({
     //   profileImageKey: key,

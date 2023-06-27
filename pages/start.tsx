@@ -24,10 +24,6 @@ import "react-notifications/lib/notifications.css";
 // import { toast } from "react-toastify";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
 import { ref } from "yup";
 
 const Schema = object({
@@ -123,7 +119,7 @@ export default function Signup() {
     <FormikProvider value={formik}>
       <Onboarding>
         <ToastContainer />
-        <NotificationContainer />
+     
         <div className="flex flex-col items-center">
           <h1 className="text-3xl">Bienvenue 👋</h1>
           {/* <p className="mt-5 text-sm">Entrez votre email pour continuer </p> */}

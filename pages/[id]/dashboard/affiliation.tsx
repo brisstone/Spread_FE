@@ -31,7 +31,7 @@ export default function Affiliation() {
     data: referrals,
     isLoading: referralLoading,
     error: referralError,
-  } = useSWR<string>("/referral");
+  } = useSWR("/referral");
 
   // console.log(referrals,'referralsreferrals');
 
@@ -135,6 +135,7 @@ export default function Affiliation() {
               <tbody>
                 {/* //@ts-ignore */}
          
+                
                 {referrals?.map((referral: any, index: number) => (
                   <TableRow>
                     <TableRowCell>

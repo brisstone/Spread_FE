@@ -155,6 +155,7 @@ const CheckoutForm = () => {
         console.log("payment error", error);
         // show error and collect new card details.
         // setPaymentError(error.message);
+        //@ts-ignore
         pushAlert(error.message);
         return;
       }
