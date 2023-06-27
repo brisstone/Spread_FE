@@ -52,7 +52,7 @@ export default function Affiliation() {
       </Tab>
 
       <TabPanel index={0} value={newTabIndex}>
-        <div className="w-full grow flex justify-center items-center">
+        <div className="w-full grow flex justify-center items-center mt-[50px]">
           <div>
             <div className="flex flex-col items-center">
               <h2 className="text-3xl text-center">

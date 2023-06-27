@@ -105,18 +105,23 @@ export default function CRMLeadModal(
             {...getFieldProps(`phoneNumber`)}
             errorText={touched.phoneNumber && errors.phoneNumber}
           /> */}
-          <PhoneInput
-            // disabled={disabled}
-            country="fr"
-            containerClass={`${utilStyles.glass} grow !z-[1]`}
-            inputClass="!w-full py-[10px] !h-full !bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base !outline-none !border-none"
-            dropdownClass="!bg-[#1c1025] !z-50"
-            buttonClass="!bg-transparent !border-none hover:bg-btn"
-            // className="bg-transparent text-base px-5 py-[10px] placeholder:text-subtitle placeholder:text-base outline-none"
-            placeholder="Enter phone number"
-            value={values.phoneNumber}
-            onChange={(v) => setFieldValue("phoneNumber", `+${v}`)}
-          />
+          <div className="mt-[5px]">
+            {" "}
+            <PhoneInput
+              // disabled={disabled}
+
+              country="fr"
+              containerClass={`${utilStyles.glass} grow !z-[1] h-[47px]`}
+              inputClass="!w-full py-[10px] !h-full !bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base !outline-none !border-none"
+              dropdownClass="!bg-[#1c1025] !z-50"
+              buttonClass="!bg-transparent !border-none hover:bg-btn"
+              // className="bg-transparent text-base px-5 py-[10px] placeholder:text-subtitle placeholder:text-base outline-none"
+              placeholder="Enter phone number"
+              value={values.phoneNumber}
+              onChange={(v) => setFieldValue("phoneNumber", `+${v}`)}
+            />
+          </div>
+
           <Input
             placeholder="Montant"
             className="mt-2"

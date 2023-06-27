@@ -36,18 +36,8 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
       {/** TODO add container for large screens */}
       <div className="flex min-h-screen w-full overflow-y-auto">
         <nav className="fixed top-0 left-0 bottom-0 w-1/5 p-[10px]">
-          {/* <div  className="w-[100%] flex justify-center items-center">
-            <img
-              src={ "/seperation-line.jpg"}
-              height={40}
-              width={40}
-              alt="avatar"
-              className="rounded-full w-[40px] h-[40px] object-cover"
-            />
-          </div> */}
-
           <div className="bg-gradient-nav h-screen w-full rounded-2xl backdrop-blur-3xl overflow-auto">
-            <div className="w-[100%] flex justify-center items-center">
+            <div className="w-[100%] flex justify-center items-center mt-[5px]">
               <Image
                 src={enterprise?.logo ?? "/logo.png"}
                 height={80}
@@ -56,6 +46,36 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                 className="rounded-full w-[70px] h-[70px] object-cover"
               />
             </div>
+
+            {/* <div className="relative h-1">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"></div>
+            </div>
+            <div className="relative h-1">
+              <div className="absolute inset-0 bg-white"></div>
+              <div className="absolute left-0 right-0 mx-auto w-2/3 bg-gray-300"></div>
+            </div> */}
+            {/* <div className="relative h-1">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"></div>
+              <div className="absolute left-0 right-0 mx-auto w-2/3 bg-gray-300"></div>
+            </div> */}
+
+            {/* <div className="relative h-1 mt-[15px]">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"></div>
+              <div className="absolute left-1/6 right-1/6 mx-auto w-2/3 bg-gray-300"></div>
+            </div> */}
+
+<div className="relative h-1 mt-[20px]">
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"></div>
+  <div className="absolute left-1/4 right-1/4 mx-auto w-1/2 bg-gray-300"></div>
+</div>
+
+
+{/* <div className="relative h-1">
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"></div>
+  <div className="absolute left-1/6 right-1/6 mx-auto w-2/3 bg-gray-300"></div>
+</div> */}
+
+
             <div className="p-6">
               <ul>
                 <NavItem

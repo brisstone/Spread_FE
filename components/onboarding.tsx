@@ -5,7 +5,7 @@ import Background from "./background";
 import { useGoogleLogin } from "@react-oauth/google";
 // import FacebookLogin from "react-facebook-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppleLogin from "react-apple-login";
 
 export default function Onboarding({ children, className }: Props) {
@@ -40,6 +40,7 @@ export function Social({
     onSuccess: (codeResponse) => success(codeResponse),
     onError: (error) => authError(error),
   });
+  const [applePop, setapplePop] = useState(false);
   const responseFacebook = (response: any) => {
     console.log(response);
     // setData(response);
@@ -54,9 +55,26 @@ export function Social({
   const appleResponse = (e) => {
     console.log(e, "jjjjsjjsjsjjs");
   };
+
+  const onFacebookClick = (e) => {
+    console.log(e, "jjjjsjjsjsjjs");
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setapplePop(true);
+    }, 1000);
+  }, [process.env.NEXT_APPLE_KEY]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setapplePop(true);
+    }, 1000);
+  }, []);
+
   return (
     <div className="flex justify-evenly items-center gap-4 mt-8">
-      {["facebook", "apple", "google"].map((m) => (
+      {["google", "apple", "facebook"].map((m) => (
         <Glass key={m} className="rounded-2xl">
           <div className="flex justify-center items-center p-6">
             {m == "google" && (
@@ -72,64 +90,36 @@ export function Social({
             )}
 
             {m == "facebook" && (
-              // <Image
-              //   priority
-              //   src={`/images/${m}.svg`}
-              //   height={25}
-              //   width={25}
-              //   alt={`${m} logo`}
-              //   onClick={() => login()}
-              //   className="cursor-pointer"
-              // />
               <>
-                {" "}
-                {!loginFacebook && (
-                  <FacebookLogin
-                    appId={`${process.env.NEXT_FACEBOOK_KEY}`}
-                    // autoLoad
-                    autoLoad={true}
-                    fields="first_name, last_name, email, picture, birthday"
-                    scope="public_profile, email, user_birthday"
-                    returnScopes={true}
-                    callback={responseFacebook}
-                    render={(renderProps) => (
-                      <Image
-                        priority
-                        src={`/images/${m}.svg`}
-                        height={25}
-                        width={25}
-                        alt={`${m} logo`}
-                        // onClick={() => login()}
-                        className="cursor-pointer"
-                      />
-                    )}
-                  />
-                )}{" "}
-                {loginFacebook && (
-                  <Image
-                    priority
-                    src={`/images/${m}.svg`}
-                    height={25}
-                    width={25}
-                    alt={`${m} logo`}
-                    // onClick={() => login()}
-                    className="cursor-pointer"
-                  />
-                )}
+                <FacebookLogin
+                  appId="675301831110231"
+                  autoLoad
+                  fields="first_name, last_name, email, picture, birthday"
+                  scope="public_profile, email, user_birthday"
+                  returnScopes={true}
+                  callback={responseFacebook}
+                  render={(renderProps) => (
+                    <Image
+                      onClick={renderProps.onClick}
+                      // priority
+                      src={`/images/${m}.svg`}
+                      height={25}
+                      width={25}
+                      alt={`${m} logo`}
+                      // onClick={() => login()}
+                      className="cursor-pointer"
+                    />
+                  )}
+                />
               </>
             )}
             {m == "apple" && (
               <div className="cursor-pointer">
-                {" "}
                 <AppleLogin
                   clientId={`${
                     process.env.NEXT_APPLE_KEY || "com.react.apple.login"
                   }`}
                   redirectURI={`${window.location.host}`}
-                  usePopup={true}
-                  callback={appleResponse} // Catch the response
-                  scope="email name"
-                  responseMode="query"
                   render={(
                     renderProps //Custom Apple Sign in Button
                   ) => (

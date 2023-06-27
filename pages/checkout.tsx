@@ -37,7 +37,7 @@ const CheckoutForm = () => {
   const { clientSecret, subscriptionId, referralId, email } = router.query;
 
 
-  console.log(clientSecret, subscriptionId, referralId, email,'jjjjjjjj');
+  // console.log(clientSecret, subscriptionId, referralId, email,'jjjjjjjj');
   
 
   console.log(clientSecret, "clientSecretclientSecret", subscriptionId);
