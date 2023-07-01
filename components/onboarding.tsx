@@ -36,6 +36,7 @@ export function Social({
   authError: any;
 }) {
   const [loginFacebook, setloginFacebook] = useState(false);
+  
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => success(codeResponse),
     onError: (error) => authError(error),

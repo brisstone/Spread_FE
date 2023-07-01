@@ -44,7 +44,7 @@ export default function App({
 
   // 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
   return (
-    <GoogleOAuthProvider clientId="190245129087-d6lcmcnt20rj5tc3viamga6jtg96lnej.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_KEY}`}>
       <Provider store={store}>
         <SWRConfig
           value={{
