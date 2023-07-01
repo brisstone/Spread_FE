@@ -61,6 +61,8 @@ export default function Plan() {
     isLoading: subLoading,
   } = useSWR<StripeSubscription>("/payment/subscriptions");
 
+
+
   return (
     <div className="w-full grow">
       <div className="w-full flex">
