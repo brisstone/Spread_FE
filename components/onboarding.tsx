@@ -96,7 +96,7 @@ export function Social({
               <>
                 <FacebookLogin
                   appId="675301831110231"
-                  autoLoad
+                  // autoLoad
                   fields="first_name, last_name, email, picture, birthday"
                   scope="public_profile, email, user_birthday"
                   returnScopes={true}
