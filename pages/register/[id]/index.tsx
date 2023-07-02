@@ -45,7 +45,7 @@ const Schema = object({
   ),
 });
 
-// toast.info(`Check your email for OTP to proceed.`, {
+// toast.info(`Vérifiez votre boîte de réception pour que l'OTP continue, et vérifiez également votre spam s'il n'est pas trouvé..`, {
 //   position: "top-right",
 //   autoClose: 2000000000,
 //   hideProgressBar: false,
@@ -101,8 +101,8 @@ export default function Signup() {
         return;
       }
 
-      // pushAlert("Check your email for OTP to proceed.");
-      toast.info(`Check your email for OTP to proceed.`, {
+      // pushAlert("Vérifiez votre boîte de réception pour que l'OTP continue, et vérifiez également votre spam s'il n'est pas trouvé..");
+      toast.info(`Vérifiez votre boîte de réception pour que l'OTP continue, et vérifiez également votre spam s'il n'est pas trouvé.`, {
         position: "top-right",
         autoClose: 2000000000,
         hideProgressBar: false,
@@ -111,7 +111,7 @@ export default function Signup() {
       });
 
       setTimeout(() => {
-        pushAlert("Check your email for OTP to proceed.",);
+        pushAlert("Vérifiez votre boîte de réception pour que l'OTP continue, et vérifiez également votre spam s'il n'est pas trouvé..",);
 
         router.push("/verify-email");
       }, 1000);

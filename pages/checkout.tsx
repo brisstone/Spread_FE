@@ -256,7 +256,7 @@ const CheckoutForm = () => {
 
               <div className="mt-[10px]">
                 <label className="text-[white]">
-                  Card Number
+                Numéro de carte
                   <Glass
                     className={`text-[white] w-full bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base outline-none `}
                   >
@@ -288,7 +288,7 @@ const CheckoutForm = () => {
               <div className="flex gap-4 mt-[10px]">
                 <div className="w-[50%]">
                   <label className="text-[white]">
-                    Expiry Date
+                  Date d'expiration
                     <Glass
                       className={`text-[white] w-full bg-transparent text-base px-5 py-4 placeholder:text-subtitle placeholder:text-base outline-none `}
                     >
@@ -349,7 +349,7 @@ const CheckoutForm = () => {
               </div>
               <div className="mt-[10px]">
                 <label className="text-[white]">
-                  Postal Code{" "}
+                Code Postal{" "}
                   <Input
                     style={{ height: "48px" }}
                     // options={
