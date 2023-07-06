@@ -19,7 +19,7 @@ export default function PasswordChanged() {
       text1="Votre mot de passe à bien été changé !"
       text2="Cliquez sur continuer pour vous connecter"
       btnText="👉 Continuer"
-      onButtonClick={() => router.replace(`/${id}/login`)}
+      onButtonClick={() => router.replace(`/login`)}
     />
   );
 }

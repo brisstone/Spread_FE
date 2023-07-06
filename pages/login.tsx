@@ -6,7 +6,12 @@ import { useRouter } from "next/router";
 import { usePost } from "@/hooks/apiHooks";
 import { User } from "@/types/general";
 import { object } from "yup";
-import { EmailSchema, OAuthSchema, PasswordSchema, UuidSchema } from "@/util/schema";
+import {
+  EmailSchema,
+  OAuthSchema,
+  PasswordSchema,
+  UuidSchema,
+} from "@/util/schema";
 import Cookies from "js-cookie";
 import { Form, FormikProvider } from "formik";
 import { useEffect, useState } from "react";
@@ -67,8 +72,8 @@ export default function Login() {
     initialValues: {
       email: (email as string | undefined) || "",
       password: "",
-      oAuth: ""
-      
+      oAuth: "",
+
       // enterpriseId: (router.query.id as string | undefined) || "",
     },
     schema: Schema,
@@ -97,12 +102,11 @@ export default function Login() {
   //   }
   // }, [error, data, router]);
 
-
   useEffect(() => {
     if (user) {
       axios
         .get(
-            //@ts-ignore
+          //@ts-ignore
           `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
           {
             headers: {
@@ -113,7 +117,6 @@ export default function Login() {
           }
         )
         .then(async (res) => {
-
           const data: any = {
             //@ts-ignore
             email: res.data.email,
@@ -125,16 +128,18 @@ export default function Login() {
             `${process.env.NEXT_PUBLIC_API_URL}/auth/login?auth=google`,
             data
           );
-  
-          setCookieContext(response.data.data.user.enterpriseId, response.data.data.token);
+
+          setCookieContext(
+            response.data.data.user.enterpriseId,
+            response.data.data.token
+          );
           router.replace(`/${response.data.data.user.enterpriseId}/dashboard`);
 
           // setProfile(res.data);
         })
         .catch((err) => {
-   
-          
-          pushAlert(err?.response?.data?.message || err?.message)});
+          pushAlert(err?.response?.data?.message || err?.message);
+        });
     }
   }, [user]);
 
@@ -203,6 +208,16 @@ export default function Login() {
                 <span className="text-icon ml-0.5">
                   <Link href="/register/1">Inscrivez-vous</Link>
                 </span>
+              </p>
+              <p className="mt-7 text-base">
+                <span>Vous avez oublié votre mot de passe ?</span>
+                <p>
+                  <span className="text-icon ml-0.5">
+                    <Link href="/forgot-password-request">
+                      Réinitialiser le mot de passe
+                    </Link>
+                  </span>
+                </p>
               </p>
             </OnboardingGlass>
           </div>

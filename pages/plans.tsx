@@ -14,6 +14,8 @@ import useUser from "@/data/use-user";
 import { useEffect, useState } from "react";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
 import { omit } from "lodash";
+import Link from "next/link";
+import Switch from "react-switch";
 
 function FeatureItem({ text, className }: { text: string } & Props) {
   return (
@@ -41,8 +43,9 @@ function Plan(
     benefits: string[];
     svgUrl: string;
     selected?: boolean;
+    monthly: boolean;
     onSelected: () => any;
-    isSubmitting: boolean
+    isSubmitting: boolean;
   }
 ) {
   return (
@@ -62,7 +65,9 @@ function Plan(
 
         <p>
           <span className="text-[54px] leading-[66px]">{props.price}€</span>
-          <span className="text-base text-subtitle">/mois</span>
+          <span className="text-base text-subtitle">
+            /{props.monthly ? "moise" : "annuel"}
+          </span>
         </p>
 
         <p className="text-base text-subtitle3 mt-5">Sans Engagement</p>
@@ -80,7 +85,7 @@ function Plan(
             variant="secondary"
             className="transition shadow-blurrygrey w-full mt-[60px] hover:bg-btn hover:shadow-btn2 hover:text-white"
           >
-            Passer au plan Freelance
+            Passer au {props.name}
           </Button>
         </div>
       </div>
@@ -99,8 +104,7 @@ export default function Payment() {
     publishableKey: string;
   }>("/payment/plans");
 
-  console.log(data,'datadatadatadata');
-  
+  console.log(data, "datadatadatadata");
 
   useEffect(() => {
     if (enterprise && enterprise.subscriptionActive) {
@@ -109,6 +113,41 @@ export default function Payment() {
   }, [enterprise, router]);
 
   const [isSubmitting, setIsSubmitting] = useState<string | null>(null);
+
+  const [checked, setChecked] = useState(false);
+  const [allPlans, setAllPlans] = useState(data?.prices);
+
+  useEffect(() => {
+    setAllPlans(
+      data?.prices
+        ?.sort((a, b) => +a.product.metadata.rank - +b.product.metadata.rank)
+           // @ts-ignore
+        .filter((plan) => plan.metadata.monthly == "true")
+    );
+  }, [data?.prices]);
+
+  const toggleChanged = (e: any) => {
+    console.log(e, "djjdjdjd");
+    setChecked(!checked);
+    if (checked) {
+      //@ts-ignore
+      setAllPlans(
+        data?.prices
+          ?.sort((a, b) => +a.product.metadata.rank - +b.product.metadata.rank)
+             // @ts-ignore
+          .filter((plan) => plan.metadata.monthly == "true")
+      );
+    } else {
+      // @ts-ignore
+      setAllPlans(
+        data?.prices
+          ?.sort((a, b) => +a.product.metadata.rank - +b.product.metadata.rank)
+             // @ts-ignore
+          .filter((plan) => plan.metadata.monthly == "false")
+      );
+    }
+  };
+
   return (
     <Onboarding className="relative h-full !justify-start">
       <Fetched
@@ -119,8 +158,22 @@ export default function Payment() {
           <>
             <div className="sticky z-10 top-0 left-0 right-0 w-full bg-btn py-5">
               <p className="text-[20px] leading-6 text-center">
-              Application tout-en-un pour votre agence ou votre activité de Freelance 👨‍💻  
+                Application tout-en-un pour votre agence ou votre activité de
+                Freelance 👨‍💻
               </p>
+            </div>
+            <div className="flex text-[white] mt-5 items-center">
+              <div>Monthly</div>
+              <div className="px-2">
+                {" "}
+                <Switch
+                  onChange={toggleChanged}
+                  checked={checked}
+                  onColor="#2003fc"
+                />
+              </div>
+
+              <div>Yearly</div>
             </div>
             <div className="w-full grow mt-11 py-11 container mx-auto flex items-center">
               <div className="w-full flex flex-col items-center">
@@ -128,65 +181,63 @@ export default function Payment() {
                   Scalez votre entreprise ! Essayez Stread pendant 14 jours 🏆
                 </h1>
                 <div className="flex mt-8 gap-1 text-base">
-                  <p>Vous avez déjà un compte?</p>
+                  <Link href="/login">
+                    <p>Vous avez déjà un compte?</p>
+                  </Link>
                   <p className="text-icon">Se connecter</p>
                 </div>
                 <div className="flex w-full justify-center items-center mt-10">
                   <div className="flex justify-center gap-7 items-stretch">
-                    {/* <div className="flex gap-7"> */}
-                    {d.prices
-                      .sort(
-                        (a, b) =>
-                          +a.product.metadata.rank - +b.product.metadata.rank
-                      )
-                      .map((p) => (
-                        <Plan
-                          isSubmitting={isSubmitting === p.id}
-                          onSelected={() => {
-                            setIsSubmitting(p.id)
-                            //Api to Create Subscription for user on stripe
-                            createSubscription(p.id)
-                              .then((data) => {
-                                console.log("data", data);
-                                router.push({
-                                  pathname: "/checkout",
-                                  query: {
-                                    ...omit(data, ['enterpriseId']),
-                                    id: data.enterpriseId,
-                                  },
-                                });
-                                setIsSubmitting(null);
-                              })
-                              .catch((e) => {
-                                console.log(e);
-                                setIsSubmitting(null);
-                                pushAlert(e.message);
+                    {allPlans?.map((p) => (
+                      <Plan
+                        isSubmitting={isSubmitting === p.id}
+                        onSelected={() => {
+                          setIsSubmitting(p.id);
+                          //Api to Create Subscription for user on stripe
+                          createSubscription(p.id)
+                            .then((data) => {
+                              console.log("data", data);
+                              router.push({
+                                pathname: "/checkout",
+                                query: {
+                                  ...omit(data, ["enterpriseId"]),
+                                  id: data.enterpriseId,
+                                },
                               });
-                          }}
-                          key={p.id}
-                          name={p.product.name}
-                          svgUrl="/images/dart.svg"
-                          price={p.unit_amount / 100}
-                          benefits={
-                            p.product.name.toLowerCase().includes("freelance")
-                              ? [
-                                  "3 utilisateurs",
-                                  "10 clients",
-                                  "CRM",
-                                  "Onboarding et facturation",
-                                  "Gestionnaire de tâches",
-                                  "Chat avec son équipe et ses clients",
-                                ]
-                              : [
-                                  "Toutes les fonctionnalités de la tarification Freelance",
-                                  "Nombres d’utilisateurs illimités",
-                                  "Nombres de clients illimités",
-                                  "Mesurez les chiffres de l’agence",
-                                  "Support prioritaire pour une aide rapide en cas de besoin",
-                                ]
-                          }
-                        />
-                      ))}
+                              setIsSubmitting(null);
+                            })
+                            .catch((e) => {
+                              console.log(e);
+                              setIsSubmitting(null);
+                              pushAlert(e.message);
+                            });
+                        }}
+                        key={p.id}
+                        name={p.product.name}
+                        svgUrl="/images/dart.svg"
+                        price={p.unit_amount / 100}
+                        //@ts-ignore
+                        monthly={p.metadata.monthly == "true"}
+                        benefits={
+                          p.product.name.toLowerCase().includes("freelance")
+                            ? [
+                                "3 utilisateurs",
+                                "10 clients",
+                                "CRM",
+                                "Onboarding et facturation",
+                                "Gestionnaire de tâches",
+                                "Chat avec son équipe et ses clients",
+                              ]
+                            : [
+                                "Toutes les fonctionnalités de la tarification Freelance",
+                                "Nombres d’utilisateurs illimités",
+                                "Nombres de clients illimités",
+                                "Mesurez les chiffres de l’agence",
+                                "Support prioritaire pour une aide rapide en cas de besoin",
+                              ]
+                        }
+                      />
+                    ))}
                     {/* </div> */}
                   </div>
                   {/* <div className="grow">
