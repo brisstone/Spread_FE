@@ -35,6 +35,9 @@ export default function ResetPassword() {
       : null
   );
 
+  console.log(data, error, 'kdkdkdkkdkdkkddkd');
+  
+
   const { pushAlert } = useAlert();
 
   const initialValues = {
