@@ -99,12 +99,12 @@ export default function Affiliation() {
                   <Input
                     disabled
                     className="my-4 lg:min-w-[417px]"
-                    value={`${window.location.host}/login/${data}`}
+                    value={`${window.location.host}/register/${data}`}
                   />
                   <Button
                     onClick={async () => {
                       navigator.clipboard
-                        .writeText(`${window.location.host}/login/${data}`)
+                        .writeText(`${window.location.host}/register/${data}`)
                         .catch((e) => console.error("Failed to copy: ", e));
                     }}
                     className="font-[600] lg:min-w-[417px] shadow-btn2"

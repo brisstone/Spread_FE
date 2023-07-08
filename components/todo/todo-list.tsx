@@ -89,6 +89,7 @@ export default function TodoList({
                       text={t.title}
                       details={t.description || ""}
                       checked={t.done}
+                      isNote={false}
                     />
                   ))}
                   <li className="h-px" ref={observerTarget}></li>

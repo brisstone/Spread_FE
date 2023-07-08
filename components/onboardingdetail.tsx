@@ -64,7 +64,7 @@ export default function OnboardingDetail(props: DetailProps) {
               )}
 
               <Link
-                href={`/${router.query.id}/login`}
+                href={`/login`}
                 className="flex mt-6 justify-center items-center gap-3"
               >
                 <Image
