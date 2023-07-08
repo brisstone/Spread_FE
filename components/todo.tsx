@@ -14,11 +14,15 @@ export function TodoItem(props: {
   text: string;
   details?: string;
   checked?: boolean;
+  isNote?: boolean;
   mutate?: KeyedMutator<Task[][]>;
 }) {
   const [detailShown, setDetailsShown] = useState(false);
 
   const { pushAlert } = useAlert();
+
+  console.log(props.isNote,'isNoteisNoteisNote');
+  
 
   return (
     <li className="w-full block py-5 border-b border-solid border-b-active-icon last:border-b-0">
@@ -36,13 +40,23 @@ export function TodoItem(props: {
                   id={props.id}
                   name={props.id}
                   onChange={(e) => {
-                    checkAndUncheckNotes(props.id, !props.checked)
-                      .then(() => {
-                        if (props.mutate) props.mutate();
-                      })
-                      .catch((e) => {
-                        pushAlert(e.message);
-                      });
+                    {
+                      props.isNote
+                        ? checkAndUncheckNotes(props.id, !props.checked)
+                            .then(() => {
+                              if (props.mutate) props.mutate();
+                            })
+                            .catch((e) => {
+                              pushAlert(e.message);
+                            })
+                        : checkAndUncheckTask(props.id, !props.checked)
+                            .then(() => {
+                              if (props.mutate) props.mutate();
+                            })
+                            .catch((e) => {
+                              pushAlert(e.message);
+                            });
+                    }
                   }}
                   // value={props.id}
                   // className="translate-y-full"

@@ -90,6 +90,7 @@ export default function NotesList({
                       text={t.title}
                       details={t.description || ""}
                       checked={t.done}
+                      isNote={true}
                     />
                   ))}
                   <li className="h-px" ref={observerTarget}></li>
