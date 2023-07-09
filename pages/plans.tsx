@@ -169,7 +169,7 @@ export default function Payment() {
                 <Switch
                   onChange={toggleChanged}
                   checked={checked}
-                  onColor="#2003fc"
+                  onColor="#6D3DED"
                 />
               </div>
 
