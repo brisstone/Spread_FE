@@ -21,9 +21,6 @@ import Link from "next/link";
 import Fetched from "@/components/fetched";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-// import Switch from "react-switch";
-
-
 
 const Schema = object({
   email: EmailSchema,
@@ -44,14 +41,6 @@ export default function Login() {
   const [emailValid, setEmailValid] = useState(false);
   const [show, setShow] = useState(false);
   const [user, setUser] = useState();
-  const [showPassword, setShowPassword] = useState(false)
-    
- const togglePassword = (e: any) => {
-  setShowPassword(!showPassword)
- }
-
-
-
 
   useEffect(() => {
     EmailSchema.validate(email)
@@ -76,6 +65,7 @@ export default function Login() {
       email: string;
       oAuth: string;
       password: string;
+      rememberMe: Boolean
     }
   >({
     url: "/auth/login",
@@ -84,6 +74,7 @@ export default function Login() {
       email: (email as string | undefined) || "",
       password: "",
       oAuth: "",
+      rememberMe: checked
 
       // enterpriseId: (router.query.id as string | undefined) || "",
     },
@@ -154,6 +145,11 @@ export default function Login() {
     }
   }, [user]);
 
+  const toggleChanged = (e: any) => {
+    console.log(e, "djjdjdjd");
+    setChecked(!checked);
+  };
+
   if (!show) return <Onboarding />;
 
   return (
@@ -198,6 +194,21 @@ export default function Login() {
                     errorText={touched.password && errors.password}
                   />
                   {/* <Input name="Nom" placeholder="Prénom, Nom" /> */}
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <Switch
+                    className="mt-4"
+                    onChange={toggleChanged}
+                    checked={checked}
+                    onColor="#6D3DED"
+                    checkedIcon={false}
+                    uncheckedIcon={false}
+                    height={20}
+                    handleDiameter={18}
+                    width={36}
+                  />
+                  <span className="mt-4 text-[14px]">Se souvenir de moi</span>
                 </div>
 
                 <p className="text-icon text-base mt-4">
