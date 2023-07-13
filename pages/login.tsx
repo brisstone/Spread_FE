@@ -21,6 +21,9 @@ import Link from "next/link";
 import Fetched from "@/components/fetched";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+// import Switch from "react-switch";
+
+
 
 const Schema = object({
   email: EmailSchema,
@@ -41,6 +44,14 @@ export default function Login() {
   const [emailValid, setEmailValid] = useState(false);
   const [show, setShow] = useState(false);
   const [user, setUser] = useState();
+  const [showPassword, setShowPassword] = useState(false)
+    
+ const togglePassword = (e: any) => {
+  setShowPassword(!showPassword)
+ }
+
+
+
 
   useEffect(() => {
     EmailSchema.validate(email)
@@ -194,6 +205,15 @@ export default function Login() {
                       Mot de passe oublié?
                     </Link> */}
                 </p>
+              {/* <div>
+              
+              <Switch
+                  onChange={togglePassword}
+                  onColor="#2003fc"
+                  checked={false}
+                />
+              </div>
+                 */}
 
                 <Button
                   type="submit"
