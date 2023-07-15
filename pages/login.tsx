@@ -76,7 +76,7 @@ export default function Login() {
       email: (email as string | undefined) || "",
       password: "",
       oAuth: "",
-      rememberMe: checked
+      rememberMe: checked,
 
       // enterpriseId: (router.query.id as string | undefined) || "",
     },
@@ -218,6 +218,15 @@ export default function Login() {
                       Mot de passe oublié?
                     </Link> */}
                 </p>
+              {/* <div>
+              
+              <Switch
+                  onChange={togglePassword}
+                  onColor="#2003fc"
+                  checked={false}
+                />
+              </div>
+                 */}
 
                 <Button
                   type="submit"

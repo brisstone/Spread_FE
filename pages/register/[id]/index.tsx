@@ -154,9 +154,9 @@ export default function Signup() {
             <Form autoComplete="off" onSubmit={handleSubmit} className="w-full">
               <div className="w-[300px] flex flex-col gap-5">
                 <Input
-                  header="Nom"
+                  header="Prénom"
                   type="text"
-                  placeholder="Nom"
+                  placeholder="Prénom"
                   {...getFieldProps("name")}
                   errorText={touched.name && errors.name}
                 />
