@@ -55,7 +55,7 @@ export function KanbanItemCard(props: KanbanItemProps) {
                   .catch((e) => pushAlert(e.message));
               }}
               // value={props.id}
-              // className="translate-y-full"
+              // className="translate-y-full"https://docs.google.com/document/d/1zpI2rdLUU4suKKM3GA1ixleE4yPy7Khp7cPZ74PKBYA/edit?usp=sharing
               // {...props}
             />
           )}

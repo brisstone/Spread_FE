@@ -21,6 +21,7 @@ import Link from "next/link";
 import Fetched from "@/components/fetched";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import Switch from "react-switch";
 
 const Schema = object({
   email: EmailSchema,
@@ -41,6 +42,7 @@ export default function Login() {
   const [emailValid, setEmailValid] = useState(false);
   const [show, setShow] = useState(false);
   const [user, setUser] = useState();
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     EmailSchema.validate(email)
@@ -74,7 +76,7 @@ export default function Login() {
       email: (email as string | undefined) || "",
       password: "",
       oAuth: "",
-      rememberMe: checked
+      rememberMe: checked,
 
       // enterpriseId: (router.query.id as string | undefined) || "",
     },

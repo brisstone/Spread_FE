@@ -66,7 +66,7 @@ function Plan(
         <p>
           <span className="text-[54px] leading-[66px]">{props.price}€</span>
           <span className="text-base text-subtitle">
-            /{props.monthly ? "moise" : "annuel"}
+            /{props.monthly ? "mois" : "annuel"}
           </span>
         </p>
 
@@ -121,7 +121,7 @@ export default function Payment() {
     setAllPlans(
       data?.prices
         ?.sort((a, b) => +a.product.metadata.rank - +b.product.metadata.rank)
-           // @ts-ignore
+        // @ts-ignore
         .filter((plan) => plan.metadata.monthly == "true")
     );
   }, [data?.prices]);
@@ -134,7 +134,7 @@ export default function Payment() {
       setAllPlans(
         data?.prices
           ?.sort((a, b) => +a.product.metadata.rank - +b.product.metadata.rank)
-             // @ts-ignore
+          // @ts-ignore
           .filter((plan) => plan.metadata.monthly == "true")
       );
     } else {
@@ -142,7 +142,7 @@ export default function Payment() {
       setAllPlans(
         data?.prices
           ?.sort((a, b) => +a.product.metadata.rank - +b.product.metadata.rank)
-             // @ts-ignore
+          // @ts-ignore
           .filter((plan) => plan.metadata.monthly == "false")
       );
     }
@@ -162,29 +162,32 @@ export default function Payment() {
                 Freelance 👨‍💻
               </p>
             </div>
-            <div className="flex text-[white] mt-5 items-center">
-              <div>Monthly</div>
-              <div className="px-2">
-                {" "}
-                <Switch
-                  onChange={toggleChanged}
-                  checked={checked}
-                  onColor="#6D3DED"
-                />
-              </div>
 
-              <div>Yearly</div>
-            </div>
             <div className="w-full grow mt-11 py-11 container mx-auto flex items-center">
               <div className="w-full flex flex-col items-center">
                 <h1 className="text-xl text-center">
                   Scalez votre entreprise ! Essayez Stread pendant 14 jours 🏆
                 </h1>
+
                 <div className="flex mt-8 gap-1 text-base">
                   <Link href="/login">
                     <p>Vous avez déjà un compte?</p>
                   </Link>
                   <p className="text-icon">Se connecter</p>
+                </div>
+
+                <div className="flex text-[white] mt-5 items-center">
+                  <div>Mensuel</div>
+                  <div className="px-2">
+                    {" "}
+                    <Switch
+                      onChange={toggleChanged}
+                      checked={checked}
+                      onColor="#6D3DED"
+                    />
+                  </div>
+
+                  <div>Annuel (-20%)</div>
                 </div>
                 <div className="flex w-full justify-center items-center mt-10">
                   <div className="flex justify-center gap-7 items-stretch">
