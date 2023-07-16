@@ -33,8 +33,8 @@ export default function Invoicing() {
           <TabItem>Facturation</TabItem>
           <TabItem>Sommaire</TabItem>
           <TabItem>Abonnements</TabItem>
-          <TabItem>Rapports</TabItem>
           <TabItem>Clients</TabItem>
+          <TabItem>Rapports</TabItem>
           <TabItem>Réglages</TabItem>
         </Tab>
 
