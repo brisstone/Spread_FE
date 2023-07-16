@@ -33,8 +33,8 @@ export default function Invoicing() {
           <TabItem>Facturation</TabItem>
           <TabItem>Sommaire</TabItem>
           <TabItem>Abonnements</TabItem>
-          <TabItem>Clients</TabItem>
           <TabItem>Rapports</TabItem>
+          <TabItem>Clients</TabItem>
           <TabItem>Réglages</TabItem>
         </Tab>
 
@@ -55,20 +55,20 @@ export default function Invoicing() {
             <InvoiceList type={InvoiceType.RECURRENT} />
           </Card>
         </TabPanel>
-
         <TabPanel index={3} value={tabIndex}>
-          <Card className="mt-7 relative flex flex-col grow h-full">
-            <InvoiceReportList />
-          </Card>
-        </TabPanel>
-
-        <TabPanel index={4} value={tabIndex}>
           <div className="w-full mt-6">
             <KPIGroup />
 
             <SalesTurnoverChart className="w-full mt-5" />
           </div>
         </TabPanel>
+
+        <TabPanel index={4} value={tabIndex}>
+          <Card className="mt-7 relative flex flex-col grow h-full">
+            <InvoiceReportList />
+          </Card>
+        </TabPanel>
+
         <TabPanel index={5} value={tabIndex}>
           <Card className="mt-7 relative flex flex-col grow h-full px-6 py-14">
             <div className="w-full p-7">
