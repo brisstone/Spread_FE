@@ -37,6 +37,8 @@ export default function Login() {
   //   router.query.id ? `/enterprise/check/${router.query.id}` : null
   // );
 
+  console.log(router.query,'mdmdmdmdmdm');
+  
   const { email } = router.query;
 
   const [emailValid, setEmailValid] = useState(false);

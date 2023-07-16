@@ -14,11 +14,10 @@ const Schema = object({
   id: string().optional(),
 });
 
-export default function CreateKanbanCatModal(
+export default function EditCRMCategoryModal(
   props: ModalProps & {
     name: string;
-    isEdit: boolean,
-    id: string
+    id: string;
   }
 ) {
   const { pushAlert } = useAlert();
@@ -32,19 +31,19 @@ export default function CreateKanbanCatModal(
     KanbanCategory,
     {
       name: string;
-      id: string
-    }
+      id: string;
+    } 
   >({
-    // `${props.isEdit? "/kanban/categories/edit": "/kanban/categories"}` 
-    url:  `${props.isEdit? "/kanban/categories/edit": "/kanban/categories"}`,
+    // `${props.isEdit? "/kanban/categories/edit": "/kanban/categories"}`
+    url: "/crm/categories/edit",
     enableReinitialize: true,
     initialValues: {
       name: props?.name,
-      id: props.id
+      id: props.id,
     },
     schema: Schema,
     onComplete: (data) => {
-      mutate("/kanban/categories");
+      mutate("/crm/categories");
 
       if (props.handleClose) props.handleClose();
     },
@@ -67,7 +66,7 @@ export default function CreateKanbanCatModal(
             errorText={touched.name && errors.name}
           />
           <Button className="mt-4 w-full" type="submit" loading={isSubmitting}>
-          {props.isEdit? "Modifier": "Ajouter"}  
+            Modifier
           </Button>
         </Form>
       </FormikProvider>

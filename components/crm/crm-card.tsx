@@ -15,6 +15,8 @@ import CRMLeadModal from "./lead-modal";
 import Fetched from "../fetched";
 import useLeads from "@/data/use-leads";
 import { ScrollableList } from "../list";
+import { Popover } from "react-tiny-popover";
+import EditCRMCategoryModal from "./edit-crm-category";
 // import useUserAndEnterprise from "@/data/user-user-enterprise";
 // import Link from "next/link";
 
@@ -46,7 +48,9 @@ function CRMLeadItem({ lead }: { lead: CRMLead }) {
       } cursor-move items-center`}
     >
       <p className="text-[16px] leading-[20px]">{lead.name}</p>
-      <p className="text-[16px] leading-[20px]"><span>Amount:</span> {lead.amount}</p>
+      <p className="text-[16px] leading-[20px]">
+        <span>Amount:</span> {lead.amount}
+      </p>
       {!lead.onboarding ? (
         <Button
           loading={loading}
@@ -95,6 +99,8 @@ export default function CRMCard(props: CRMCardProps) {
   const { pushAlert } = useAlert();
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalCOpen, setModalCOpen] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: DragTypes.CRMLEAD,
@@ -132,6 +138,13 @@ export default function CRMCard(props: CRMCardProps) {
         handleClose={() => setModalOpen(false)}
         categoryId={props.data.id}
       />
+      <EditCRMCategoryModal
+        open={modalCOpen}
+        handleClose={() => setModalCOpen(false)}
+        name={props.data?.name}
+        id={props.data?.id}
+      />
+      {console.log(props.data, "dmmdmdmdd")}
       <Card className={`!h-full basis-1/4 min-w-[25%] flex flex-col`}>
         <div className="p-5 h-full flex flex-col">
           <div className="flex w-full items-center gap-4 justify-between">
@@ -139,11 +152,33 @@ export default function CRMCard(props: CRMCardProps) {
             <p className="text-base leading-[20px]">
               {props.data.leadCount} Lead{props.data.leadCount === 1 ? "" : "s"}
             </p>
-            <IconButton
-              width={22}
-              height={22}
-              iconUrl="/images/threedots.svg"
-            />
+
+            <Popover
+              isOpen={isPopoverOpen}
+              positions={["bottom", "bottom", "top", "left"]} // preferred positions by priority
+              content={
+                <div style={{ color: "", background: "white", padding: "5px" }}>
+                  <div
+                    onClick={() => {
+                      setModalCOpen(true);
+                    }}
+                  >
+                    Edit
+                  </div>
+                </div>
+              }
+            >
+              <div
+                style={{ color: "white" }}
+                onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+              >
+                <IconButton
+                  iconUrl="/images/ellipse.svg"
+                  width={15}
+                  height={15}
+                />
+              </div>
+            </Popover>
           </div>
 
           <div className="mt-8 w-full relative grow">
