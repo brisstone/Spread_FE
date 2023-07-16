@@ -115,7 +115,7 @@ export default function Invoicing() {
                   />
                 </div>
 
-                <TextArea
+                {/* <TextArea
                   header={
                     <>
                       <span>Détails de facturation </span>
@@ -124,7 +124,7 @@ export default function Invoicing() {
                   }
                   placeholder="Vos détails de facturation ... (optionnel)"
                   className="mt-5 max-w-[75%]"
-                />
+                /> */}
 
                 <TextArea
                   header={
@@ -138,14 +138,14 @@ export default function Invoicing() {
                 />
 
                 <div className="mt-10 flex gap-6">
-                  <Button
+                  {/* <Button
                     // loading={}
                     type="submit"
                     iconUrl="/images/plus-black.svg"
                     className="shadow-none !text-base bg-white text-black"
                   >
                     Créer
-                  </Button>
+                  </Button> */}
                   <Button
                     // loading={}
                     type="submit"
