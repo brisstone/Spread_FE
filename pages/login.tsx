@@ -126,6 +126,7 @@ export default function Login() {
             email: res.data.email,
             password: "google",
             oAuth: "google",
+            rememberMe: checked
           };
 
           const response = await axios.post(
