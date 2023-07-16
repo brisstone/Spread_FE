@@ -46,6 +46,7 @@ function CRMLeadItem({ lead }: { lead: CRMLead }) {
       } cursor-move items-center`}
     >
       <p className="text-[16px] leading-[20px]">{lead.name}</p>
+      <p className="text-[16px] leading-[20px]"><span>Amount:</span> {lead.amount}</p>
       {!lead.onboarding ? (
         <Button
           loading={loading}
