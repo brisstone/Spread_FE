@@ -16,6 +16,8 @@ import { DragTypes, KanbanDefault } from "@/types/enum";
 import { closeKanbanItem, moveKanbanItem, moveLead } from "@/services";
 import { useAlert } from "@/contexts/alert-context";
 import { KeyedMutator, unstable_serialize, useSWRConfig } from "swr";
+import { Popover } from "react-tiny-popover";
+import CreateKanbanCatModal from "./create-kanban-category";
 
 interface KanbanItemProps {
   data: KanbanItem;
@@ -89,6 +91,7 @@ export function KanbanItemCard(props: KanbanItemProps) {
 }
 
 export function KanbanCard({ category }: { category: KanbanCategory }) {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const {
     data: items,
     error,
@@ -102,6 +105,7 @@ export function KanbanCard({ category }: { category: KanbanCategory }) {
     )
   );
 
+  const [cOpen, setCOpen] = useState(false);
 
   const { pushAlert } = useAlert();
 
@@ -162,6 +166,14 @@ export function KanbanCard({ category }: { category: KanbanCategory }) {
         handleClose={() => setModalOpen(false)}
         categoryId={category.id}
         mutate={mutate}
+        category={category}
+      />
+      <CreateKanbanCatModal
+        open={cOpen}
+        handleClose={() => setCOpen(false)}
+        name={category.name}
+        isEdit={true}
+        id={category.id}
       />
       <Card className="flex flex-col p-5 !h-full basis-80 min-w-[20rem]">
         <div className="flex justify-between mb-10">
@@ -174,7 +186,32 @@ export function KanbanCard({ category }: { category: KanbanCategory }) {
               width={15}
               height={15}
             />
-            <IconButton iconUrl="/images/ellipse.svg" width={15} height={15} />
+            <Popover
+              isOpen={isPopoverOpen}
+              positions={["bottom", "bottom", "top", "left"]} // preferred positions by priority
+              content={
+                <div style={{ color: "", background: "white", padding: "5px" }}>
+                  <div
+                    onClick={() => {
+                      setCOpen(true);
+                    }}
+                  >
+                    Edit
+                  </div>
+                </div>
+              }
+            >
+              <div
+                style={{ color: "white" }}
+                onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+              >
+                <IconButton
+                  iconUrl="/images/ellipse.svg"
+                  width={15}
+                  height={15}
+                />
+              </div>
+            </Popover>
           </div>
         </div>
 

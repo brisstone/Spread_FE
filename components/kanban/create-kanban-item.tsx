@@ -22,9 +22,15 @@ export default function CreateKanbanItemModal(
   props: ModalProps & {
     categoryId: string;
     mutate: KeyedMutator<KanbanItem[][]>;
+    category: any
   }
 ) {
   const { pushAlert } = useAlert();
+
+  console.log(props,'djjfjfjfjf');
+  
+
+  const {category} = props;
 
   const {
     data: newClient,
@@ -42,9 +48,9 @@ export default function CreateKanbanItemModal(
     url: "/kanban/items",
     enableReinitialize: true,
     initialValues: {
-      title: "",
-      description: "",
-      assigneeId: "",
+      title: category?.name,
+      description: category?.description,
+      assigneeId: category?.assignee,
       categoryId: props.categoryId,
     },
     schema: Schema,
@@ -82,6 +88,7 @@ export default function CreateKanbanItemModal(
             header="Nom"
             placeholder="Nom"
             className="mt-2"
+            // value={category.name}
             smallerYPadding
             {...getFieldProps("title")}
             errorText={touched.title && errors.title}
