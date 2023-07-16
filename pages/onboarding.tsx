@@ -18,6 +18,7 @@ import { PasswordSchema, RequiredSchema } from "@/util/schema";
 import { useAlert } from "@/contexts/alert-context";
 import { Form, FormikErrors, FormikProvider } from "formik";
 import { arrayError, setCookieContext } from "@/lib";
+import { v4 as uuidv4 } from 'uuid';
 
 const Schema = object({
   data: array()
@@ -67,10 +68,11 @@ export default function ClientOnboarding() {
         ? data.questionCategories.reduce((a, b) => {
             return [
               ...a,
-              b.questions.map((q) => ({
+              b.questions.map((q, index) => ({
                 category: b.name,
                 question: q.name,
                 answer: "",
+                id: `AA_${index}_${b.name}`
               })),
             ];
           }, [] as LeadOnboarding["data"][])

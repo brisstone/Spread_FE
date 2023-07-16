@@ -28,22 +28,31 @@ export default function Login() {
     router.query.id ? `/enterprise/check/${router.query.id}` : null
   );
 
+  
+
   const { email } = router.query;
+
+  console.log(router.query,'KING__444', email);
 
   const [emailValid, setEmailValid] = useState(false);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
+    // alert('jssjdjd')
+    console.log('KING__0');
     EmailSchema.validate(email)
       .then(() => {
+        console.log('KING__1');
+        
         setEmailValid(true);
         setShow(true);
       })
       .catch(() => {
+        console.log('KING__2');
         setEmailValid(false);
         setShow(true);
       });
-  }, [email]);
+  }, []);
 
   const { pushAlert } = useAlert();
 
@@ -79,6 +88,8 @@ export default function Login() {
     }
   }, [error, data, router]);
 
+  console.log(show,'showshowshow');
+  
   if (!show) return <Onboarding />;
 
   return (

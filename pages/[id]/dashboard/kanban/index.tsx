@@ -28,6 +28,9 @@ export default function Kanban() {
         <CreateKanbanCatModal
           open={cOpen}
           handleClose={() => setCOpen(false)}
+          name=""
+          isEdit={false}
+          id=""
         />
         <div className="flex w-full items-center justify-between mb-5">
           <ClientsDropdown

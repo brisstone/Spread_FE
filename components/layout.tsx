@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import useUserAndEnterprise from "@/data/user-user-enterprise";
 import { User } from "@/types/general";
 import Image from "next/image";
+import Link from "next/link";
 
 export interface LayoutProps extends Props {
   header?: string;
@@ -20,7 +21,6 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
 
   const { user, enterprise, isLoading, error, loggedOut } =
     useUserAndEnterprise();
-
 
   // console.log("isLoading:", isLoading);
   // console.log("error:", error);
@@ -64,17 +64,15 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
               <div className="absolute left-1/6 right-1/6 mx-auto w-2/3 bg-gray-300"></div>
             </div> */}
 
-<div className="relative h-1 mt-[20px]">
-  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"></div>
-  <div className="absolute left-1/4 right-1/4 mx-auto w-1/2 bg-gray-300"></div>
-</div>
+            <div className="relative h-1 mt-[20px]">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"></div>
+              <div className="absolute left-1/4 right-1/4 mx-auto w-1/2 bg-gray-300"></div>
+            </div>
 
-
-{/* <div className="relative h-1">
+            {/* <div className="relative h-1">
   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"></div>
   <div className="absolute left-1/6 right-1/6 mx-auto w-2/3 bg-gray-300"></div>
 </div> */}
-
 
             <div className="p-6">
               <ul>
@@ -131,11 +129,11 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
                   name="Facturation"
                   href={`/${enterprise?.id}/dashboard/invoicing`}
                 />
-                <NavItem
+                {/* <NavItem
                   svg="settings"
                   name="Affiliation"
                   href={`/${enterprise?.id}/dashboard/affiliation`}
-                />
+                /> */}
                 <NavItem
                   svg="settings"
                   name="Paramètres"
@@ -147,8 +145,12 @@ const Layout: FC<LayoutProps> = (props: LayoutProps) => {
               // style={{ border: "2px solid red" }}
               className="flex flex-col w-[100%] justify-center items-center text-[white]"
             >
-              <img className="mr-8 pt-6" src="/become_aff.svg" alt="refer" />{" "}
+              <Link href={`/${enterprise?.id}/dashboard/affiliation`}>
+                <img className="mr-8 pt-6" src="/become_aff.svg" alt="refer" />
+              </Link>
+
               <div className="flex gap-[6px] pb-12">
+                {" "}
                 <div>
                   <Image
                     src={user?.profileImageUrl ?? "/avart.png"}
