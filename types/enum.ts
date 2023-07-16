@@ -32,7 +32,7 @@ export enum QuestionType {
 }
 
 export enum KanbanDefault {
-  CLOSED = "Fermé",
+  CLOSED = "Fermémmmmm",
   BACKLOG = "Arriéré",
   PROGRESS = "En cours",
 }
