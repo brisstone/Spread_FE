@@ -72,7 +72,7 @@ export function RecentExpensesTable() {
   return (
     <Card className="w-full mt-4">
       <div className="p-7">
-        <CardHeader title="Dépenses 🧾" subTitle="+$1200 ce mois ci" />
+        <CardHeader title="Dépenses" subTitle="+$1200 ce mois ci" />
 
         <CardContent>
           <Fetched
@@ -112,7 +112,7 @@ export default function Expenses() {
     <Layout>
       <Card className="flex flex-col w-full h-full grow p-7">
         <div className="flex w-full justify-between items-start">
-          <LayoutHeader>Dépenses 🧾</LayoutHeader>
+          <LayoutHeader>Dépenses</LayoutHeader>
 
           <Link href={`${asPath}/list`}>
             <Button>Voir Dépenses</Button>
