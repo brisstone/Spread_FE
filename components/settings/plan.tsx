@@ -8,6 +8,7 @@ import Fetched from "../fetched";
 import { Feedback } from "../feedback";
 import { Stripe } from "@stripe/stripe-js";
 import { StripeInvoice, StripeSubscription } from "@/types/general";
+import Link from "next/link";
 
 export function PlanInvoiceItem({ data }: { data: StripeInvoice }) {
   const {
@@ -60,8 +61,6 @@ export default function Plan() {
     error: subError,
     isLoading: subLoading,
   } = useSWR<StripeSubscription>("/payment/subscriptions");
-
-
 
   return (
     <div className="w-full grow">
@@ -151,6 +150,20 @@ export default function Plan() {
             />
           </div>
         </Card>
+      </div>
+      <div className="flex gap-4">
+        {" "}
+        <Link href={"/plans"}>
+          <Button
+            type="submit"
+            className="shadow-none !text-base font-semibold"
+          >
+            Changer de plan
+          </Button>
+        </Link>
+        <Button type="submit" className="shadow-none !text-base font-semibold">
+          Annuler l'abonnement
+        </Button>
       </div>
     </div>
   );
