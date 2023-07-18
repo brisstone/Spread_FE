@@ -52,6 +52,8 @@ export default function InvoiceListItem(
     <li
       className={`flex items-center justify-between w-full pr-6 ${props.className}`}
     >
+      {console.log(props.data,'sjsjsjjs')
+      }
       <div className="flex items-start w-3/4 max-w-[75%]">
         <StatusContainer className="" heading="Statut">
           <InvoiceTag paid={!!props.data.paidAt} />
@@ -76,6 +78,12 @@ export default function InvoiceListItem(
             0
           )}`}
           second="Sent 1m"
+        />
+         <VerticalDivider className="self-stretch" />
+        <StatusContainer
+          heading="VAT"
+          first={`Reduction: ${props.data.discount}`}
+          second={`Tax: ${props.data.tax}`}
         />
       </div>
 

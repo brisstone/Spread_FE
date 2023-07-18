@@ -95,7 +95,9 @@ export default function Signup() {
     },
     onComplete: (data) => {
    
-
+      console.log(data,'datadata');
+      
+      pushAlert(`${data.message}`);
       if (data.status == false) {
         pushAlert(`${data.message}`);
         return;

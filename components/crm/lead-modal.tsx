@@ -5,12 +5,13 @@ import Modal, { ModalProps } from "../modal";
 import Input from "../input";
 import { usePost } from "@/hooks/apiHooks";
 import { EmailSchema, UuidSchema } from "@/util/schema";
-import { CRMLead } from "@/types/general";
+import { CRMLead, LeadOnboarding } from "@/types/general";
 import { useAlert } from "@/contexts/alert-context";
 import Button from "../button";
 import PhoneInput from "react-phone-input-2";
 import utilStyles from "@/styles/utils.module.css";
 import "react-phone-input-2/lib/style.css";
+import Select, { SelectOption } from "../select";
 
 const LeadSchema = object({
   email: EmailSchema,
@@ -20,14 +21,17 @@ const LeadSchema = object({
   name: string().required("Nom est requis"),
   amount: number().required("Le montant est requis"),
   categoryId: UuidSchema,
+  status: string().optional(),
   // currencyId: UuidSchema,
 });
 
 export default function CRMLeadModal(
-  props: ModalProps & { categoryId: string }
+  props: ModalProps & { categoryId: string; lead: any }
 ) {
   const { pushAlert } = useAlert();
   const { mutate } = useSWRConfig();
+
+  console.log(props.lead, "ddkfkkfk");
 
   const {
     data: newClient,
@@ -41,17 +45,20 @@ export default function CRMLeadModal(
       name: string;
       amount: string;
       categoryId: string;
-      // currencyId: string;
+      status: string;
     }
   >({
-    url: "/crm/leads",
+    url: `${
+      props?.lead?.status ? `/crm/leads/edit/${props.lead.id}` : "/crm/leads"
+    }`,
     enableReinitialize: true,
     initialValues: {
-      email: "",
-      phoneNumber: "",
-      name: "",
-      amount: "",
-      categoryId: props.categoryId,
+      email: props?.lead?.email,
+      phoneNumber: props?.lead?.phoneNumber,
+      name: props.lead?.name,
+      amount: props.lead?.amount,
+      categoryId: props?.categoryId,
+      status: props?.lead?.status,
       // currencyId: "",
     },
     schema: LeadSchema,
@@ -70,6 +77,8 @@ export default function CRMLeadModal(
     },
   });
 
+  console.log(formError, "formErrorformError");
+
   const {
     errors,
     values,
@@ -85,18 +94,22 @@ export default function CRMLeadModal(
       <FormikProvider value={formik}>
         <Form className="w-full" onSubmit={handleSubmit}>
           <Input
-            placeholder="E-mail"
-            smallerYPadding
-            {...getFieldProps(`email`)}
-            errorText={touched.email && errors.email}
-          />
-          <Input
             placeholder="Nom"
             className="mt-2"
             smallerYPadding
             {...getFieldProps(`name`)}
             errorText={touched.name && errors.name}
           />
+
+          {!props?.lead?.status && (
+            <Input
+              placeholder="E-mail"
+              smallerYPadding
+              {...getFieldProps(`email`)}
+              errorText={touched.email && errors.email}
+            />
+          )}
+
           {/* <Input
             placeholder="Numéro de téléphoner"
             type="tel"
@@ -130,6 +143,19 @@ export default function CRMLeadModal(
             {...getFieldProps(`amount`)}
             errorText={touched.amount && errors.amount}
           />
+
+          {props?.lead?.status && (
+            <Select
+              header="Status"
+              {...getFieldProps(`status`)}
+              errorText={touched.status && errors.status}
+            >
+              <SelectOption value="ongoing">ONGOING</SelectOption>
+              <SelectOption value="lost">LOST</SelectOption>
+              <SelectOption value="pending">PENDING</SelectOption>
+            </Select>
+          )}
+
           {/* <CurrenciesDropdown
             className="mt-2"
             errorText={touched.currencyId && errors.currencyId}

@@ -104,6 +104,7 @@ export interface CRMLead extends BaseModel {
   categoryId: string;
   category: CRMCategory;
   onboarding: LeadOnboarding | null;
+  status?: string
 }
 
 export interface QuestionCategory extends BaseModel {
@@ -166,6 +167,15 @@ export interface KanbanItem extends BaseModel {
 
 export interface InvoiceCurrency extends BaseModel {
   name: string;
+}
+
+export interface DefaultBillingSettings {
+  currency: string;
+  tax: number;
+  discount: number;
+  amount: number;
+  title: string;
+  description: string;
 }
 
 export interface InvoiceItem extends BaseModel {
