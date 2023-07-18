@@ -64,9 +64,9 @@ function Plan(
         </p>
 
         <p>
-          <span className="text-[54px] leading-[66px]">{props.price}€</span>
+          <span className="text-[54px] leading-[66px]">{props.monthly? `${props.price}`: `${props.price/12}`}€</span>
           <span className="text-base text-subtitle">
-            /{props.monthly ? "mois" : "annuel"}
+            /{props.monthly ? "mois" : "mois"}
           </span>
         </p>
 

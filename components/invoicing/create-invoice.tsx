@@ -6,7 +6,7 @@ import UsersDropdown from "../users-dropdown";
 import Input, { TextArea } from "../input";
 import Button, { AddButton } from "../button";
 import { usePost } from "@/hooks/apiHooks";
-import { Invoice } from "@/types/general";
+import { DefaultBillingSettings, Invoice } from "@/types/general";
 import { array, date, number, object, string } from "yup";
 import { RequiredSchema, UuidSchema } from "@/util/schema";
 import { useAlert } from "@/contexts/alert-context";
@@ -15,7 +15,10 @@ import CurrenciesDropdown from "../currency-dropdown";
 import ClientsDropdown from "../client-dropdown";
 import IconButton from "../iconbutton";
 import { arrayError } from "@/lib";
-import { mutate } from "swr";
+import { mutate, } from "swr";
+import useSWR from 'swr'
+import { useEffect } from "react";
+
 
 const Schema = object({
   type: string().oneOf(Object.values(InvoiceType)),
@@ -46,22 +49,39 @@ const itemDefault = {
   price: 0,
 };
 
-const initialValues = {
-  type: InvoiceType.SIMPLE,
-  dueDate: undefined,
-  currencyId: "",
-  clientId: "",
-  name: "",
-  description: "",
-  notes: "",
-  discount: undefined,
-  tax: undefined,
-  items: [itemDefault],
-};
+
 
 export default function CreateInvoice(props: { onCreate: () => any }) {
   const { pushAlert } = useAlert();
 
+
+
+  const {  data: billingSettings,
+    isLoading: invLoading,
+    error: invError,} = useSWR<DefaultBillingSettings []>(
+      `/billing/settings`
+  );
+
+  useEffect(() => {
+    setFieldValue("discount",billingSettings?.[0].discount )
+    setFieldValue("tax",billingSettings?.[0].tax )
+    setFieldValue("currencyId",billingSettings?.[0].currency )
+    setFieldValue("name",billingSettings?.[0].title )
+    setFieldValue("description",billingSettings?.[0].description )
+  }, [billingSettings?.[0]])
+  
+  const initialValues = {
+    type: InvoiceType.SIMPLE,
+    dueDate: undefined,
+    currencyId: "",
+    clientId: "",
+    name: "",
+    description: "",
+    notes: "",
+    discount: billingSettings?.[0].discount,
+    tax: undefined,
+    items: [itemDefault],
+  };
   const { formik } = usePost<Invoice, typeof initialValues>({
     url: "/invoices",
     initialValues,
@@ -78,6 +98,12 @@ export default function CreateInvoice(props: { onCreate: () => any }) {
       pushAlert(e.message);
     },
   });
+
+
+  
+
+
+
 
   const {
     values,

@@ -17,6 +17,7 @@ import useLeads from "@/data/use-leads";
 import { ScrollableList } from "../list";
 import { Popover } from "react-tiny-popover";
 import EditCRMCategoryModal from "./edit-crm-category";
+import Image from "next/image";
 // import useUserAndEnterprise from "@/data/user-user-enterprise";
 // import Link from "next/link";
 
@@ -24,8 +25,16 @@ interface CRMCardProps extends Props {
   data: CRMCategoryWithCount;
 }
 
-function CRMLeadItem({ lead }: { lead: CRMLead }) {
+function CRMLeadItem({
+  lead,
+  categoryId,
+}: // setModalOpen,
+{
+  lead: CRMLead;
+  categoryId: string;
+}) {
   const { pushAlert } = useAlert();
+  const [modalOpen, setModalOpen] = useState(false);
   const [{ isDragging }, drag] = useDrag(() => ({
     type: DragTypes.CRMLEAD,
     item: lead,
@@ -40,54 +49,74 @@ function CRMLeadItem({ lead }: { lead: CRMLead }) {
 
   // const { enterprise } = useUserAndEnterprise();
 
-  return (
-    <li
-      ref={drag}
-      className={`flex justify-between py-3 ${
-        isDragging ? "opacity-50" : "opacity-100"
-      } cursor-move items-center`}
-    >
-      <p className="text-[16px] leading-[20px]">{lead.name}</p>
-      <p className="text-[16px] leading-[20px]">
-        <span>Amount:</span> {lead.amount}
-      </p>
-      {!lead.onboarding ? (
-        <Button
-          loading={loading}
-          className="shadow-none text-xs leading-[14px] py-[10px] px-6"
-          onClick={() => {
-            setLoading(true);
-            onboardLead(lead.id)
-              .then((data) => {
-                mutate((prev) => {
-                  if (!prev) return prev;
-                  const index = prev.findIndex((p) => p.id === lead.id);
-                  if (!index || index < 0) return prev;
+  console.log(lead, "sjsjsjss");
 
-                  const copy = [...prev];
-                  copy[index] = data.lead;
-                  return copy;
+  return (
+    <>
+      <CRMLeadModal
+        open={modalOpen}
+        handleClose={() => setModalOpen(false)}
+        categoryId={categoryId}
+        lead={lead}
+      />
+
+      <li
+        ref={drag}
+        className={`flex justify-between py-3 ${
+          isDragging ? "opacity-50" : "opacity-100"
+        } cursor-move items-center`}
+      >
+        <p className="text-[16px] leading-[20px]">{lead.name}</p>
+        <p className="text-[16px] leading-[20px]">
+          <span>Amount:</span> {lead.amount}
+        </p>
+        {!lead.onboarding ? (
+          <Button
+            loading={loading}
+            className="shadow-none text-xs leading-[14px] py-[10px] px-6"
+            onClick={() => {
+              setLoading(true);
+              onboardLead(lead.id)
+                .then((data) => {
+                  mutate((prev) => {
+                    if (!prev) return prev;
+                    const index = prev.findIndex((p) => p.id === lead.id);
+                    if (!index || index < 0) return prev;
+
+                    const copy = [...prev];
+                    copy[index] = data.lead;
+                    return copy;
+                  });
+                  setLoading(false);
+                  pushAlert(
+                    "Un e-mail d'intégration a été envoyé",
+                    AlertType.SUCCESS
+                  );
+                })
+                .catch((e) => {
+                  setLoading(false);
+                  pushAlert(e.message);
                 });
-                setLoading(false);
-                pushAlert(
-                  "Un e-mail d'intégration a été envoyé",
-                  AlertType.SUCCESS
-                );
-              })
-              .catch((e) => {
-                setLoading(false);
-                pushAlert(e.message);
-              });
-          }}
-        >
-          👉 Onboard
-        </Button>
-      ) : (
-        <span className="text-subtitle text-xs">
-          {lead.onboarding.completedAt ? "Intégré" : "Email envoyé"}
-        </span>
-      )}
-    </li>
+            }}
+          >
+            👉 Onboard
+          </Button>
+        ) : (
+          <span className="text-subtitle text-xs">
+            {lead.onboarding.completedAt ? "Intégré" : "Email envoyé"}
+          </span>
+        )}
+
+        <div style={{ color: "white" }}>{lead?.status}</div>
+        <Image
+          onClick={() => setModalOpen(true)}
+          src="/images/edit.svg"
+          height={12}
+          width={12}
+          alt="edit icon"
+        />
+      </li>
+    </>
   );
 }
 
@@ -101,6 +130,7 @@ export default function CRMCard(props: CRMCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalCOpen, setModalCOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: DragTypes.CRMLEAD,
@@ -137,6 +167,7 @@ export default function CRMCard(props: CRMCardProps) {
         open={modalOpen}
         handleClose={() => setModalOpen(false)}
         categoryId={props.data.id}
+        lead={null}
       />
       <EditCRMCategoryModal
         open={modalCOpen}
@@ -204,7 +235,13 @@ export default function CRMCard(props: CRMCardProps) {
                   ref={drop}
                 >
                   {leads.length > 0 ? (
-                    leads.map((l) => <CRMLeadItem lead={l} key={l.id} />)
+                    leads.map((l) => (
+                      <CRMLeadItem
+                        lead={l}
+                        key={l.id}
+                        categoryId={props.data.id}
+                      />
+                    ))
                   ) : (
                     <p className="text-base text-subtitle text-center">
                       Aucun prospect dans cette catégorie

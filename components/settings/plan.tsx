@@ -140,7 +140,27 @@ export default function Plan() {
             />
           </div>
           <div className="mt-9 flex w-full gap-4 justify-between items-center">
-            <p>Adresse de facturation</p>
+            <p>Ville</p>
+            <Input
+              id="dueDate"
+              placeholder="100 rue du bonheur"
+              className="grow"
+              // {...getFieldProps("dueDate")}
+              onChange={(e) => {}}
+            />
+          </div>
+          <div className="mt-9 flex w-full gap-4 justify-between items-center">
+            <p>Région</p>
+            <Input
+              id="dueDate"
+              placeholder="100 rue du bonheur"
+              className="grow"
+              // {...getFieldProps("dueDate")}
+              onChange={(e) => {}}
+            />
+          </div>
+          <div className="mt-9 flex w-full gap-4 justify-between items-center">
+            <p>Pays</p>
             <Input
               id="dueDate"
               placeholder="100 rue du bonheur"
