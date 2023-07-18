@@ -51,12 +51,9 @@ const chartdata = [
   },
 ];
 
-
-
 const dataFormatter = (number: number) => {
   return "$ " + Intl.NumberFormat("us").format(number).toString();
 };
-
 
 export default function SalesTurnoverChart(props: Props) {
   const {
@@ -106,7 +103,7 @@ export default function SalesTurnoverChart(props: Props) {
         </CardContent>
       </div>
       <div className="flex flex-wrap">
-        <div className="w-full sm:w-1/2 lg:w-1/3 px-2">
+        <div className="w-1/2 sm:w-1/2 lg:w-1/5 px-2">
           <CardR className="max-w-lg">
             <Title>Sales</Title>
             <DonutChart
@@ -119,20 +116,39 @@ export default function SalesTurnoverChart(props: Props) {
             />
           </CardR>
         </div>
-        <div className="w-full sm:w-1/2 lg:w-1/3 px-2">
+        <div className="w-full sm:w-1/2 lg:w-2/5 px-2">
           <CardR className="max-w-lg">
             <Title>Sales</Title>
-            <DonutChart
-              className="mt-6"
-              data={cities}
-              category="sales"
-              index="name"
-              valueFormatter={valueFormatter}
-              colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
-            />
+            <div className="flex">
+              <div className="w-1/2">
+                <div className="rounded-xl w-[200px] h-[80px] bg-[#47288C] flex items-center" >
+                  <div>Personnes Invitées</div>
+                  <div>145 people</div>
+                </div>
+                <div className="w-[21]">kkwkw</div>
+              </div>
+              <div className="bg-[red] w-1/2">
+                {" "}
+                <DonutChart
+                  className="mt-6 bg-green"
+                  data={cities}
+                  category="sales"
+                  index="name"
+                  valueFormatter={valueFormatter}
+                  colors={[
+                    "slate",
+                    "violet",
+                    "indigo",
+                    "rose",
+                    "cyan",
+                    "amber",
+                  ]}
+                />
+              </div>
+            </div>
           </CardR>
         </div>
-        <div className="w-full sm:w-1/2 lg:w-1/3 px-2">
+        <div className="w-full sm:w-1/2 lg:w-2/5 px-2">
           <CardR>
             <Title>Number of species threatened with extinction (2021)</Title>
             <Subtitle>
