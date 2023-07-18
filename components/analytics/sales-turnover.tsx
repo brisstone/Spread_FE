@@ -39,15 +39,15 @@ const cities = [
 const chartdata = [
   {
     name: "Amphibians",
-    "Number of threatened species": 2488,
+    "Clients Actuels": 2488,
   },
   {
     name: "Birds",
-    "Number of threatened species": 1445,
+    "Clients Actuels": 1445,
   },
   {
     name: "Crustaceans",
-    "Number of threatened species": 743,
+    "Clients Actuels": 743,
   },
 ];
 
@@ -101,80 +101,6 @@ export default function SalesTurnoverChart(props: Props) {
             }
           />
         </CardContent>
-      </div>
-      <div className="flex flex-wrap">
-        <div className="w-1/2 sm:w-1/3 lg:w-1/5 px-2 h-96">
-          <CardR className="max-w-lg">
-            <Title className="text-sm">Taux de Satisfaction</Title>
-            <div className="text-xs">Tous les clients</div>
-            <DonutChart
-              className="mt-6"
-              data={cities}
-              category="sales"
-              index="name"
-              valueFormatter={valueFormatter}
-              colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
-            />
-             <div className="rounded-xl w-[180px] h-[80px] bg-[#47288C] flex flex-col justify-center text-sm" >
-                  <div className="text-[#FFFFFF] ml-4 text-lg ml-20">95%</div>
-                  <div className="text-[#A0AEC0] ml-4 text-sm">Basé sur leurs retours</div>
-                </div>
-          </CardR>
-        </div>
-        <div className="w-full sm:w-1/2 lg:w-2/5 px-2">
-          <CardR className="max-w-lg">
-            <Title className="mb-8">Apporteurs d’affaires</Title>
-            <div className="flex">
-              <div className="w-1/2 space-y-4 ">
-                <div className="rounded-xl w-[180px] h-[80px] bg-[#47288C] flex flex-col justify-center text-sm " >
-                  <div className="text-[#A0AEC0] ml-4 ">Personnes Invitées</div>
-                  <div className="text-[#FFFFFF] ml-4">145 people</div>
-                </div>
-                <div className="rounded-xl w-[180px] h-[80px] bg-[#47288C] flex flex-col justify-center text-sm" >
-                  <div className="text-[#A0AEC0] ml-4">Bonus</div>
-                  <div className="text-[#FFFFFF] ml-4">1,465</div>
-                </div>
-                
-              </div>
-              <div className=" w-1/2">
-                {" "}
-                <DonutChart
-                  className="mb-12 bg-green"
-                  data={cities}
-                  category="sales"
-                  index="name"
-                  valueFormatter={valueFormatter}
-                  colors={[
-                    "slate",
-                    "violet",
-                    "indigo",
-                    "rose",
-                    "cyan",
-                    "amber",
-                  ]}
-                />
-              </div>
-            </div>
-          </CardR>
-        </div>
-        <div className="w-full sm:w-1/2 lg:w-2/5 px-2">
-          <CardR className="max-w-lg">
-            <Title>Number of species threatened with extinction (2021)</Title>
-            <Subtitle>
-              The IUCN Red List has assessed only a small share of the total
-              known species in the world.
-            </Subtitle>
-            <BarChart
-              className="mt-6"
-              data={chartdata}
-              index="name"
-              categories={["Number of threatened species"]}
-              colors={["blue"]}
-              valueFormatter={dataFormatter}
-              yAxisWidth={48}
-            />
-          </CardR>
-        </div>
       </div>
     </Card>
   );

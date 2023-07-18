@@ -19,6 +19,7 @@ import { usePost } from "@/hooks/apiHooks";
 import { number, object, string } from "yup";
 import useSWR, { mutate } from "swr";
 import { DefaultBillingSettings } from "@/types/general";
+import SalesTurnoverChart2 from "@/components/analytics/sales-turnover-2";
 
 const Schema = object({
   currency: string().optional(),
@@ -154,7 +155,7 @@ export default function Invoicing() {
           <div className="w-full mt-6">
             <KPIGroup />
 
-            <SalesTurnoverChart className="w-full mt-5" />
+            <SalesTurnoverChart2 className="w-full mt-5" />
           </div>
         </TabPanel>
 
