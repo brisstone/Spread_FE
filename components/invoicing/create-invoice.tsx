@@ -78,7 +78,7 @@ export default function CreateInvoice(props: { onCreate: () => any }) {
     name: "",
     description: "",
     notes: "",
-    discount: billingSettings?.[0].discount,
+    // discount: billingSettings?.[0].discount,
     tax: undefined,
     items: [itemDefault],
   };

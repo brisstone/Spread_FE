@@ -181,9 +181,6 @@ export default function Plan() {
             Changer de plan
           </Button>
         </Link>
-        <Button type="submit" className="shadow-none !text-base font-semibold">
-          Annuler l'abonnement
-        </Button>
       </div>
     </div>
   );
