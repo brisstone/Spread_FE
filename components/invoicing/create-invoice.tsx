@@ -63,11 +63,11 @@ export default function CreateInvoice(props: { onCreate: () => any }) {
   );
 
   useEffect(() => {
-    setFieldValue("discount",billingSettings?.[0].discount )
-    setFieldValue("tax",billingSettings?.[0].tax )
-    setFieldValue("currencyId",billingSettings?.[0].currency )
-    setFieldValue("name",billingSettings?.[0].title )
-    setFieldValue("description",billingSettings?.[0].description )
+    setFieldValue("discount",billingSettings?.[0]?.discount )
+    setFieldValue("tax",billingSettings?.[0]?.tax )
+    setFieldValue("currencyId",billingSettings?.[0]?.currency )
+    setFieldValue("name",billingSettings?.[0]?.title )
+    setFieldValue("description",billingSettings?.[0]?.description )
   }, [billingSettings?.[0]])
   
   const initialValues = {

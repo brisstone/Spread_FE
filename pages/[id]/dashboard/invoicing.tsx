@@ -55,11 +55,11 @@ export default function Invoicing() {
 
 
   useEffect(() => {
-    setFieldValue("discount",billingSettings?.[0].discount )
-    setFieldValue("tax",billingSettings?.[0].tax )
-    setFieldValue("currency",billingSettings?.[0].currency )
-    setFieldValue("title",billingSettings?.[0].title )
-    setFieldValue("description",billingSettings?.[0].description )
+    setFieldValue("discount",billingSettings?.[0]?.discount )
+    setFieldValue("tax",billingSettings?.[0]?.tax )
+    setFieldValue("currency",billingSettings?.[0]?.currency )
+    setFieldValue("title",billingSettings?.[0]?.title )
+    setFieldValue("description",billingSettings?.[0]?.description )
   }, [billingSettings?.[0]])
 
 
