@@ -274,7 +274,7 @@ export default function SalesTurnoverChart2(props: Props) {
               colors={["zinc"]}
               valueFormatter={dataFormatter}
               yAxisWidth={48}
-              borderRadius={100}
+              // borderRadius={100}
             />
           </div>
         </div>
