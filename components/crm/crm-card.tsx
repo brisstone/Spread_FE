@@ -244,7 +244,7 @@ export default function CRMCard(props: CRMCardProps) {
                     ))
                   ) : (
                     <p className="text-base text-subtitle text-center">
-                      Aucun prospect dans cette catégorie
+                      {/* Aucun prospect dans cette catégorie */} fnjfbjbjdjfndjfbdj 
                     </p>
                   )}
                 </ScrollableList>
