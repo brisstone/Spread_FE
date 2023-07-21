@@ -3,54 +3,86 @@ import Card, { CardContent, CardHeader } from "@/components/card";
 import Fetched from "@/components/fetched";
 import { TurnoverData } from "@/types/general";
 import moment from "moment";
-import { AreaChart, BarChart, Subtitle } from "@tremor/react";
+import { AreaChart, Subtitle } from "@tremor/react";
 import { valueFormatter } from "@/lib/util";
 import { Feedback } from "@/components/feedback";
 import { Props } from "@/types/props";
 import { Card as CardR, Title, DonutChart } from "@tremor/react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const cities = [
   {
-    name: "New York",
+    name: "A",
     sales: 9800,
   },
   {
-    name: "London",
+    name: "B",
     sales: 4567,
   },
   {
-    name: "Hong Kong",
+    name: "C",
     sales: 3908,
   },
   {
-    name: "San Francisco",
+    name: "D",
     sales: 2400,
   },
   {
-    name: "Singapore",
+    name: "E",
     sales: 1908,
   },
   {
-    name: "Zurich",
+    name: "F",
     sales: 1398,
   },
 ];
 
 const chartdata = [
   {
-    name: "Amphibians",
-    "Clients Actuels": 2488,
+    name: "A",
+    Clients_Actuels: 300,
   },
   {
-    name: "Birds",
-    "Clients Actuels": 1445,
+    name: "B",
+    Clients_Actuels: 1000,
   },
   {
-    name: "Crustaceans",
-    "Clients Actuels": 743,
+    name: "C",
+    Clients_Actuels: 200,
+  },
+  {
+    name: "D",
+    Clients_Actuels: 500,
+  },
+  {
+    name: "E",
+    Clients_Actuels: 600,
+  },
+  {
+    name: "F",
+    Clients_Actuels: 800,
+  },
+  {
+    name: "G",
+    Clients_Actuels: 380,
+  },
+  {
+    name: "H",
+    Clients_Actuels: 800,
+  },
+  {
+    name: "I",
+    Clients_Actuels: 400,
   },
 ];
-
 
 const chartStyles = `
   .bar-chart-svg .bar {
@@ -65,6 +97,8 @@ const chartStyles = `
 const dataFormatter = (number: number) => {
   return "$ " + Intl.NumberFormat("us").format(number).toString();
 };
+
+const dataFormatter2 = (value: any) => `${value}`;
 
 export default function SalesTurnoverChart2(props: Props) {
   const {
@@ -244,10 +278,18 @@ export default function SalesTurnoverChart2(props: Props) {
                 </svg>
                 <div
                   className=""
-                  style={{ position: "absolute", right: "25%", top: "30%" }}
+                  style={{
+                    position: "absolute",
+                    right: "27%",
+                    top: "27%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
                   <div className="text-[#A0AEC0]">Safety</div>
-                  <div className="text-[#FFFFFF]">9.3</div>
+                  <div className="text-[#FFFFFF] text-[30px]">9.3</div>
                   <div className="text-[#A0AEC0]">Total Score</div>
                 </div>
                 {/* <DonutChart
@@ -277,7 +319,7 @@ export default function SalesTurnoverChart2(props: Props) {
               known species in the world.
             </Subtitle> */}
             <style>{chartStyles}</style>
-            <BarChart
+            {/* <BarChart
               className="mt-6"
               data={chartdata}
               index="name"
@@ -285,12 +327,61 @@ export default function SalesTurnoverChart2(props: Props) {
               colors={["zinc"]}
               valueFormatter={dataFormatter}
               yAxisWidth={48}
-              barSize={200} // Set the desired width of the bars (you can adjust this value)
+              barSize={2} // Set the desired width of the bars (you can adjust this value)
               barBorderRadius={100} // Set the desired border radius (you can adjust this value)
-            />
+            /> */}
+
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={chartdata}>
+                <XAxis dataKey="name" hide />
+                {/* <YAxis color="white" /> */}
+                <YAxis
+                  tick={{ fill: "white" }}
+                  axisLine={false}
+                  domain={["dataMin", "dataMax"]}
+                />
+                <Tooltip
+                  content={<CustomTooltip />}
+                  // formatter={dataFormatter2}
+                />
+                {/* <Legend /> */}
+                <Bar
+                  dataKey="Clients_Actuels"
+                  fill="white"
+                  radius={[10, 10, 10, 10]}
+                  barSize={10}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+            <div style={{ color: "white", marginTop: "50px" }}>
+              <div>Clients Actuels</div>
+              <div>
+                <span style={{ color: "#BC96E6" }}>(+23)</span>{" "}
+                <span style={{ color: "#A0AEC0" }}>depuis 1 semaine</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </Card>
   );
 }
+
+export const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: {
+  active?: any;
+  payload?: any;
+  label?: any;
+}) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`${label} : ${payload[0].value}`}</p>
+      </div>
+    );
+  }
+  return null;
+};

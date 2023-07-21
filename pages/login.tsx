@@ -140,7 +140,7 @@ export default function Login() {
             response.data.data.user.enterpriseId,
             response.data.data.token
           );
-          router.replace(`/${response.data.data.user.enterpriseId}/dashboard`);
+          router.push(`/${response.data.data.user.enterpriseId}/dashboard`);
 
           // setProfile(res.data);
         })
