@@ -18,6 +18,8 @@ import { ScrollableList } from "../list";
 import { Popover } from "react-tiny-popover";
 import EditCRMCategoryModal from "./edit-crm-category";
 import Image from "next/image";
+import { text } from "stream/consumers";
+import { size } from "lodash";
 // import useUserAndEnterprise from "@/data/user-user-enterprise";
 // import Link from "next/link";
 
@@ -62,18 +64,23 @@ function CRMLeadItem({
 
       <li
         ref={drag}
-        className={`flex justify-between py-3 ${
+        className={`flex flex-row gap-4 py-3 ${
           isDragging ? "opacity-50" : "opacity-100"
         } cursor-move items-center`}
       >
-        <p className="text-[16px] leading-[20px]">{lead.name}</p>
-        <p className="text-[16px] leading-[20px]">
-          <span>Amount:</span> {lead.amount}
-        </p>
+        <div className="flex flex-col">
+          <p className="text-[16px] leading-[20px] text-xs">{lead.name}</p>
+          <div className="flex">
+            <p className="text-[16px] leading-[20px] text-xs">
+              <span className="text-xs">Amount:</span> {lead.amount}
+            </p>
+          </div>
+        </div>
+
         {!lead.onboarding ? (
           <Button
             loading={loading}
-            className="shadow-none text-xs leading-[14px] py-[10px] px-6"
+            className="shadow-none text-xs leading-[14px] py-[10px] px-6 h-10 w-16 text-xs"
             onClick={() => {
               setLoading(true);
               onboardLead(lead.id)
@@ -107,7 +114,7 @@ function CRMLeadItem({
           </span>
         )}
 
-        <div style={{ color: "white" }}>{lead?.status}</div>
+        <div className="text-white text-sm">{lead?.status}</div>
         <Image
           onClick={() => setModalOpen(true)}
           src="/images/edit.svg"
@@ -212,7 +219,7 @@ export default function CRMCard(props: CRMCardProps) {
             </Popover>
           </div>
 
-          <div className="mt-8 w-full relative grow">
+          <div className="mt-8 w-full relative grow flex">
             <Fetched
               error={error}
               errorComp={
@@ -244,7 +251,7 @@ export default function CRMCard(props: CRMCardProps) {
                     ))
                   ) : (
                     <p className="text-base text-subtitle text-center">
-                      {/* Aucun prospect dans cette catégorie */} fnjfbjbjdjfndjfbdj 
+                      Aucun prospect dans cette catégorie{" "}
                     </p>
                   )}
                 </ScrollableList>
