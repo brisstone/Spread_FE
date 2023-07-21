@@ -197,7 +197,7 @@ export default function Plan() {
                         <FormikProvider value={formik}> 
                           <Form className="w-full" onSubmit={handleSubmit}>
                             <Button 
-                      
+                              style={{marginTop:"10px"}}
                               type="submit" className="shadow-none !text-base font-semibold">
                               Annuler le plan
                             </Button>
