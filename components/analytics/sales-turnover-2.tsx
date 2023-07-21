@@ -51,6 +51,17 @@ const chartdata = [
   },
 ];
 
+
+const chartStyles = `
+  .bar-chart-svg .bar {
+    /* Adjust the width of the bars */
+    width: 10px;
+    /* Add rounded edges */
+    rx: 5px;
+    ry: 5px;
+  }
+`;
+
 const dataFormatter = (number: number) => {
   return "$ " + Intl.NumberFormat("us").format(number).toString();
 };
@@ -102,13 +113,15 @@ export default function SalesTurnoverChart2(props: Props) {
           />
         </CardContent>
       </div>
-      <div className="flex flex-wrap" style={{background:"#22053E"}}>
+      <div className="flex flex-wrap" style={{ background: "#22053E" }}>
         <div
           style={{ borderRadius: "100px" }}
           className="w-1/2 sm:w-1/3 lg:w-1/5 px-2 h-96 rounded-md"
         >
           <div className="max-w-lg p-4">
-            <Title className="text-sm text-[#ccc] mb-6">Taux de Satisfaction</Title>
+            <Title className="text-sm text-[#ccc] mb-6">
+              Taux de Satisfaction
+            </Title>
             <div className="text-xs">Tous les clients</div>
             <div style={{ marginTop: "-50px", zIndex: "-1" }}>
               <DonutChart
@@ -164,10 +177,10 @@ export default function SalesTurnoverChart2(props: Props) {
               }}
               className="rounded-xl w-[180px] h-[80px] bg-[#47288C] flex flex-col justify-center items-center text-sm p-1"
             >
-               <div className="flex items-between justify-between text-[#ccc] w-[100%]">
+              <div className="flex items-between justify-between text-[#ccc] w-[100%]">
                 <div>0%</div>
                 <div>100%</div>
-               </div>
+              </div>
               <div className="text-[#FFFFFF] ml-4 text-lg ml-20">95%</div>
               <div className="text-[#A0AEC0] ml-4 text-sm">
                 Basé sur leurs retours
@@ -203,10 +216,7 @@ export default function SalesTurnoverChart2(props: Props) {
                   <div className="text-[#FFFFFF] ml-4">1,465</div>
                 </div>
               </div>
-              <div
-                className="w-1/2"
-                style={{ position: "relative"}}
-              >
+              <div className="w-1/2" style={{ position: "relative" }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="193"
@@ -266,6 +276,7 @@ export default function SalesTurnoverChart2(props: Props) {
               The IUCN Red List has assessed only a small share of the total
               known species in the world.
             </Subtitle> */}
+            <style>{chartStyles}</style>
             <BarChart
               className="mt-6"
               data={chartdata}
@@ -274,7 +285,8 @@ export default function SalesTurnoverChart2(props: Props) {
               colors={["zinc"]}
               valueFormatter={dataFormatter}
               yAxisWidth={48}
-              // borderRadius={100}
+              barSize={200} // Set the desired width of the bars (you can adjust this value)
+              barBorderRadius={100} // Set the desired border radius (you can adjust this value)
             />
           </div>
         </div>
