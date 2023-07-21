@@ -9,6 +9,12 @@ import { Feedback } from "../feedback";
 import { Stripe } from "@stripe/stripe-js";
 import { StripeInvoice, StripeSubscription } from "@/types/general";
 import Link from "next/link";
+import { data } from "autoprefixer";
+import axios from "axios";
+import { usePost } from "@/hooks/apiHooks";
+import { Form, FormikProvider } from "formik";
+import { useAlert } from "@/contexts/alert-context";
+import { AlertType } from "@/types/enum";
 
 export function PlanInvoiceItem({ data }: { data: StripeInvoice }) {
   const {
@@ -50,6 +56,76 @@ const cardBrands: { [b: string]: string } = {
 };
 
 export default function Plan() {
+  const { pushAlert } = useAlert();
+  const changePlan = () =>{
+
+
+    const {
+      data,
+      error,
+      isLoading,
+    } = useSWR<StripeInvoice[]>("/cancel/subscription");
+
+
+    console.log(data, error, isLoading,'sjsjjd');
+    
+
+  }
+
+  const {
+    data: newClient,
+    error: formError,
+    formik,
+  } = usePost<
+    // QuestionWithCategory,
+    {
+      // name: string;
+      // // type: QuestionType;
+      // categoryId: string;
+    }
+  >({
+    url: "payment/cancel/subscription",
+    enableReinitialize: true,
+    initialValues: {
+      // name: "",
+      // type: QuestionType.TEXT,
+      // categoryId: "",
+    },
+    // schema: Schema,
+    onComplete: (data) => {
+      pushAlert("Cancelled", AlertType.SUCCESS);
+      // mutate((existing) => {
+      //   const copy = [...(existing || [])];
+      //   const existingCategoryIndex = copy.findIndex(
+      //     (c) => c.id === data.categoryId
+      //   ); // category index in cache
+
+      //   if (existingCategoryIndex < 0) { // if the question's category does not exist
+      //     return [
+      //       ...copy,
+      //       { ...data.category, questions: [omit(data, ["category"])] }, // create an entry
+      //     ];
+      //   }
+
+      //   // if it exists,
+      //   copy[existingCategoryIndex] = {
+      //     ...copy[existingCategoryIndex],
+      //     questions: [
+      //       ...copy[existingCategoryIndex].questions,
+      //       omit(data, ["category"]), // add new data to the list of questions
+      //     ],
+      //   };
+
+      //   return copy;
+      // });
+      // if (props.handleClose) props.handleClose();
+    },
+    onError: (e) => {
+      pushAlert(e.message);
+    },
+  });
+
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
   const {
     data: invoices,
     error: invError,
@@ -116,7 +192,18 @@ export default function Plan() {
               dataComp={(invs) =>
                 invs?.length > 0 ? (
                   invs?.map((inv) => (
-                    <PlanInvoiceItem data={inv} key={inv.id} />
+                    <>
+                        <PlanInvoiceItem data={inv} key={inv.id} />
+                        <FormikProvider value={formik}> 
+                          <Form className="w-full" onSubmit={handleSubmit}>
+                            <Button 
+                      
+                              type="submit" className="shadow-none !text-base font-semibold">
+                              Annuler le plan
+                            </Button>
+                          </Form>
+                        </FormikProvider>
+                    </>        
                   ))
                 ) : (
                   <Feedback
@@ -128,6 +215,17 @@ export default function Plan() {
             />
           </ul>
         </Card>
+        {/* <FormikProvider value={formik}> 
+          <Form className="w-full" onSubmit={handleSubmit}>
+            <Button 
+            
+              type="submit" className="shadow-none !text-base font-semibold">
+              Annuler le plan
+            </Button>
+          </Form>
+        </FormikProvider> */}
+       
+       
         <Card className="p-7 basis-1/2">
           <div className="flex w-full gap-4 justify-between items-center">
             <p>Adresse de facturation</p>
@@ -180,11 +278,14 @@ export default function Plan() {
           >
             Changer de plan
           </Button>
+          
         </Link>
-        <Button 
+        {/* <Button 
+        onClick={()=>changePlan()}
           type="submit" className="shadow-none !text-base font-semibold">
           Annuler le plan
-        </Button>
+        </Button> */}
+
       </div>
     </div>
   );
