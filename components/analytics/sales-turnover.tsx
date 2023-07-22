@@ -66,7 +66,7 @@ export default function SalesTurnoverChart(props: Props) {
     <Card className={props.className}>
       <div className="p-7 relative">
         <CardHeader
-          title="Chiffre d’Affaires-- 💰"
+          title="Chiffre d’Affaires💰"
           subTitle=""
           // subTitle="(+5k) ce mois ci en 2023"
         />
