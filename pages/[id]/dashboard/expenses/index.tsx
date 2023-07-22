@@ -72,7 +72,7 @@ export function RecentExpensesTable() {
   return (
     <Card className="w-full mt-4">
       <div className="p-7">
-        <CardHeader title="Dépenses" subTitle="+$1200 ce mois ci" />
+        <CardHeader title="Dépenses" subTitle="+$0.000 ce mois ci" />
 
         <CardContent>
           <Fetched
@@ -124,7 +124,7 @@ export default function Expenses() {
               <KPI
                 data={{
                   name: "Aujourd’hui | C.A",
-                  value: "$12,000",
+                  value: "$0.000",
                 }}
                 className="grow"
               />
@@ -145,7 +145,7 @@ export default function Expenses() {
               <div className="p-7">
                 <CardHeader
                   title="Chiffre d’Affaires 💰"
-                  subTitle="(+5k) ce mois ci en 2023"
+                  subTitle="(+0k) ce mois ci en 2023"
                 />
 
                 <CardContent>

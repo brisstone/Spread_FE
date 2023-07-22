@@ -21,28 +21,28 @@ import {
 const cities = [
   {
     name: "A",
-    sales: 9800,
+    sales: 0,
   },
   {
     name: "B",
-    sales: 4567,
+    sales: 0.01,
   },
-  {
-    name: "C",
-    sales: 3908,
-  },
-  {
-    name: "D",
-    sales: 2400,
-  },
-  {
-    name: "E",
-    sales: 1908,
-  },
-  {
-    name: "F",
-    sales: 1398,
-  },
+  // {
+  //   name: "C",
+  //   sales: 3908,
+  // },
+  // {
+  //   name: "D",
+  //   sales: 2400,
+  // },
+  // {
+  //   name: "E",
+  //   sales: 1908,
+  // },
+  // {
+  //   name: "F",
+  //   sales: 1398,
+  // },
 ];
 
 const chartdata = [
@@ -111,7 +111,7 @@ export default function SalesTurnoverChart2(props: Props) {
     <Card className={props.className}>
       <div className="p-7 relative">
         <CardHeader
-          title="Chiffre d’Affaires-- 💰"
+          title="Chiffre d’Affaires 💰"
           subTitle=""
           // subTitle="(+5k) ce mois ci en 2023"
         />
@@ -159,18 +159,19 @@ export default function SalesTurnoverChart2(props: Props) {
             <div className="text-xs">Tous les clients</div>
             <div style={{ marginTop: "-50px", zIndex: "-1" }}>
               <DonutChart
+              showLabel={false}
                 className="mt-6"
                 data={cities}
                 category="sales"
                 index="name"
                 valueFormatter={valueFormatter}
                 colors={[
-                  "violet",
-                  "violet",
-                  "violet",
-                  "violet",
-                  "violet",
-                  "violet",
+                  "indigo",
+                  // "violet",
+                  // "violet",
+                  // "violet",
+                  // "violet",
+                  // "violet",
                 ]}
               />
             </div>
@@ -215,7 +216,7 @@ export default function SalesTurnoverChart2(props: Props) {
                 <div>0%</div>
                 <div>100%</div>
               </div>
-              <div className="text-[#FFFFFF] ml-4 text-lg ml-20">95%</div>
+              <div className="text-[#FFFFFF] ml-4 text-lg ml-20">0%</div>
               <div className="text-[#A0AEC0] ml-4 text-sm">
                 Basé sur leurs retours
               </div>
@@ -236,7 +237,7 @@ export default function SalesTurnoverChart2(props: Props) {
                   className="rounded-xl w-[180px] h-[80px] bg-[#47288C] flex flex-col justify-center text-sm "
                 >
                   <div className="text-[#A0AEC0] ml-4 ">Personnes Invitées</div>
-                  <div className="text-[#FFFFFF] ml-4">145 people</div>
+                  <div className="text-[#FFFFFF] ml-4">0 people</div>
                 </div>
                 <div
                   style={{
@@ -247,7 +248,7 @@ export default function SalesTurnoverChart2(props: Props) {
                   className="rounded-xl w-[180px] h-[80px] bg-[#47288C] flex flex-col justify-center text-sm"
                 >
                   <div className="text-[#A0AEC0] ml-4">Bonus</div>
-                  <div className="text-[#FFFFFF] ml-4">1,465</div>
+                  <div className="text-[#FFFFFF] ml-4">0</div>
                 </div>
               </div>
               <div className="w-1/2" style={{ position: "relative" }}>
@@ -289,47 +290,16 @@ export default function SalesTurnoverChart2(props: Props) {
                   }}
                 >
                   <div className="text-[#A0AEC0]">Safety</div>
-                  <div className="text-[#FFFFFF] text-[30px]">9.3</div>
+                  <div className="text-[#FFFFFF] text-[30px]">0.0</div>
                   <div className="text-[#A0AEC0]">Total Score</div>
                 </div>
-                {/* <DonutChart
-                  className="mb-12 bg-green"
-                  data={cities}
-                  category="sales"
-                  index="name"
-                  valueFormatter={valueFormatter}
-                  colors={[
-                    "violet",
-                    "violet",
-                    "violet",
-                    "violet",
-                    "violet",
-                    "violet",
-                  ]}
-                /> */}
               </div>
             </div>
           </div>
         </div>
         <div className="w-full sm:w-1/2 lg:w-2/5 px-2 rounded-lg">
           <div className="max-w-lg bg-[#241533] p-4">
-            {/* <Title>Number of species threatened with extinction (2021)</Title>
-            <Subtitle>
-              The IUCN Red List has assessed only a small share of the total
-              known species in the world.
-            </Subtitle> */}
             <style>{chartStyles}</style>
-            {/* <BarChart
-              className="mt-6"
-              data={chartdata}
-              index="name"
-              categories={["Clients Actuels"]}
-              colors={["zinc"]}
-              valueFormatter={dataFormatter}
-              yAxisWidth={48}
-              barSize={2} // Set the desired width of the bars (you can adjust this value)
-              barBorderRadius={100} // Set the desired border radius (you can adjust this value)
-            /> */}
 
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={chartdata}>
@@ -356,8 +326,8 @@ export default function SalesTurnoverChart2(props: Props) {
             <div style={{ color: "white", marginTop: "50px" }}>
               <div>Clients Actuels</div>
               <div>
-                <span style={{ color: "#BC96E6" }}>(+23)</span>{" "}
-                <span style={{ color: "#A0AEC0" }}>depuis 1 semaine</span>
+                <span style={{ color: "#BC96E6" }}>(+0)</span>{" "}
+                <span style={{ color: "#A0AEC0" }}>depuis 0 semaine</span>
               </div>
             </div>
           </div>
