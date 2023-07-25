@@ -69,7 +69,8 @@ export default function Plan() {
     data: newClient,
     error: formError,
     formik,
-  } = usePost<// QuestionWithCategory,
+  } = usePost<
+  // QuestionWithCategory,
   {
     // name: string;
     // // type: QuestionType;
@@ -188,7 +189,7 @@ export default function Plan() {
                       <PlanInvoiceItem data={inv} key={inv.id} />
                       <FormikProvider value={formik}>
                         <Form className="w-full" onSubmit={handleSubmit}>
-                          
+                          an
                           {inv.isSubcriptionCancelled == false ? (
                             <>
                               <Button onClick={(e)=>{

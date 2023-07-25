@@ -127,11 +127,6 @@ export function BriefGlass(props: NoteGlassProps) {
 export function Team(props: { data: MinimalUser[]; name: string }) {
   return (
     <ClientDetailGlass title={`Equipe - ${props.name}`}>
-      {console.log(props,'propsprossps')
-      }
-      <div className="text-[white]">lllslslsl
-      dddd
-      </div>
       
       {props.data.length > 0 ? (
         <div className="w-fit flex flex-col items-stretch">
