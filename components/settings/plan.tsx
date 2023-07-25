@@ -57,33 +57,25 @@ const cardBrands: { [b: string]: string } = {
 
 export default function Plan() {
   const { pushAlert } = useAlert();
-  const changePlan = () =>{
+  const changePlan = () => {
+    const { data, error, isLoading } = useSWR<StripeInvoice[]>(
+      "/cancel/subscription"
+    );
 
-
-    const {
-      data,
-      error,
-      isLoading,
-    } = useSWR<StripeInvoice[]>("/cancel/subscription");
-
-
-    console.log(data, error, isLoading,'sjsjjd');
-    
-
-  }
+    console.log(data, error, isLoading, "sjsjjd");
+  };
 
   const {
     data: newClient,
     error: formError,
     formik,
   } = usePost<
-    // QuestionWithCategory,
-    {
-      // name: string;
-      // // type: QuestionType;
-      // categoryId: string;
-    }
-  >({
+  // QuestionWithCategory,
+  {
+    // name: string;
+    // // type: QuestionType;
+    // categoryId: string;
+  }>({
     url: "payment/cancel/subscription",
     enableReinitialize: true,
     initialValues: {
@@ -193,17 +185,34 @@ export default function Plan() {
                 invs?.length > 0 ? (
                   invs?.map((inv) => (
                     <>
-                        <PlanInvoiceItem data={inv} key={inv.id} />
-                        <FormikProvider value={formik}> 
-                          <Form className="w-full" onSubmit={handleSubmit}>
-                            <Button 
-                              style={{marginTop:"10px"}}
-                              type="submit" className="shadow-none !text-base font-semibold">
-                              Annuler le plan
-                            </Button>
-                          </Form>
-                        </FormikProvider>
-                    </>        
+                      {console.log(inv, "datadata")}
+                      <PlanInvoiceItem data={inv} key={inv.id} />
+                      <FormikProvider value={formik}>
+                        <Form className="w-full" onSubmit={handleSubmit}>
+                          an
+                          {inv.isSubcriptionCancelled == false ? (
+                            <>
+                              <Button onClick={(e)=>{
+                                e.preventDefault()
+                                e.stopPropagation()
+                                return
+                              }} className="bg-[red] mt-6">Plan Cancelled</Button>
+                            </>
+                          ) : (
+                            <>
+                              {" "}
+                              <Button
+                                style={{ marginTop: "10px" }}
+                                type="submit"
+                                className="shadow-none !text-base font-semibold"
+                              >
+                                Annuler le plan
+                              </Button>
+                            </>
+                          )}
+                        </Form>
+                      </FormikProvider>
+                    </>
                   ))
                 ) : (
                   <Feedback
@@ -224,8 +233,7 @@ export default function Plan() {
             </Button>
           </Form>
         </FormikProvider> */}
-       
-       
+
         <Card className="p-7 basis-1/2">
           <div className="flex w-full gap-4 justify-between items-center">
             <p>Adresse de facturation</p>
@@ -278,14 +286,12 @@ export default function Plan() {
           >
             Changer de plan
           </Button>
-          
         </Link>
         {/* <Button 
         onClick={()=>changePlan()}
           type="submit" className="shadow-none !text-base font-semibold">
           Annuler le plan
         </Button> */}
-
       </div>
     </div>
   );

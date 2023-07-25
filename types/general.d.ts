@@ -303,6 +303,7 @@ export interface StripeInvoice {
     paid_at: number | null;
     voided_at: number | null;
   };
+  isSubcriptionCancelled: boolean
 }
 
 export interface StripeSubscription {
