@@ -7,7 +7,7 @@ export function getUserName(
   console.log('USER', user)
   return (
     `${user.firstName || ""}${user.lastName ? ` ${user.lastName}` : ""}` ||
-    user.baseUser.email
+    user?.baseUser?.email
   );
 }
 

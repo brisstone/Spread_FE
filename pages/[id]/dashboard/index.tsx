@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <Layout>
       <LayoutHeader>
-        {user && `Bienvenue, ${user.firstName || user.baseUser.email} ! 👋`}
+        {user && `Bienvenue, ${user?.firstName || user?.baseUser?.email} ! 👋`}
       </LayoutHeader>
       <KPIGroup />
       <div className="w-full flex gap-6">

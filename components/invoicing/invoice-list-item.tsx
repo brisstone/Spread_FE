@@ -68,15 +68,15 @@ export default function InvoiceListItem(
           first={props.data.client.name}
           second={props.data.client.email}
         />
-        <VerticalDivider className="self-stretch" />
-        <StatusContainer
+        {/* <VerticalDivider className="self-stretch" /> */}
+        {/* <StatusContainer
           heading="Montant"
           first={`${props.data.currency.name} ${props.data.items.reduce(
             (a, b) => a + b.total,
             0
           )}`}
           second="Sent 1m"
-        />
+        /> */}
          <VerticalDivider className="self-stretch" />
         <StatusContainer
           heading="VAT"

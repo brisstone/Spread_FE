@@ -30,9 +30,15 @@ import { ConfirmationModal } from "@/components/modal";
 import useDocuments from "@/data/use-documents";
 
 function FolderTag() {
+  const {
+    data: folders,
+    isLoading: foldersLoading,
+    error: foldersError,
+    mutate,
+  } = useSWR<DocumentFolder[]>("/documents/folders");
   return (
     <div className="px-3 py-1 bg-white2 w-fit flex justify-center items-center rounded-[4px]">
-      <span className="text-[10px] leading-[14px] text-[#778599]">14 Docs</span>
+      <span className="text-[10px] leading-[14px] text-[#778599]">{folders?.length ?? 0} Docs</span>
     </div>
   );
 }
