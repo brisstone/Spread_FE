@@ -30,10 +30,12 @@ interface CRMCardProps extends Props {
 function CRMLeadItem({
   lead,
   categoryId,
+  // amount
 }: // setModalOpen,
 {
   lead: CRMLead;
   categoryId: string;
+  // amount: number
 }) {
   const { pushAlert } = useAlert();
   const [modalOpen, setModalOpen] = useState(false);
@@ -168,6 +170,7 @@ export default function CRMCard(props: CRMCardProps) {
     }),
   }));
 
+  {console.log(props.data,'skskskksddskkss')}
   return (
     <>
       <CRMLeadModal
@@ -182,13 +185,13 @@ export default function CRMCard(props: CRMCardProps) {
         name={props.data?.name}
         id={props.data?.id}
       />
-      {console.log(props.data, "dmmdmdmdd")}
+
       <Card className={`!h-full basis-1/4 min-w-[25%] flex flex-col`}>
         <div className="p-5 h-full flex flex-col">
           <div className="flex w-full items-center gap-4 justify-between">
             <p className="text-[16px] leading-[20px]">{props.data.name}</p>
             <p className="text-base leading-[20px]">
-              {props.data.leadCount} Lead{props.data.leadCount === 1 ? "" : "s"}
+            ${props?.data?.leads?.reduce((acc: any, curr: { amount: any; }) => acc + curr.amount, 0)?.toLocaleString()} {" "} ({props.data.leadCount} Lead{props.data.leadCount === 1 ? "" : "s"})
             </p>
 
             <Popover
@@ -241,12 +244,14 @@ export default function CRMCard(props: CRMCardProps) {
                   }`}
                   ref={drop}
                 >
+
                   {leads.length > 0 ? (
                     leads.map((l) => (
                       <CRMLeadItem
                         lead={l}
                         key={l.id}
                         categoryId={props.data.id}
+
                       />
                     ))
                   ) : (
