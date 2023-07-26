@@ -269,6 +269,7 @@ export interface OnboardingDetail {
 }
 
 export interface CRMCategoryWithCount extends CRMCategory {
+  leads: any;
   leadCount: number;
 }
 

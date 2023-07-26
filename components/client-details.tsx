@@ -6,19 +6,26 @@ import Tag from "./tag";
 import { MinimalUser } from "@/types/general";
 import { getUserName } from "@/lib/util";
 import utilStyles from "@/styles/utils.module.css";
-import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, Key, useState } from "react";
-import { AiOutlineEdit } from 'react-icons/ai';
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactFragment,
+  ReactPortal,
+  Key,
+  useState,
+} from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import EditOnBoardingAnswer from "./onboarding/edit-onbarding-answer-modal";
 
 interface ClientDetailGlassProps extends Props {
   title: string;
+  // action: ()=>{}
 }
 
 interface NoteGlassProps extends ClientDetailGlassProps {
   note: string;
   lead: any;
 }
-
 
 interface Item {
   answer: string;
@@ -28,10 +35,13 @@ interface Item {
 }
 
 function ClientDetailGlass(props: ClientDetailGlassProps) {
-
   return (
     <Glass className="p-5 mt-10 grow">
-      <p className="text-[30px] leading-[35px]">{props.title}</p>
+      <div className="flex items-between justify-between">
+        <p className="text-[30px] leading-[35px]">{props.title}</p>
+        <div className="text-[white]">elipsis</div>
+      </div>
+
       <BaseHDivider className="mt-5" />
       {props.children}
     </Glass>
@@ -39,33 +49,55 @@ function ClientDetailGlass(props: ClientDetailGlassProps) {
 }
 
 export function NoteGlass(props: NoteGlassProps) {
-
-
-  const groupedData: Record<string, Item[]> = props.lead?.data.reduce((result: Record<string, Item[]>, item: Item) => {
-    const { category } = item;
-    if (!result[category]) {
-      result[category] = [];
-    }
-    result[category].push(item);
-    return result;
-  }, {}) || {};
-  
+  const groupedData: Record<string, Item[]> =
+    props.lead?.data.reduce((result: Record<string, Item[]>, item: Item) => {
+      const { category } = item;
+      if (!result[category]) {
+        result[category] = [];
+      }
+      result[category].push(item);
+      return result;
+    }, {}) || {};
 
   return (
     <ClientDetailGlass title={props.title}>
-
-
       <p className="text-base mt-5 mb-5">{props.note}</p>
       {Object?.entries(groupedData).map(([category, items]) => (
         <div key={category} className="mb-[30px]">
-          <h3><b>{category}</b> </h3>
+          <h3>
+            <b>{category}</b>{" "}
+          </h3>
           <ul>
-            {items.map((item: { question: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; answer: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) => (
-              <li key={index} className="mb-[10px]">
-                <p>Question: {item.question}</p>
-                <p className="text-[blue]">Answer: {item.answer}</p>
-              </li>
-            ))}
+            {items.map(
+              (
+                item: {
+                  question:
+                    | string
+                    | number
+                    | boolean
+                    | ReactElement<any, string | JSXElementConstructor<any>>
+                    | ReactFragment
+                    | ReactPortal
+                    | null
+                    | undefined;
+                  answer:
+                    | string
+                    | number
+                    | boolean
+                    | ReactElement<any, string | JSXElementConstructor<any>>
+                    | ReactFragment
+                    | ReactPortal
+                    | null
+                    | undefined;
+                },
+                index: Key | null | undefined
+              ) => (
+                <li key={index} className="mb-[10px]">
+                  <p>Question: {item.question}</p>
+                  <p className="text-[blue]">Answer: {item.answer}</p>
+                </li>
+              )
+            )}
           </ul>
         </div>
       ))}
@@ -74,23 +106,22 @@ export function NoteGlass(props: NoteGlassProps) {
 }
 
 export function BriefGlass(props: NoteGlassProps) {
-  const [answerId, setAnswerId] = useState("")
-  const [answer, setAnswer] = useState("")
-  const [modalCOpen, setModalCOpen] = useState(false)
-  
-  const groupedData: Record<string, Item[]> = props.lead?.data?.reduce((result: Record<string, Item[]>, item: Item) => {
-    const { category } = item;
-    if (!result[category]) {
-      result[category] = [];
-    }
-    result[category].push(item);
-    return result;
-  }, {}) || {};
-  
+  const [answerId, setAnswerId] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [modalCOpen, setModalCOpen] = useState(false);
+
+  const groupedData: Record<string, Item[]> =
+    props.lead?.data?.reduce((result: Record<string, Item[]>, item: Item) => {
+      const { category } = item;
+      if (!result[category]) {
+        result[category] = [];
+      }
+      result[category].push(item);
+      return result;
+    }, {}) || {};
 
   return (
     <ClientDetailGlass title={props.title}>
-
       <EditOnBoardingAnswer
         open={modalCOpen}
         handleClose={() => setModalCOpen(false)}
@@ -102,21 +133,47 @@ export function BriefGlass(props: NoteGlassProps) {
       <p className="text-base mt-5 mb-5">{props.note}</p>
       {Object?.entries(groupedData).map(([category, items]) => (
         <div key={category} className="mb-[30px]">
-          <h3><b>{category}</b> </h3>
+          <h3>
+            <b>{category}</b>{" "}
+          </h3>
           <ul>
-            {items.map((item: { question: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; answer: string ;id: string }, index: Key | null | undefined, ) => (
-              <li key={index} className="mb-[10px]">
-               
-                <p>Question: {item.question}</p>
-                <div className="flex items-center gap-4">
-                  <p className="text-[gold]">Answer: {item.answer}</p> 
-                  {/* <Pen size={32} /> */}
-                
-                <div style={{color:"white"}} onClick={()=> {setAnswerId(item.id); setAnswer(item.answer); setModalCOpen(true)}}><AiOutlineEdit/></div>
-                </div>
-               
-              </li>
-            ))}
+            {items.map(
+              (
+                item: {
+                  question:
+                    | string
+                    | number
+                    | boolean
+                    | ReactElement<any, string | JSXElementConstructor<any>>
+                    | ReactFragment
+                    | ReactPortal
+                    | null
+                    | undefined;
+                  answer: string;
+                  id: string;
+                },
+                index: Key | null | undefined
+              ) => (
+                <li key={index} className="mb-[10px]">
+                  <p>Question: {item.question}</p>
+                  <div className="flex items-center gap-4">
+                    <p className="text-[gold]">Answer: {item.answer}</p>
+                    {/* <Pen size={32} /> */}
+
+                    <div
+                      style={{ color: "white" }}
+                      onClick={() => {
+                        setAnswerId(item.id);
+                        setAnswer(item.answer);
+                        setModalCOpen(true);
+                      }}
+                    >
+                      <AiOutlineEdit />
+                    </div>
+                  </div>
+                </li>
+              )
+            )}
           </ul>
         </div>
       ))}
@@ -125,9 +182,10 @@ export function BriefGlass(props: NoteGlassProps) {
 }
 
 export function Team(props: { data: MinimalUser[]; name: string }) {
+
+
   return (
     <ClientDetailGlass title={`Equipe - ${props.name}`}>
-      
       {props.data.length > 0 ? (
         <div className="w-fit flex flex-col items-stretch">
           <div className="flex justify-between gap-[200px] mt-5">
