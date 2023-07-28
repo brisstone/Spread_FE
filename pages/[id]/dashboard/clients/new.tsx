@@ -101,6 +101,7 @@ export default function NewClient() {
 
   return (
     <Layout header="Nouveau Client ℹ️">
+      
       <FormikProvider value={formik}>
         {error && (
           <p
