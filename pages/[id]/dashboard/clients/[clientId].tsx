@@ -71,7 +71,7 @@ export default function ClientDetails() {
           <TabItem>Bref 📝</TabItem>
           <TabItem>Tâches 🎯</TabItem>
           <TabItem>Notes</TabItem>
-          {/* <TabItem>Équipe</TabItem> */}
+          <TabItem>Équipe</TabItem>
         </Tab>
 
         <Fetched
@@ -116,9 +116,13 @@ export default function ClientDetails() {
                 {/* <NoteGlass title={`Notes - ${c.name}`} note={c.brief || ""} /> */}
               </TabPanel>
 
-              {/* <TabPanel value={tabIndex} index={3}>
-                <Team data={c.team} name={c.name} />
-              </TabPanel> */}
+
+              {console.log(c,'dkdkdkkdd')
+              }
+
+              <TabPanel value={tabIndex} index={3}>
+                <Team data={c.team} name={c.name} leadId={c!.leadId} />
+              </TabPanel>
             </>
           )}
         />

@@ -16,15 +16,21 @@ import {
 } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import EditOnBoardingAnswer from "./onboarding/edit-onbarding-answer-modal";
+import ClientTeamModal from "./crm/team-modal";
 
 interface ClientDetailGlassProps extends Props {
   title: string;
+  lead?: string;
+  leadId?: string;
+  isTeam?: boolean
   // action: ()=>{}
 }
 
-interface NoteGlassProps extends ClientDetailGlassProps {
+interface NoteGlassProps {
   note: string;
-  lead: any;
+  title: string;
+  lead?: any;
+  leadId?: any;
 }
 
 interface Item {
@@ -35,16 +41,37 @@ interface Item {
 }
 
 function ClientDetailGlass(props: ClientDetailGlassProps) {
-  return (
-    <Glass className="p-5 mt-10 grow">
-      <div className="flex items-between justify-between">
-        <p className="text-[30px] leading-[35px]">{props.title}</p>
-        <div className="text-[white]">elipsis</div>
-      </div>
+  console.log(props, "kdkdkdk");
 
-      <BaseHDivider className="mt-5" />
-      {props.children}
-    </Glass>
+  const [showAddTeam, setShowAddTeam] = useState<boolean>(false);
+  return (
+    <>
+    
+      {" "}
+      <ClientTeamModal
+        open={showAddTeam}
+        handleClose={() => setShowAddTeam(false)}
+        lead={props!.leadId ?? ""}
+      />{" "}
+      <Glass className="p-5 mt-10 grow">
+        {props!.isTeam && (
+          <div className="flex items-between justify-between">
+            <p className="text-[30px] leading-[35px] text-[white]">{props.title}</p>
+            <div
+              className="text-[white] cursor-pointer"
+              onClick={() => {
+                setShowAddTeam(true);
+              }}
+            >
+              Ajouter une équipe
+            </div>
+          </div>
+        )}
+
+        <BaseHDivider className="mt-5" />
+        {props.children}
+      </Glass>
+    </>
   );
 }
 
@@ -59,8 +86,10 @@ export function NoteGlass(props: NoteGlassProps) {
       return result;
     }, {}) || {};
 
+  console.log(props, "propsprops");
+
   return (
-    <ClientDetailGlass title={props.title}>
+    <ClientDetailGlass title={props.title} lead={props.leadId}>
       <p className="text-base mt-5 mb-5">{props.note}</p>
       {Object?.entries(groupedData).map(([category, items]) => (
         <div key={category} className="mb-[30px]">
@@ -181,11 +210,13 @@ export function BriefGlass(props: NoteGlassProps) {
   );
 }
 
-export function Team(props: { data: MinimalUser[]; name: string }) {
-
-
+export function Team(props: {
+  data: MinimalUser[];
+  name: string;
+  leadId?: string;
+}) {
   return (
-    <ClientDetailGlass title={`Equipe - ${props.name}`}>
+    <ClientDetailGlass title={`Equipe - ${props.name}`} leadId={props.leadId} isTeam={true}>
       {props.data.length > 0 ? (
         <div className="w-fit flex flex-col items-stretch">
           <div className="flex justify-between gap-[200px] mt-5">
@@ -194,7 +225,7 @@ export function Team(props: { data: MinimalUser[]; name: string }) {
           </div>
 
           {/* Team list */}
-          {props.data.map((u) => (
+          {props?.data.map((u) => (
             <div className="flex items-center mt-5" key={u.id}>
               <Image
                 src={u.profileImageUrl || "/images/profilecompany2.png"}
@@ -206,7 +237,7 @@ export function Team(props: { data: MinimalUser[]; name: string }) {
               <div className="grow ml-5">
                 <p className="text-base">{getUserName(u)}</p>
                 <p className="text-[13px] leading-[19px] whitespace-nowrap text-ellipsis">
-                  {u.baseUser.email}
+                  {u?.baseUser?.email}
                 </p>
               </div>
               <Tag>Actif</Tag>
