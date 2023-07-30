@@ -131,7 +131,7 @@ function CRMLeadItem({
 
 export default function CRMCard(props: CRMCardProps) {
   const { data, error, isLoading, mutate } = useLeads(props.data.id);
-
+ 
   const { mutate: mutateGlobal } = useSWRConfig();
 
   const { pushAlert } = useAlert();
